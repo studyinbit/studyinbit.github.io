@@ -39,7 +39,7 @@ export default function Home() {
       <GradientBlob variant="accent" className="bottom-0 left-1/4 w-[400px] h-[400px] opacity-20" delay={4} />
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-20 md:pt-32 md:pb-32 px-6">
+      <section className="relative pt-28 pb-20 md:pt-32 md:pb-32 px-6">
         <div className="container mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
 
