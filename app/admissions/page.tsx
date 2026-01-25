@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AlertTriangle, CheckCircle2, Download, BookOpen, GraduationCap, ChevronRight } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Download, BookOpen, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { CostCalculator } from "@/components/features/CostCalculator";
 
@@ -108,7 +109,7 @@ export default function AdmissionsPage() {
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1 }}
                 className="bg-white/50 backdrop-blur-md border border-white/60 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all"
               >
@@ -145,39 +146,35 @@ export default function AdmissionsPage() {
         {/* Timeline */}
         <div className="mb-24">
           <h2 className="text-3xl font-display font-bold mb-12 text-center">Application Timeline</h2>
-          <div className="relative border-l-2 border-primary/20 ml-4 md:ml-1/2 space-y-12">
-             {timeline.map((step, index) => (
-               <motion.div
-                 key={index}
-                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                 whileInView={{ opacity: 1, x: 0 }}
-                 viewport={{ once: true }}
-                 className={`relative flex flex-col md:flex-row gap-8 items-start ${index % 2 === 0 ? "md:flex-row-reverse" : ""}`}
-               >
-                 <div className="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white shadow-sm z-10" />
+          <div className="relative max-w-3xl mx-auto">
+            {/* Mobile: continuous left line */}
+            <div className="md:hidden absolute left-[7px] top-2 bottom-2 w-0.5 bg-primary/20" />
+            {/* Desktop: continuous center line */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 -translate-x-1/2" />
 
-                 <div className="pl-8 md:pl-0 md:w-1/2 flex flex-col items-start md:items-end md:text-right md:pr-12">
-                    {index % 2 === 0 && (
-                      <>
-                        <span className="text-primary font-bold tracking-wider text-sm uppercase mb-1">{step.month}</span>
-                        <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                        <p className="text-muted-foreground text-sm">{step.desc}</p>
-                      </>
-                    )}
-                    {index % 2 !== 0 && <div className="hidden md:block" />} {/* Spacer for layout */}
-                 </div>
+            {timeline.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: index * 0.1 }}
+                className={`relative md:grid md:grid-cols-2 md:gap-8 ${index === timeline.length - 1 ? "" : "mb-12"}`}
+              >
+                {/* Mobile: left dot */}
+                <div className="md:hidden absolute left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-primary border-2 border-white shadow-sm z-10" />
 
-                 <div className="pl-8 md:pl-12 md:w-1/2">
-                    {index % 2 !== 0 && (
-                      <>
-                        <span className="text-primary font-bold tracking-wider text-sm uppercase mb-1">{step.month}</span>
-                        <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                        <p className="text-muted-foreground text-sm">{step.desc}</p>
-                      </>
-                    )}
-                 </div>
-               </motion.div>
-             ))}
+                {/* Desktop: center dot */}
+                <div className="hidden md:block absolute left-1/2 top-2 w-3 h-3 rounded-full bg-primary border-4 border-white shadow-sm -translate-x-1/2 z-10" />
+
+                {/* Content wrapper - alternates sides on desktop */}
+                <div className={`${index % 2 === 0 ? "md:text-right md:pr-12" : "md:text-left md:pl-12 md:col-start-2"} pl-10 pt-1`}>
+                  <span className="text-primary font-bold tracking-wider text-sm uppercase mb-1 block">{step.month}</span>
+                  <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                  <p className="text-muted-foreground text-sm">{step.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
 
@@ -185,11 +182,12 @@ export default function AdmissionsPage() {
         <div className="text-center bg-primary/5 rounded-3xl p-12 border border-primary/10">
           <h2 className="text-3xl font-display font-bold mb-6">Ready to Apply?</h2>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
+            <WhatsAppButton />
+            {/* <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
               <a href="https://apply.bit.edu.cn" target="_blank" rel="noopener noreferrer">
                 Visit BIT Admission Portal <ChevronRight className="ml-2 w-5 h-5" />
               </a>
-            </Button>
+            </Button> */}
           </div>
         </div>
 

@@ -1,8 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { BlurImage } from "@/components/ui/blur-image";
 import { Shield, TrendingUp, Award, Zap } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+
+import heroBg from "@/public/images/uni/IMG_20251101_124832167.CCD.webp";
+import shanghaiImg from "@/public/images/shanghai.webp";
+import beijingMap from "@/public/images/beijing-map.webp";
 
 export default function WhyBitPage() {
   return (
@@ -34,8 +39,8 @@ export default function WhyBitPage() {
         <div className="grid md:grid-cols-2 gap-12 mb-24 items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-8"
           >
             <div className="bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-sm">
@@ -70,12 +75,20 @@ export default function WhyBitPage() {
           {/* Visual Element (Placeholder for illustration) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="relative h-[400px] bg-gradient-to-br from-slate-100 to-slate-200 rounded-3xl overflow-hidden flex items-center justify-center border border-white/50 shadow-inner"
           >
-             <div className="absolute inset-0 bg-[url('/images/uni/IMG_20251101_124832167.CCD.webp')] bg-cover bg-center opacity-80" />
-             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8">
+             <div className="absolute inset-0">
+               <BlurImage
+                 src={heroBg}
+                 alt="BIT Campus"
+                 fill
+                 className="object-cover opacity-80"
+                 placeholder="blur"
+               />
+             </div>
+             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-8 z-10">
                 <p className="text-white font-bold text-2xl">Research Priority</p>
                 <p className="text-white/80">Aerospace & Defense Engineering</p>
              </div>
@@ -94,7 +107,8 @@ export default function WhyBitPage() {
           <motion.div
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
-             viewport={{ once: true }}
+             viewport={{ once: true, margin: "-100px" }}
+             transition={{ duration: 0.5 }}
              className="overflow-hidden rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
           >
             <table className="w-full text-left border-collapse">
@@ -141,12 +155,13 @@ export default function WhyBitPage() {
              <motion.div
                initial={{ opacity: 0, scale: 0.9 }}
                whileInView={{ opacity: 1, scale: 1 }}
-               viewport={{ once: true }}
+               viewport={{ once: true, margin: "-100px" }}
+               transition={{ duration: 0.5 }}
                className="relative rounded-3xl overflow-hidden shadow-xl border border-border group"
              >
                 <div className="aspect-video relative">
-                   <img src="/images/shanghai.webp" alt="Shanghai Skyline - China's Rise" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                   <BlurImage src={shanghaiImg} alt="Shanghai Skyline - China's Rise" fill className="object-cover group-hover:scale-105 transition-transform duration-700" placeholder="blur" />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
                 </div>
              </motion.div>
            </div>
@@ -192,7 +207,7 @@ export default function WhyBitPage() {
               </div>
             </div>
              <div className="h-64 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 overflow-hidden relative group">
-                <img src="/images/beijing-map.webp" alt="Map of Liangxiang vs Beijing" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                <BlurImage src={beijingMap} alt="Map of Liangxiang vs Beijing" fill className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" placeholder="blur" />
              </div>
           </div>
         </div>

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, ChevronDown, ChevronUp, MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Search, ChevronDown, ChevronUp } from "lucide-react";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { Input } from "@/components/ui/input";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+import { cn } from "@/lib/utils";
 
 interface FAQItem {
   q: string;
@@ -15,11 +16,53 @@ interface FAQItem {
   category?: string;
 }
 
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function underlineMatches(text: string, query: string) {
+  if (!query) return text;
+
+  const regex = new RegExp(escapeRegExp(query), "gi");
+  const parts: (string | React.ReactNode)[] = [];
+  let lastIndex = 0;
+  let matchCount = 0;
+
+  for (const match of text.matchAll(regex)) {
+    if (match.index == null) continue;
+
+    const start = match.index;
+    const end = start + match[0].length;
+
+    if (start > lastIndex) {
+      parts.push(text.slice(lastIndex, start));
+    }
+
+    parts.push(
+      <span
+        key={`${start}-${matchCount}`}
+        className="underline decoration-blue-500 decoration-2 underline-offset-2"
+      >
+        {text.slice(start, end)}
+      </span>
+    );
+
+    matchCount += 1;
+    lastIndex = end;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
+
 export default function FAQPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [openCategory, setOpenCategory] = useState("Parents");
+  const [openCategory, setOpenCategory] = useState("Any");
 
-  const categories = ["Parents", "Students", "Practical"];
+  const categories = ["Any", "Parents", "Students", "Practical"];
 
   const faqData: Record<string, FAQItem[]> = {
     Parents: [
@@ -73,16 +116,23 @@ export default function FAQPage() {
   };
 
   // Flatten for search
-  const allFaqs = Object.entries(faqData).flatMap(([cat, items]) =>
+  const anyFaqs = Object.entries(faqData).flatMap(([cat, items]) =>
     items.map(item => ({ ...item, category: cat }))
   );
 
   const filteredFaqs = searchTerm
-    ? allFaqs.filter(item =>
-        item.q.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.a.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : faqData[openCategory as keyof typeof faqData];
+    ? anyFaqs.filter(item => {
+        const searchLower = searchTerm.toLowerCase();
+        return (
+          item.q.toLowerCase().includes(searchLower) ||
+          item.a.toLowerCase().includes(searchLower) ||
+          (item.quote && item.quote.toLowerCase().includes(searchLower)) ||
+          (item.author && item.author.toLowerCase().includes(searchLower))
+        );
+      })
+    : openCategory === "Any"
+      ? anyFaqs
+      : faqData[openCategory as keyof typeof faqData];
 
   return (
     <div className="relative overflow-hidden min-h-screen pt-32 pb-20">
@@ -106,7 +156,10 @@ export default function FAQPage() {
             <Input
               type="text"
               placeholder="Search specific questions (e.g., 'safety', 'food', 'VPN')..."
-              className="pl-12 py-6 rounded-full text-lg shadow-sm border-primary/20 focus-visible:ring-primary/50"
+              className={cn(
+                "pl-12 py-6 rounded-full text-lg shadow-sm border-primary/20 focus-visible:ring-primary/50 transition-all duration-300",
+                searchTerm ? "bg-white" : "bg-white/40 hover:bg-white/60 focus:bg-white"
+              )}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -139,7 +192,12 @@ export default function FAQPage() {
               // Search Results View
               filteredFaqs.length > 0 ? (
                 filteredFaqs.map((faq, idx) => (
-                  <FAQCard key={idx} faq={faq} />
+                  <FAQCard
+                    key={faq.q}
+                    faq={faq}
+                    autoOpen={idx === 0 && searchTerm !== ""}
+                    highlightQuery={searchTerm}
+                  />
                 ))
               ) : (
                 <div className="text-center text-muted-foreground py-12">
@@ -161,11 +219,12 @@ export default function FAQPage() {
           <p className="text-muted-foreground mb-8">
             Our student team is ready to chat. No chatbots, just real seniors.
           </p>
-          <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
+          <WhatsAppButton />
+          {/* <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
             <a href="https://wa.me/6281388577873" target="_blank" rel="noopener noreferrer">
               Chat on WhatsApp <MessageCircle className="ml-2 w-5 h-5" />
             </a>
-          </Button>
+          </Button> */}
         </div>
 
       </div>
@@ -173,8 +232,22 @@ export default function FAQPage() {
   );
 }
 
-function FAQCard({ faq }: { faq: FAQItem }) {
-  const [isOpen, setIsOpen] = useState(false);
+function FAQCard({
+  faq,
+  autoOpen = false,
+  highlightQuery = "",
+}: {
+  faq: FAQItem;
+  autoOpen?: boolean;
+  highlightQuery?: string;
+}) {
+  const [isOpen, setIsOpen] = useState(autoOpen);
+
+  useEffect(() => {
+    if (autoOpen && !isOpen) {
+      setIsOpen(true);
+    }
+  }, [autoOpen, isOpen]);
 
   return (
     <motion.div
@@ -187,7 +260,9 @@ function FAQCard({ faq }: { faq: FAQItem }) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50/50 transition-colors"
       >
-        <span className="font-bold text-lg text-foreground pr-8">{faq.q}</span>
+        <span className="font-bold text-lg text-foreground pr-8">
+          {underlineMatches(faq.q, highlightQuery)}
+        </span>
         {isOpen ? <ChevronUp className="w-5 h-5 text-muted-foreground shrink-0" /> : <ChevronDown className="w-5 h-5 text-muted-foreground shrink-0" />}
       </button>
 
@@ -199,11 +274,11 @@ function FAQCard({ faq }: { faq: FAQItem }) {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <div className="p-6 pt-0 text-muted-foreground leading-relaxed border-t border-border/50 bg-gray-50/30">
-              {faq.a}
+            <div className="p-6 pt-0 text-muted-foreground leading-relaxed">
+              {underlineMatches(faq.a, highlightQuery)}
               {faq.quote && (
                 <div className="mt-4 pl-4 border-l-4 border-primary/20 italic text-sm text-foreground/80">
-                  &quot;{faq.quote}&quot; <span className="block mt-1 font-semibold text-primary not-italic">— {faq.author}</span>
+                  &quot;{underlineMatches(faq.quote, highlightQuery)}&quot; <span className="block mt-1 font-semibold text-primary not-italic">— {faq.author}</span>
                 </div>
               )}
             </div>

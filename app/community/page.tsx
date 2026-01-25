@@ -1,9 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Users, BookOpen, Briefcase, Heart, Plane, Home, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { BlurImage } from "@/components/ui/blur-image";
+import { Users, BookOpen, Briefcase, Heart, Plane, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+
+import galleryImg1 from "@/public/images/uni/IMG_20250917_093259940.CCD.webp";
+import galleryImg2 from "@/public/images/uni/IMG_20251122_121955346.CCD.webp";
+import galleryImg3 from "@/public/images/uni/IMG_20251213_092706951.CCD.webp";
+import galleryImg4 from "@/public/images/uni/IMG_20250912_085144058.CCD.webp";
+import galleryImg5 from "@/public/images/uni/IMG_20250930_174155491.CCD.webp";
+import galleryImg6 from "@/public/images/uni/IMG_20251115_093217450.CCD.webp";
+
+import permitImg from "@/public/images/icons/permitbeijing.webp";
+import ppitImg from "@/public/images/icons/ppitiongkok.webp";
 
 export default function CommunityPage() {
   const containerVariants = {
@@ -69,12 +82,12 @@ export default function CommunityPage() {
   ];
 
   const galleryImages = [
-    "/images/uni/IMG_20250917_093259940.CCD.webp",
-    "/images/uni/IMG_20251122_121955346.CCD.webp",
-    "/images/uni/IMG_20251213_092706951.CCD.webp",
-    "/images/uni/IMG_20250912_085144058.CCD.webp",
-    "/images/uni/IMG_20250930_174155491.CCD.webp",
-    "/images/uni/IMG_20251115_093217450.CCD.webp",
+    { src: galleryImg1, caption: "Community Moment" },
+    { src: galleryImg2, caption: "Community Moment" },
+    { src: galleryImg3, caption: "Community Moment" },
+    { src: galleryImg4, caption: "Community Moment" },
+    { src: galleryImg5, caption: "Community Moment" },
+    { src: galleryImg6, caption: "Community Moment" },
   ];
 
   return (
@@ -109,7 +122,7 @@ export default function CommunityPage() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           className="grid md:grid-cols-2 gap-8 mb-32"
         >
           {pillars.map((pillar, idx) => (
@@ -149,7 +162,7 @@ export default function CommunityPage() {
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.2 }}
                 className="relative bg-white rounded-3xl p-8 shadow-sm border border-border"
               >
@@ -169,7 +182,7 @@ export default function CommunityPage() {
         </div>
 
         {/* Community Network */}
-        <div className="bg-slate-900 text-white rounded-[2.5rem] p-12 mb-32 relative overflow-hidden">
+        <div className="bg-gradient-to-b md:bg-gradient-to-r from-slate-900 from-40% to-slate-100 text-white rounded-[2.5rem] p-12 mb-32 relative overflow-hidden">
           <GradientBlob variant="cool" className="opacity-50" />
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -177,21 +190,27 @@ export default function CommunityPage() {
               <p className="text-slate-300 leading-relaxed mb-8">
                 StudyinBIT is connected to <strong>PERMIT Beijing</strong> (Indonesian Students Association in Beijing) and <strong>PPIT Tiongkok</strong>. This gives you access to Embassy resources, inter-university events, and a network of over 1,000 Indonesian students across the city.
               </p>
-              <div className="flex gap-4">
-                 <Button variant="outline" className="border-white/20 hover:bg-white/10 text-white hover:text-white" asChild>
-                   <a href="https://www.instagram.com/permitbeijing/" target="_blank" rel="noopener noreferrer">@permitbeijing</a>
+              <div className="flex gap-4 flex-wrap">
+                 <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
+                   <a href="https://www.instagram.com/permitbeijing/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                     <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
+                     <span>@permitbeijing</span>
+                   </a>
                  </Button>
-                 <Button variant="outline" className="border-white/20 hover:bg-white/10 text-white hover:text-white" asChild>
-                   <a href="https://www.instagram.com/ppitiongkok" target="_blank" rel="noopener noreferrer">@ppitiongkok</a>
+                 <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
+                   <a href="https://www.instagram.com/ppitiongkok" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                     <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
+                     <span>@ppitiongkok</span>
+                   </a>
                  </Button>
               </div>
             </div>
             <div className="flex gap-6 justify-center md:justify-end">
-               <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg flex items-center justify-center">
-                 <img src="/images/icons/permitbeijing.webp" alt="PERMIT Beijing" className="rounded-full" />
+               <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg flex items-center justify-center relative overflow-hidden">
+                 <BlurImage src={permitImg} alt="PERMIT Beijing" className="rounded-full object-contain" fill sizes="128px" />
                </div>
-               <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg flex items-center justify-center translate-y-8">
-                 <img src="/images/icons/ppitiongkok.webp" alt="PPIT Tiongkok" className="rounded-full" />
+               <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg flex items-center justify-center translate-y-8 relative overflow-hidden">
+                 <BlurImage src={ppitImg} alt="PPIT Tiongkok" className="rounded-full object-contain" fill sizes="128px" />
                </div>
             </div>
           </div>
@@ -200,24 +219,25 @@ export default function CommunityPage() {
         {/* Photo Gallery */}
         <div className="mb-24">
           <h2 className="text-3xl font-display font-bold mb-12 text-center">Life at BIT</h2>
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            {galleryImages.map((src, idx) => (
+          <div className="columns-2 md:columns-3 gap-4 md:gap-6">
+            {galleryImages.map((item, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1 }}
-                className="relative rounded-2xl overflow-hidden group break-inside-avoid"
+                className="relative rounded-2xl overflow-hidden group break-inside-avoid mb-6"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                <img
-                  src={src}
-                  alt={`Community moment ${idx + 1}`}
+                <BlurImage
+                  src={item.src}
+                  alt={item.caption}
                   className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                   <p className="text-white font-medium text-sm">Community Moment</p>
+                   <p className="text-white font-medium text-sm">{item.caption}</p>
                 </div>
               </motion.div>
             ))}
@@ -227,11 +247,12 @@ export default function CommunityPage() {
         {/* CTA */}
         <div className="text-center">
           <h2 className="text-3xl font-display font-bold mb-6">Want to talk to a senior?</h2>
-          <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
+          <WhatsAppButton />
+          {/* <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
             <a href="https://wa.me/6281388577873" target="_blank" rel="noopener noreferrer">
               Chat with BIND Team <ChevronRight className="ml-2 w-5 h-5" />
             </a>
-          </Button>
+          </Button> */}
         </div>
 
       </div>

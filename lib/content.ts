@@ -12,7 +12,7 @@ export const siteContent = {
   ],
   features: [
     {
-      title: "The 'Seven Sons' Elite",
+      title: "Backed by China",
       description: "A premier member of the 'Seven Sons of National Defense', with labs capitalized by the state's most critical projects in aerospace and security.",
       icon: "Shield",
     },

@@ -2,10 +2,18 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, ChevronRight, GraduationCap, Globe, Users, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { BlurImage } from "@/components/ui/blur-image";
+import { GraduationCap, Globe, Users, TrendingUp } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { SquareArrowTopRight } from "@/components/ui/SquareArrowTopRight";
 import { siteContent } from "@/lib/content";
+
+// Static Image Imports
+import heroImg1 from "@/public/images/uni/IMG_20251101_124832167.CCD.webp";
+import heroImg2 from "@/public/images/uni/IMG_20250914_190338764.CCD.NIGHT.webp";
+import heroImg3 from "@/public/images/uni/IMG_20251213_102035090.CCD.webp";
+import heroImg4 from "@/public/images/uni/IMG_20251207_121823829.CCD.webp";
 
 export default function Home() {
   const containerVariants = {
@@ -22,14 +30,6 @@ export default function Home() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
-
-  // Image grid using actual campus photos
-  const heroImages = [
-    "/images/uni/IMG_20251101_124832167.CCD.webp",
-    "/images/uni/IMG_20250914_190338764.CCD.NIGHT.webp",
-    "/images/uni/IMG_20251213_102035090.CCD.webp",
-    "/images/uni/IMG_20251207_121823829.CCD.webp",
-  ];
 
   return (
     <div className="relative overflow-hidden">
@@ -56,7 +56,7 @@ export default function Home() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                   </span>
-                  Admissions for 2026 Open
+                  Free Consultation
                 </span>
               </motion.div>
 
@@ -76,18 +76,12 @@ export default function Home() {
               </motion.p>
 
               <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <Button size="lg" className="rounded-full text-lg px-8 py-7 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group relative overflow-hidden" asChild>
-                   <a href={siteContent.contact.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                      <img src="/images/icons/whatsapp-icon.svg" alt="WhatsApp" className="w-6 h-6 brightness-0 invert" />
-                      Chat on WhatsApp
-                   </a>
-                </Button>
-                <Button size="lg" variant="outline" className="rounded-full text-lg px-8 py-7 border-2 bg-white/50 hover:bg-white/80 group whitespace-nowrap min-w-[160px]" asChild>
+                <WhatsAppButton />
+                {/* <Button size="lg" variant="outline" className="rounded-full text-lg px-8 py-7 border bg-white hover:bg-white transition-all duration-300 group whitespace-nowrap min-w-[160px]" asChild>
                   <Link href="/why-bit" className="flex items-center justify-center gap-2">
                     Why BIT? <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
                   </Link>
-                </Button>
+                </Button> */}
               </motion.div>
             </motion.div>
 
@@ -102,18 +96,18 @@ export default function Home() {
                <div className="grid grid-cols-2 gap-4 h-full p-4 relative">
                   <div className="space-y-4 pt-12">
                      <div className="h-64 rounded-2xl overflow-hidden shadow-lg border border-white/20 relative group">
-                        <img src={heroImages[0]} alt="Campus Life" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                        <BlurImage src={heroImg1} alt="Campus Life" placeholder="blur" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                      </div>
                      <div className="h-48 rounded-2xl overflow-hidden shadow-lg border border-white/20 relative group">
-                        <img src={heroImages[1]} alt="Campus Night" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                        <BlurImage src={heroImg2} alt="Campus Night" placeholder="blur" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                      </div>
                   </div>
                   <div className="space-y-4">
                      <div className="h-48 rounded-2xl overflow-hidden shadow-lg border border-white/20 relative group">
-                        <img src={heroImages[2]} alt="Students" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                        <BlurImage src={heroImg3} alt="Students" placeholder="blur" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                      </div>
                      <div className="h-64 rounded-2xl overflow-hidden shadow-lg border border-white/20 relative group">
-                        <img src={heroImages[3]} alt="Library" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                        <BlurImage src={heroImg4} alt="Library" placeholder="blur" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                      </div>
                   </div>
                </div>
@@ -132,7 +126,7 @@ export default function Home() {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
@@ -168,31 +162,38 @@ export default function Home() {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative p-8 rounded-3xl bg-white border border-white/60 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <Link
+                  href="/why-bit"
+                  className="block h-full group relative p-8 rounded-3xl bg-white border border-white/60 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <div className="w-6 h-6 text-primary">
-                       {index === 0 && <GraduationCap />}
-                       {index === 1 && <Globe />}
-                       {index === 2 && <TrendingUp />}
-                       {index === 3 && <Users />}
+                  <div className="relative z-10">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-6 h-6 text-primary">
+                        {index === 0 && <GraduationCap />}
+                        {index === 1 && <Globe />}
+                        {index === 2 && <TrendingUp />}
+                        {index === 3 && <Users />}
+                      </div>
                     </div>
-                  </div>
 
-                  <h3 className="text-2xl font-bold mb-3 font-display">{feature.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed mb-6">
-                    {feature.description}
-                  </p>
-
-                  <div className="flex items-center text-primary font-medium opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                    Learn more <ChevronRight className="w-4 h-4 ml-1" />
+                    <h3 className="text-2xl font-bold mb-3 font-display flex items-center gap-2">
+                      {feature.title}
+                      <SquareArrowTopRight
+                        size={12}
+                        strokeWidth={3}
+                        className="opacity-40 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 flex-shrink-0"
+                      />
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -208,13 +209,7 @@ export default function Home() {
             Join a community of 400+ Indonesian students at one of China&apos;s most prestigious engineering universities.
           </p>
           <div className="flex justify-center">
-            <Button size="lg" className="rounded-full text-lg px-8 py-7 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 group relative overflow-hidden" asChild>
-               <a href={siteContent.contact.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                  <img src="/images/icons/whatsapp-icon.svg" alt="WhatsApp" className="w-6 h-6 brightness-0 invert" />
-                  Chat on WhatsApp
-               </a>
-            </Button>
+            <WhatsAppButton />
           </div>
         </div>
       </section>
