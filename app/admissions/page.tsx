@@ -1,0 +1,199 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { AlertTriangle, CheckCircle2, Download, BookOpen, GraduationCap, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { GradientBlob } from "@/components/ui/GradientBlob";
+import { CostCalculator } from "@/components/features/CostCalculator";
+
+export default function AdmissionsPage() {
+  const checklist = [
+    { category: "Academic", items: ["High School Diploma", "Math & Science proficiency", "CSCA Exam Score"] },
+    { category: "Language", items: ["IELTS 6.0+ / TOEFL 80+", "HSK 4 (for Chinese programs)"] },
+    { category: "Documents", items: ["Transcripts (Translated)", "Passport Copy", "Study Plan / Personal Statement", "2 Recommendation Letters", "Physical Exam Form", "Police Clearance Certificate"] },
+  ];
+
+  const timeline = [
+    { month: "Sep - Oct", title: "Preparation", desc: "Research programs, prepare documents, start CSCA prep." },
+    { month: "Nov - Dec", title: "Application Window", desc: "Submit online application, take CSCA exam (Dec/Jan)." },
+    { month: "Jan - Mar", title: "Assessment", desc: "Interviews (if required), scholarship reviews." },
+    { month: "Apr - Jun", title: "Results & Visa", desc: "Offer letters sent, JW202 form issued, Apply for Student Visa (X1)." },
+    { month: "Sep", title: "Enrollment", desc: "Fly to Beijing, dorm check-in, orientation." },
+  ];
+
+  return (
+    <div className="relative overflow-hidden min-h-screen pt-32 pb-20">
+      <GradientBlob variant="warm" className="top-20 left-0 w-[600px] h-[600px] -translate-x-1/3 opacity-30" />
+      <GradientBlob variant="cool" className="bottom-0 right-0 w-[500px] h-[500px] translate-x-1/3 opacity-30" />
+
+      <div className="container mx-auto px-6 max-w-6xl relative z-10">
+
+        {/* Hero */}
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-6xl font-display font-bold mb-6"
+          >
+            Your Path to <span className="text-primary">BIT</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-lg text-muted-foreground leading-relaxed"
+          >
+            Clear requirements. Multiple scholarship options. A guided journey from application to arrival.
+          </motion.p>
+        </div>
+
+        {/* CRITICAL ALERT - CSCA */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-24 rounded-3xl overflow-hidden border-l-8 border-amber-500 bg-amber-50/80 backdrop-blur-sm shadow-lg"
+        >
+          <div className="p-8 md:p-12">
+            <div className="flex items-start gap-4 mb-6">
+              <div className="bg-amber-100 p-3 rounded-full text-amber-600 shrink-0">
+                <AlertTriangle className="w-8 h-8" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-amber-900 mb-2">CRITICAL UPDATE: 2026 Admissions Change</h2>
+                <p className="text-amber-800/80 text-lg">
+                  The <strong>China Scholastic Competency Assessment (CSCA)</strong> is now the standard for international admissions and scholarship ranking.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 mt-8">
+              <div className="bg-white/60 p-6 rounded-2xl border border-amber-200/50">
+                <h3 className="font-bold text-amber-900 mb-2">The Exam</h3>
+                <p className="text-sm text-amber-800/70">Mathematics (Mandatory) + Physics OR Chemistry. Multiple choice & problem solving.</p>
+              </div>
+              <div className="bg-white/60 p-6 rounded-2xl border border-amber-200/50">
+                <h3 className="font-bold text-amber-900 mb-2">Why It Matters</h3>
+                <p className="text-sm text-amber-800/70">Scores determine your scholarship tier (CSC Type A vs B). High score = Better coverage.</p>
+              </div>
+              <div className="bg-white/60 p-6 rounded-2xl border border-amber-200/50 flex flex-col justify-between">
+                <div>
+                  <h3 className="font-bold text-amber-900 mb-2">Action Plan</h3>
+                  <p className="text-sm text-amber-800/70">Focus on Calculus & Mechanics. Download sample papers below.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+               <Button variant="outline" className="border-amber-200 hover:bg-amber-100 text-amber-900">
+                 <Download className="w-4 h-4 mr-2" /> Download Syllabus
+               </Button>
+               <Button variant="outline" className="border-amber-200 hover:bg-amber-100 text-amber-900">
+                 <Download className="w-4 h-4 mr-2" /> Sample CSCA Papers
+               </Button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Requirements Checklist */}
+        <div className="mb-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-display font-bold mb-4">What You Need</h2>
+            <p className="text-muted-foreground">Prepare these documents before the portal opens.</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {checklist.map((group, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-white/50 backdrop-blur-md border border-white/60 rounded-3xl p-8 shadow-sm hover:shadow-md transition-all"
+              >
+                <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                  {group.category === "Academic" && <GraduationCap className="w-5 h-5 text-primary" />}
+                  {group.category === "Language" && <BookOpen className="w-5 h-5 text-primary" />}
+                  {group.category === "Documents" && <CheckCircle2 className="w-5 h-5 text-primary" />}
+                  {group.category}
+                </h3>
+                <ul className="space-y-4">
+                  {group.items.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Cost Calculator Section */}
+        <div className="mb-24 scroll-mt-24" id="calculator">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-display font-bold mb-4">Scholarships & Costs</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              BIT is committed to making world-class engineering education accessible. Use our calculator to estimate your annual investment.
+            </p>
+          </div>
+          <CostCalculator />
+        </div>
+
+        {/* Timeline */}
+        <div className="mb-24">
+          <h2 className="text-3xl font-display font-bold mb-12 text-center">Application Timeline</h2>
+          <div className="relative border-l-2 border-primary/20 ml-4 md:ml-1/2 space-y-12">
+             {timeline.map((step, index) => (
+               <motion.div
+                 key={index}
+                 initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
+                 className={`relative flex flex-col md:flex-row gap-8 items-start ${index % 2 === 0 ? "md:flex-row-reverse" : ""}`}
+               >
+                 <div className="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 w-4 h-4 rounded-full bg-primary border-4 border-white shadow-sm z-10" />
+
+                 <div className="pl-8 md:pl-0 md:w-1/2 flex flex-col items-start md:items-end md:text-right md:pr-12">
+                    {index % 2 === 0 && (
+                      <>
+                        <span className="text-primary font-bold tracking-wider text-sm uppercase mb-1">{step.month}</span>
+                        <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                        <p className="text-muted-foreground text-sm">{step.desc}</p>
+                      </>
+                    )}
+                    {index % 2 !== 0 && <div className="hidden md:block" />} {/* Spacer for layout */}
+                 </div>
+
+                 <div className="pl-8 md:pl-12 md:w-1/2">
+                    {index % 2 !== 0 && (
+                      <>
+                        <span className="text-primary font-bold tracking-wider text-sm uppercase mb-1">{step.month}</span>
+                        <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                        <p className="text-muted-foreground text-sm">{step.desc}</p>
+                      </>
+                    )}
+                 </div>
+               </motion.div>
+             ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center bg-primary/5 rounded-3xl p-12 border border-primary/10">
+          <h2 className="text-3xl font-display font-bold mb-6">Ready to Apply?</h2>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
+              <a href="https://apply.bit.edu.cn" target="_blank" rel="noopener noreferrer">
+                Visit BIT Admission Portal <ChevronRight className="ml-2 w-5 h-5" />
+              </a>
+            </Button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
