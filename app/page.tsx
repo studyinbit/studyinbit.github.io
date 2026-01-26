@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { BlurImage } from "@/components/ui/blur-image";
-import { GraduationCap, Globe, Users, TrendingUp } from "lucide-react";
+import { GraduationCap, Globe, Users, TrendingUp, ChevronDown } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { SquareArrowTopRight } from "@/components/ui/SquareArrowTopRight";
@@ -75,14 +75,54 @@ export default function Home() {
                 {siteContent.hero.subtitle}
               </motion.p>
 
-              <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                <WhatsAppButton />
-                {/* <Button size="lg" variant="outline" className="rounded-full text-lg px-8 py-7 border bg-white hover:bg-white transition-all duration-300 group whitespace-nowrap min-w-[160px]" asChild>
-                  <Link href="/why-bit" className="flex items-center justify-center gap-2">
-                    Why BIT? <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
-                  </Link>
-                </Button> */}
+              <motion.div
+                variants={itemVariants}
+                className="grid grid-cols-2 gap-x-4 gap-y-4 w-full max-w-xl"
+              >
+                {siteContent.stats.map((stat, index) => (
+                  <div
+                    key={index}
+                    className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/60 backdrop-blur-md shadow-sm px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/80 hover:shadow-xl"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative z-10">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-4xl md:text-5xl font-display font-bold tracking-tight text-primary">
+                          {stat.value}
+                        </span>
+                        {stat.suffix ? (
+                          <span className="text-base md:text-lg font-semibold text-foreground/70">
+                            {stat.suffix}
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="mt-1 text-sm font-semibold tracking-tight text-foreground">
+                        {stat.label}
+                      </p>
+                      <p className="mt-1 text-xs text-muted-foreground">
+                        {stat.source}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </motion.div>
+
+              <motion.a
+                variants={itemVariants}
+                href="#more"
+                className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+                aria-label="Scroll to learn more"
+              >
+                <span>Scroll</span>
+                <motion.span
+                  aria-hidden="true"
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 1.3, repeat: Infinity, ease: "easeInOut" }}
+                  className="inline-flex"
+                >
+                  <ChevronDown className="h-5 w-5" />
+                </motion.span>
+              </motion.a>
             </motion.div>
 
             {/* Right Visual Grid */}
@@ -117,37 +157,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="relative py-12 border-y border-white/20 bg-white/30 backdrop-blur-sm">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-            {siteContent.stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="flex items-baseline justify-center gap-1 mb-2">
-                  <span className="text-4xl md:text-5xl font-display font-bold text-foreground">
-                    {stat.value}
-                  </span>
-                  <span className="text-lg font-medium text-primary">{stat.suffix}</span>
-                </div>
-                <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                  {stat.label}
-                </p>
-                <p className="text-xs text-muted-foreground/60">{stat.source}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Value Props Grid */}
-      <section className="py-24 px-6 relative">
+      <section id="more" className="py-24 px-6 relative scroll-mt-24">
         <div className="container mx-auto max-w-6xl">
           <div className="mb-16 md:text-center max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">Why Top Students Choose BIT</h2>

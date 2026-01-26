@@ -84,8 +84,8 @@ export function Footer() {
               ))}
               <li className="pt-2">
                  <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-100 dark:bg-blue-900/10 dark:border-blue-800">
-                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-1">Unofficial Recruitment Site</p>
-                    <p className="text-xs text-muted-foreground">Managed by BIND (BIT Indonesian Community)</p>
+                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-1">Timothy Pardin</p>
+                    <p className="text-xs text-muted-foreground">+62 813-88577-873</p>
                  </div>
               </li>
             </ul>
