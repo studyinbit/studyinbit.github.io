@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BlurImage } from "@/components/ui/blur-image";
-import { MapPin, Coffee, Utensils, Wifi, Bus, Bike } from "lucide-react";
+import { MapPin, Coffee, Utensils, Wifi, Bus, Bike, Shield } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
 
 import dormImg1 from "@/public/images/uni/IMG_20251103_130246 (1).webp";
@@ -15,6 +15,7 @@ import galleryImg3 from "@/public/images/uni/IMG_20251213_102035090.CCD.webp";
 import galleryImg4 from "@/public/images/uni/IMG_20251207_121823829.CCD.webp";
 import galleryImg5 from "@/public/images/uni/IMG_20250915_121520361.CCD.webp";
 import galleryImg6 from "@/public/images/uni/IMG_20250911_163633452.CCD.webp";
+import beijingMap from "@/public/images/beijing-map.webp";
 
 export default function CampusLifePage() {
   const facilities = [
@@ -97,7 +98,29 @@ export default function CampusLifePage() {
             <h2 className="text-3xl font-display font-bold mb-4">Where You&apos;ll Live</h2>
             <p className="text-muted-foreground">Affordable, comfortable, and safe.</p>
           </div>
+          
+          {/* Location Section */}
+          <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-16 relative overflow-hidden mb-12">
+            <div className="absolute top-0 right-0 w-full h-full opacity-20">
+              <GradientBlob variant="cool" className="translate-x-1/2" />
+            </div>
 
+            <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">The Geography of Focus</h2>
+                <p className="text-slate-300 leading-relaxed mb-6">
+                  Liangxiang is 30-40km from central Beijing. This isolation is a feature. In the city, distractions are infinite. In Liangxiang, the environment is engineered for deep work.
+                </p>
+                <div className="flex items-center gap-4 text-slate-300">
+                  <Shield className="w-5 h-5 text-emerald-400" />
+                  <span>Library seats 2,500 students</span>
+                </div>
+              </div>
+              <div className="h-64 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 overflow-hidden relative group">
+                <BlurImage src={beijingMap} alt="Map of Liangxiang vs Beijing" fill className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" placeholder="blur" />
+              </div>
+            </div>
+          </div>
           <div className="space-y-16">
             {/* New Building */}
             <div>
