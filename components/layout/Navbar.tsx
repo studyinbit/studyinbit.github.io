@@ -10,10 +10,8 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { name: "Home", href: "/" },
-  { name: "Why BIT?", href: "/why-bit" },
   { name: "Campus Life", href: "/campus-life" },
   { name: "Community", href: "/community" },
-  { name: "Admissions", href: "/admissions" },
   { name: "FAQ", href: "/faq" },
 ];
 
@@ -61,14 +59,12 @@ export function Navbar() {
           {/* CTA & Mobile Toggle */}
           <div className="flex items-center gap-2">
             <Link
-              href="https://wa.me/6281388577873"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/admissions"
               className="cta-button !px-5 !py-2 !text-sm whitespace-nowrap hidden sm:inline-flex items-center gap-2"
             >
               <span className="cta-glow"></span>
-              Chat
-              <MessageCircle className="w-4 h-4" />
+              Admissions
+              <GraduationCap className="w-4 h-4" />
             </Link>
 
             <button

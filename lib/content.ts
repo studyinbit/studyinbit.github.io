@@ -5,10 +5,10 @@ export const siteContent = {
     cta: "Start Your Journey",
   },
   stats: [
-    { label: "Global Engineering Rank", value: "14", suffix: "th", source: "NTU Ranking" },
-    { label: "Graduate Employability", value: "9", suffix: "th", source: "QS China" },
+    { label: "Mechanical Engineering", value: "64", suffix: "th", source: "QS Ranking" },
+    { label: "Computer Science", value: "89", suffix: "th", source: "QS Ranking" },
+    { label: "Economics", value: "108", suffix: "th", source: "QS Ranking" },
     { label: "Indonesian Students", value: "400", suffix: "+", source: "Active Community" },
-    { label: "Global Rank", value: "102", suffix: "", source: "ARWU 2025" },
   ],
   features: [
     {
