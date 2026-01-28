@@ -118,4 +118,56 @@ Component aliases (from `components.json`):
 
 5. **WhatsApp Contact**: Primary contact method is WhatsApp (`https://wa.me/6281388577873`).
 
-5. Project uses **bun**, not node/npm/npx.
+6. **Package Manager - BUN ONLY**:
+   - This project **EXCLUSIVELY** uses [Bun](https://bun.sh) as the package manager and runtime
+   - **NEVER** use `npm`, `yarn`, `pnpm`, `node`, or `npx` commands
+   - **NEVER** create or modify `package-lock.json`, `yarn.lock`, or `pnpm-lock.yaml`
+   - Only `bun.lock` should exist for dependency locking
+
+   **For Claude Code**:
+   - Always use `bun` instead of `npm`/`yarn`/`pnpm`
+   - Use `bunx` instead of `npx`
+   - Example: `bunx shadcn add button` NOT `npx shadcn add button`
+
+   **For Contributors without Bun**:
+   If you don't have Bun installed, install it first:
+   ```bash
+   # macOS/Linux
+   curl -fsSL https://bun.sh/install | bash
+
+   # Windows (PowerShell)
+   powershell -c "irm bun.sh/install.ps1 | iex"
+
+   # Or via npm (one-time only to install Bun)
+   npm install -g bun
+   ```
+
+   Then use these Bun commands:
+   ```bash
+   bun install              # Instead of: npm install
+   bun add <package>        # Instead of: npm install <package>
+   bun remove <package>     # Instead of: npm uninstall <package>
+   bun run dev              # Instead of: npm run dev
+   bunx <command>           # Instead of: npx <command>
+   ```
+
+7. **Linting**:
+   - Run `bun run lint` after making any code changes
+   - Fix all linting errors before considering the task complete
+   - Do not finish work with linting errors
+   - If lint errors occur, fix them immediately and re-run `bun run lint` to verify
+
+8. **React Best Practices - Avoid useEffect**:
+   - Most `useEffect` usage can be replaced with better patterns:
+     - **Event handlers**: For user interactions (clicks, form submissions)
+     - **Server Components**: For data fetching (when not using static export)
+     - **Props/State**: For derived state (calculate during render)
+     - **useMemo/useCallback**: For expensive computations
+     - **React Query/SWR**: For data fetching and caching
+     - **Framer Motion callbacks**: For animation-related side effects
+   - Only use `useEffect` as a last resort for:
+     - Syncing with external systems (non-React libraries)
+     - Browser APIs (localStorage, window listeners) - but prefer event handlers
+     - Truly unavoidable imperative operations
+   - If you must use `useEffect`, document why it's necessary in a comment
+   - Reference: [You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect)
