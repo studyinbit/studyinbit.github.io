@@ -23,7 +23,7 @@ export default function AdmissionsPage() {
   ];
 
   return (
-    <div className="relative overflow-hidden min-h-screen pt-32 pb-20">
+    <div className="relative overflow-hidden min-h-screen pt-32">
       <GradientBlob variant="warm" className="top-20 left-0 w-[600px] h-[600px] -translate-x-1/3 opacity-30" />
       <GradientBlob variant="cool" className="bottom-0 right-0 w-[500px] h-[500px] translate-x-1/3 opacity-30" />
 
@@ -178,20 +178,22 @@ export default function AdmissionsPage() {
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center bg-primary/5 rounded-3xl p-12 border border-primary/10">
-          <h2 className="text-3xl font-display font-bold mb-6">Ready to Apply?</h2>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <WhatsAppButton />
-            {/* <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
-              <a href="https://apply.bit.edu.cn" target="_blank" rel="noopener noreferrer">
-                Visit BIT Admission Portal <ChevronRight className="ml-2 w-5 h-5" />
-              </a>
-            </Button> */}
-          </div>
-        </div>
 
       </div>
+
+      {/* Ready to Start Section */}
+      <section className="py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary/5 -skew-y-3 transform origin-top-left scale-110" />
+        <div className="container mx-auto max-w-4xl relative z-10 text-center">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">Ready to Start?</h2>
+          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+            Join a community of 400+ Indonesian students at one of China&apos;s most prestigious engineering universities.
+          </p>
+          <div className="flex justify-center">
+            <WhatsAppButton />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 import { BlurImage } from "@/components/ui/blur-image";
 import { TrendingUp, Shield, Award, Zap } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { PageSegue } from "@/components/ui/PageSegue";
 import { siteContent } from "@/lib/content";
 
 // Static Image Imports
@@ -222,13 +221,53 @@ export default function Home() {
             </motion.div>
           </div>
 
+          {/* Chinese Language Section */}
+          <div className="grid mb-24 md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.5 }}
+                className="relative rounded-3xl overflow-hidden shadow-xl border border-border group"
+              >
+                <div className="aspect-video relative">
+                  <BlurImage src={shanghaiImg} alt="Shanghai Skyline - China's Rise" fill className="object-cover group-hover:scale-105 transition-transform duration-700" placeholder="blur" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
+                </div>
+              </motion.div>
+            </div>
+            <div className="order-1 md:order-2">
+              <h2 className="text-3xl font-display font-bold mb-6">Rise with a <span className="text-primary">Superpower</span></h2>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                China is not just the world&apos;s factory; it is becoming the world&apos;s laboratory. Speaking Chinese is no longer just a &quot;nice-to-have&quot;—it is a critical career asset for the next 50 years.
+              </p>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <TrendingUp className="w-6 h-6 text-primary mt-1" />
+                  <div>
+                    <h4 className="font-bold text-foreground">Economic Gravity</h4>
+                    <p className="text-sm text-muted-foreground">As trade between Indonesia and China explodes, bilingual engineers are the most sought-after talent in Jakarta.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <Shield className="w-6 h-6 text-primary mt-1" />
+                  <div>
+                    <h4 className="font-bold text-foreground">Future-Proof Career</h4>
+                    <p className="text-sm text-muted-foreground">Mastering Mandarin (aiming for HSK 5/6) opens doors to multinational giants like Huawei, BYD, and TikTok.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
           {/* Rankings Table */}
-          <div className="mb-24">
+          <div className="mb-12">
             <div className="text-center mb-8">
+              <h2 className="text-3xl font-display font-bold mb-4">Other Metrics</h2>
               <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-4">
                 Global Recognition <span className="text-muted-foreground/50">(Multiple Rankings)</span>
               </p>
-              <h2 className="text-3xl font-display font-bold mb-4">Other Metrics</h2>
             </div>
 
             {/* Mobile Card Layout */}
@@ -295,62 +334,15 @@ export default function Home() {
               </table>
             </motion.div>
           </div>
-
-          {/* Chinese Language Section */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.5 }}
-                className="relative rounded-3xl overflow-hidden shadow-xl border border-border group"
-              >
-                <div className="aspect-video relative">
-                  <BlurImage src={shanghaiImg} alt="Shanghai Skyline - China's Rise" fill className="object-cover group-hover:scale-105 transition-transform duration-700" placeholder="blur" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10" />
-                </div>
-              </motion.div>
-            </div>
-            <div className="order-1 md:order-2">
-              <h2 className="text-3xl font-display font-bold mb-6">Rise with a <span className="text-primary">Superpower</span></h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                China is not just the world&apos;s factory; it is becoming the world&apos;s laboratory. Speaking Chinese is no longer just a &quot;nice-to-have&quot;—it is a critical career asset for the next 50 years.
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <TrendingUp className="w-6 h-6 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-bold text-foreground">Economic Gravity</h4>
-                    <p className="text-sm text-muted-foreground">As trade between Indonesia and China explodes, bilingual engineers are the most sought-after talent in Jakarta.</p>
-                  </div>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Shield className="w-6 h-6 text-primary mt-1" />
-                  <div>
-                    <h4 className="font-bold text-foreground">Future-Proof Career</h4>
-                    <p className="text-sm text-muted-foreground">Mastering Mandarin (aiming for HSK 5/6) opens doors to multinational giants like Huawei, BYD, and TikTok.</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/5 -skew-y-3 transform origin-top-left scale-110" />
-        <div className="container mx-auto max-w-4xl relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">Ready to Start?</h2>
-          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Join a community of 400+ Indonesian students at one of China&apos;s most prestigious engineering universities.
-          </p>
-          <div className="flex justify-center">
-            <WhatsAppButton />
-          </div>
-        </div>
-      </section>
+      <PageSegue
+        title="What Actually Matters"
+        description="Beyond the numbers, there's a vibrant community, unforgettable experiences, and a life-changing journey waiting for you."
+        buttonText="Explore Campus Life"
+        buttonHref="/campus-life"
+      />
     </div>
   );
 }

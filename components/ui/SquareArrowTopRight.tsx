@@ -1,49 +1,31 @@
-import React from "react";
-import { cn } from "@/lib/utils";
+"use client";
 
-export interface SquareArrowTopRightProps extends React.SVGProps<SVGSVGElement> {
-  /**
-   * The width and height of the icon in pixels.
-   * @default 24
-   */
-  size?: number | string;
-  /**
-   * The thickness of the stroke.
-   * @default 3
-   */
-  strokeWidth?: number;
+import { motion } from "framer-motion";
+
+interface SquareArrowTopRightProps {
+  className?: string;
 }
 
-export function SquareArrowTopRight({
-  size = 24,
-  strokeWidth = 3,
-  className,
-  ...props
-}: SquareArrowTopRightProps) {
+export function SquareArrowTopRight({ className = "w-5 h-5" }: SquareArrowTopRightProps) {
   return (
     <svg
-      width={size}
-      height={size}
-      viewBox="0 0 32 32"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn(className)}
-      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
     >
-      <path
-        d="M2 3H29V30"
-        stroke="currentColor"
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M2 30L29 3"
-        stroke="currentColor"
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      {/* Square - static */}
+      <rect width="18" height="18" x="3" y="3" rx="2" className="opacity-80 group-hover:opacity-100 transition-opacity" />
+
+      {/* Arrow - animated on parent hover */}
+      <g className="opacity-80 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
+        <path d="M15 9l-6 6" />
+        <path d="M15 15V9h-6" />
+      </g>
     </svg>
   );
 }

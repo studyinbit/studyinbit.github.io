@@ -7,6 +7,7 @@ import { Users, BookOpen, Briefcase, Heart, Plane, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+import { PageSegue } from "@/components/ui/PageSegue";
 
 import galleryImg1 from "@/public/images/uni/IMG_20250917_093259940.CCD.webp";
 import galleryImg2 from "@/public/images/uni/IMG_20251122_121955346.CCD.webp";
@@ -91,7 +92,7 @@ export default function CommunityPage() {
   ];
 
   return (
-    <div className="relative overflow-hidden min-h-screen pt-32 pb-20">
+    <div className="relative overflow-hidden min-h-screen pt-32">
       <GradientBlob variant="warm" className="top-20 left-0 w-[600px] h-[600px] -translate-x-1/3 opacity-30" />
       <GradientBlob variant="cool" className="bottom-0 right-0 w-[500px] h-[500px] translate-x-1/3 opacity-30" />
 
@@ -245,17 +246,20 @@ export default function CommunityPage() {
         </div>
 
         {/* CTA */}
-        <div className="text-center">
+        {/* <div className="text-center mb-20">
           <h2 className="text-3xl font-display font-bold mb-6">Want to talk to a senior?</h2>
           <WhatsAppButton />
-          {/* <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
-            <a href="https://wa.me/6281388577873" target="_blank" rel="noopener noreferrer">
-              Chat with BIND Team <ChevronRight className="ml-2 w-5 h-5" />
-            </a>
-          </Button> */}
-        </div>
+        </div> */}
 
       </div>
+
+      {/* Link to Admissions Page */}
+      <PageSegue
+        title="Ready to Apply?"
+        description="Learn about requirements, scholarships, and the application timeline for BIT."
+        buttonText="View Admissions Info"
+        buttonHref="/admissions"
+      />
     </div>
   );
 }

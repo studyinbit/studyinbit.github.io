@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { BlurImage } from "@/components/ui/blur-image";
 import { MapPin, Coffee, Utensils, Wifi, Bus, Bike, Shield } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+import { PageSegue } from "@/components/ui/PageSegue";
 
 import dormImg1 from "@/public/images/uni/IMG_20251103_130246 (1).webp";
 import dormImg2 from "@/public/images/uni/IMG_20251109_094544.webp";
@@ -67,7 +68,7 @@ export default function CampusLifePage() {
   ];
 
   return (
-    <div className="relative overflow-hidden min-h-screen pt-32 pb-20">
+    <div className="relative overflow-hidden min-h-screen pt-32">
       <GradientBlob variant="cool" className="top-20 left-0 w-[600px] h-[600px] -translate-x-1/3 opacity-30" />
       <GradientBlob variant="warm" className="bottom-0 right-0 w-[500px] h-[500px] translate-x-1/3 opacity-30" />
 
@@ -221,7 +222,7 @@ export default function CampusLifePage() {
         {/* Gallery */}
         <div>
           <h2 className="text-3xl font-display font-bold mb-12 text-center">Campus Moments</h2>
-          <div className="columns-2 md:columns-3 gap-4 md:gap-6">
+          <div className="mb-24 columns-2 md:columns-3 gap-4 md:gap-6">
              {galleryImages.map((img, idx) => (
                <motion.div
                  key={idx}
@@ -247,6 +248,14 @@ export default function CampusLifePage() {
         </div>
 
       </div>
+
+      {/* Link to Community Page */}
+      <PageSegue
+        title="Meet Your Community"
+        description="Join 400+ Indonesian students and discover the support system that makes BIT feel like home."
+        buttonText="Discover the Community"
+        buttonHref="/community"
+      />
     </div>
   );
 }
