@@ -5,6 +5,7 @@ import { BlurImage } from "@/components/ui/blur-image";
 import { TrendingUp, Shield, Award, Zap } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { PageSegue } from "@/components/ui/PageSegue";
+import ShinyText from "@/components/ui/ShinyText";
 import { siteContent } from "@/lib/content";
 
 // Static Image Imports
@@ -37,7 +38,6 @@ export default function Home() {
       rankValue: "9",
       rankSuffix: "th",
       rankColor: "emerald",
-      insightTitle: "The ROI Metric.",
       insightDescription: "BIT graduates are valued higher by employers than graduates from \"higher ranked\" but less practical universities."
     },
     {
@@ -45,7 +45,6 @@ export default function Home() {
       rankValue: "14",
       rankSuffix: "th",
       rankColor: "emerald",
-      insightTitle: "The Truth.",
       insightDescription: "In pure engineering output, BIT is a global top-15 institution, outranking many Ivy League schools."
     },
     {
@@ -53,7 +52,6 @@ export default function Home() {
       rankValue: "102",
       rankSuffix: "nd",
       rankColor: "default",
-      insightTitle: "The Hard Science Metric.",
       insightDescription: "Being on the cusp of the Top 100 globally signals immense research productivity."
     }
   ];
@@ -154,11 +152,89 @@ export default function Home() {
         </div>
       </section>
 
-
+      
 
       <section className="py-12 px-6 relative">
         <div className="container mx-auto max-w-6xl">
+          {/* Rankings Table */}
+          <div className="mb-12">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-display font-bold mb-4">Why BIT?</h2>
+              <ShinyText
+                text="More Reasons to Choose BIT"
+                speed={2}
+                delay={1}
+                color="#1a1b1aff"
+                shineColor="#cfd8ccff"
+                spread={120}
+                className="text-xs font-medium uppercase tracking-wider mb-4"
+              />
+            </div>
 
+            {/* Mobile Card Layout */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+              className="block sm:hidden space-y-6"
+            >
+              {metricsData.map((metric, index) => (
+                <div key={index} className="bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-sm">
+                  <div className="flex items-baseline gap-1 mb-2">
+                    <span className="text-3xl md:text-4xl font-semibold font-display tabular-nums text-foreground">
+                      {metric.rankValue}
+                    </span>
+                    <span className={`text-sm font-medium ${metric.rankColor === 'emerald' ? 'text-emerald-600' : 'text-primary'}`}>
+                      {metric.rankSuffix}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {metric.metric}
+                  </p>
+                  <h3 className="font-bold text-foreground mb-2">
+                    {metric.insightTitle}
+                  </h3>
+                  <p className="text-muted-foreground">
+                    {metric.insightDescription}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Desktop Table Layout */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+              className="hidden sm:block overflow-hidden rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
+            >
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-white/50 border-b border-border/50">
+                    <th className="p-6 font-display font-bold text-foreground">Metric</th>
+                    <th className="p-6 font-display font-bold text-primary">Rank</th>
+                    <th className="p-6 font-display font-bold text-foreground">Elaboration</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/50">
+                  {metricsData.map((metric, index) => (
+                    <tr key={index} className="hover:bg-white/40 transition-colors">
+                      <td className="p-6 font-medium">{metric.metric}</td>
+                      <td className={`p-6 font-bold text-xl ${metric.rankColor === 'emerald' ? 'text-emerald-600' : ''}`}>
+                        #{metric.rankValue}
+                      </td>
+                      <td className="p-6 text-muted-foreground text-sm leading-relaxed">
+                        <strong className="text-foreground block mb-1">{metric.insightTitle}</strong>
+                        {metric.insightDescription}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
+          </div>
           {/* The Seven Sons Explanation */}
           <div className="grid md:grid-cols-2 gap-12 mb-24 items-center">
             <motion.div
@@ -174,7 +250,7 @@ export default function Home() {
                     <Zap className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold font-display mb-2">The Funding Engine</h3>
+                    <h3 className="text-xl font-bold font-display mb-2">Funding Priority</h3>
                     <p className="text-muted-foreground">
                       While other universities struggle for grants, BIT&apos;s labs are capitalized by the state&apos;s most critical projects. This ensures priority in aerospace, high-end manufacturing, and national security research.
                     </p>
@@ -259,80 +335,6 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-          </div>
-
-          {/* Rankings Table */}
-          <div className="mb-12">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-display font-bold mb-4">Other Metrics</h2>
-              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-4">
-                Global Recognition <span className="text-muted-foreground/50">(Multiple Rankings)</span>
-              </p>
-            </div>
-
-            {/* Mobile Card Layout */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5 }}
-              className="block sm:hidden space-y-6"
-            >
-              {metricsData.map((metric, index) => (
-                <div key={index} className="bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-sm">
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-3xl md:text-4xl font-semibold font-display tabular-nums text-foreground">
-                      {metric.rankValue}
-                    </span>
-                    <span className={`text-sm font-medium ${metric.rankColor === 'emerald' ? 'text-emerald-600' : 'text-primary'}`}>
-                      {metric.rankSuffix}
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {metric.metric}
-                  </p>
-                  <h3 className="font-bold text-foreground mb-2">
-                    {metric.insightTitle}
-                  </h3>
-                  <p className="text-muted-foreground">
-                    {metric.insightDescription}
-                  </p>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Desktop Table Layout */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5 }}
-              className="hidden sm:block overflow-hidden rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
-            >
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-white/50 border-b border-border/50">
-                    <th className="p-6 font-display font-bold text-foreground">Metric</th>
-                    <th className="p-6 font-display font-bold text-primary">Rank</th>
-                    <th className="p-6 font-display font-bold text-foreground">Strategic Insight</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border/50">
-                  {metricsData.map((metric, index) => (
-                    <tr key={index} className="hover:bg-white/40 transition-colors">
-                      <td className="p-6 font-medium">{metric.metric}</td>
-                      <td className={`p-6 font-bold text-xl ${metric.rankColor === 'emerald' ? 'text-emerald-600' : ''}`}>
-                        #{metric.rankValue}
-                      </td>
-                      <td className="p-6 text-muted-foreground text-sm leading-relaxed">
-                        <strong className="text-foreground block mb-1">{metric.insightTitle}</strong>
-                        {metric.insightDescription}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </motion.div>
           </div>
         </div>
       </section>

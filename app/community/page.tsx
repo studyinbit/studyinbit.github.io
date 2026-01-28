@@ -105,8 +105,7 @@ export default function CommunityPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-display font-bold mb-6"
           >
-            You&apos;re Not Going Alone. <br/>
-            <span className="text-gradient-warm">You&apos;re Joining a Family.</span>
+            Join Our Family
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
