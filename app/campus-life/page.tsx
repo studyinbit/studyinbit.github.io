@@ -101,7 +101,13 @@ export default function CampusLifePage() {
           </div>
           
           {/* Location Section */}
-          <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-16 relative overflow-hidden mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="bg-slate-900 text-white rounded-3xl p-8 md:p-16 relative overflow-hidden mb-12"
+          >
             <div className="absolute top-0 right-0 w-full h-full opacity-20">
               <GradientBlob variant="cool" className="translate-x-1/2" />
             </div>
@@ -121,7 +127,7 @@ export default function CampusLifePage() {
                 <BlurImage src={beijingMap} alt="Map of Liangxiang vs Beijing" fill className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" placeholder="blur" />
               </div>
             </div>
-          </div>
+          </motion.div>
           <div className="space-y-16">
             {/* New Building */}
             <div>
