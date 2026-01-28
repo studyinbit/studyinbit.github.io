@@ -7,14 +7,12 @@ export function Footer() {
   const links = {
     explore: [
       { name: "Home", href: "/" },
-      { name: "Why BIT?", href: "/why-bit" },
       { name: "Campus Life", href: "/campus-life" },
       { name: "Indonesian Community", href: "/community" },
     ],
     resources: [
       { name: "Admissions & Scholarships", href: "/admissions" },
       { name: "FAQ", href: "/faq" },
-      { name: "Contact", href: "/contact" },
     ],
     social: [
       { name: "WhatsApp (Consultation)", href: "https://wa.me/6281388577873", icon: MessageCircle },
@@ -82,10 +80,16 @@ export function Footer() {
                   </a>
                 </li>
               ))}
-              <li className="pt-2">
-                 <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-100 dark:bg-blue-900/10 dark:border-blue-800">
-                    <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-1">Unofficial Recruitment Site</p>
-                    <p className="text-xs text-muted-foreground">Managed by BIND (BIT Indonesian Community)</p>
+              <li className="pt-4 space-y-4">
+                 <div>
+                    <p className="text-sm font-medium text-foreground">Timothy Pardin</p>
+                    <p className="text-sm text-muted-foreground">+62 813-88577-873</p>
+                 </div>
+                 <div>
+                    <p className="text-sm font-medium text-foreground">Email Inquiry</p>
+                    <a href="mailto:zhong.melvinw@gmail.com" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                      zhong.melvinw@gmail.com
+                    </a>
                  </div>
               </li>
             </ul>
@@ -96,10 +100,10 @@ export function Footer() {
           <p className="text-xs text-muted-foreground">
             © {currentYear} BIT Recruitment. All rights reserved.
           </p>
-          <div className="flex gap-6">
+          {/* <div className="flex gap-6">
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</a>
             <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
