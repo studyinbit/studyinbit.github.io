@@ -5,6 +5,7 @@ import { BlurImage } from "@/components/ui/blur-image";
 import { TrendingUp, Shield, Award, Zap } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { siteContent } from "@/lib/content";
 
 // Static Image Imports
@@ -29,6 +30,34 @@ export default function Home() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
+
+  // Metrics data for responsive rendering (ordered by best ranking first)
+  const metricsData = [
+    {
+      metric: "QS Graduate Employability",
+      rankValue: "9",
+      rankSuffix: "th",
+      rankColor: "emerald",
+      insightTitle: "The ROI Metric.",
+      insightDescription: "BIT graduates are valued higher by employers than graduates from \"higher ranked\" but less practical universities."
+    },
+    {
+      metric: "NTU Ranking (Engineering)",
+      rankValue: "14",
+      rankSuffix: "th",
+      rankColor: "emerald",
+      insightTitle: "The Truth.",
+      insightDescription: "In pure engineering output, BIT is a global top-15 institution, outranking many Ivy League schools."
+    },
+    {
+      metric: "ARWU (Shanghai Ranking) 2025",
+      rankValue: "102",
+      rankSuffix: "nd",
+      rankColor: "default",
+      insightTitle: "The Hard Science Metric.",
+      insightDescription: "Being on the cusp of the Top 100 globally signals immense research productivity."
+    }
+  ];
 
   return (
     <div className="relative overflow-hidden">
@@ -195,16 +224,51 @@ export default function Home() {
 
           {/* Rankings Table */}
           <div className="mb-24">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8">
+              <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-4">
+                Global Recognition <span className="text-muted-foreground/50">(Multiple Rankings)</span>
+              </p>
               <h2 className="text-3xl font-display font-bold mb-4">Other Metrics</h2>
             </div>
 
+            {/* Mobile Card Layout */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5 }}
-              className="overflow-hidden rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
+              className="block sm:hidden space-y-6"
+            >
+              {metricsData.map((metric, index) => (
+                <div key={index} className="bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-sm">
+                  <div className="flex items-baseline gap-1 mb-2">
+                    <span className="text-3xl md:text-4xl font-semibold font-display tabular-nums text-foreground">
+                      {metric.rankValue}
+                    </span>
+                    <span className={`text-sm font-medium ${metric.rankColor === 'emerald' ? 'text-emerald-600' : 'text-primary'}`}>
+                      {metric.rankSuffix}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {metric.metric}
+                  </p>
+                  <h3 className="font-bold text-foreground mb-2">
+                    {metric.insightTitle}
+                  </h3>
+                  <p className="text-muted-foreground">
+                    {metric.insightDescription}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
+
+            {/* Desktop Table Layout */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+              className="hidden sm:block overflow-hidden rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
             >
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -215,30 +279,18 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/50">
-                  <tr className="hover:bg-white/40 transition-colors">
-                    <td className="p-6 font-medium">ARWU (Shanghai Ranking) 2025</td>
-                    <td className="p-6 font-bold text-xl">#102</td>
-                    <td className="p-6 text-muted-foreground text-sm leading-relaxed">
-                      <strong className="text-foreground block mb-1">The Hard Science Metric.</strong>
-                      Being on the cusp of the Top 100 globally signals immense research productivity.
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-white/40 transition-colors">
-                    <td className="p-6 font-medium">QS Graduate Employability</td>
-                    <td className="p-6 font-bold text-xl text-emerald-600">#9</td>
-                    <td className="p-6 text-muted-foreground text-sm leading-relaxed">
-                      <strong className="text-foreground block mb-1">The ROI Metric.</strong>
-                      BIT graduates are valued higher by employers than graduates from &quot;higher ranked&quot; but less practical universities.
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-white/40 transition-colors">
-                    <td className="p-6 font-medium">NTU Ranking (Engineering)</td>
-                    <td className="p-6 font-bold text-xl text-emerald-600">#14</td>
-                    <td className="p-6 text-muted-foreground text-sm leading-relaxed">
-                      <strong className="text-foreground block mb-1">The Truth.</strong>
-                      In pure engineering output, BIT is a global top-15 institution, outranking many Ivy League schools.
-                    </td>
-                  </tr>
+                  {metricsData.map((metric, index) => (
+                    <tr key={index} className="hover:bg-white/40 transition-colors">
+                      <td className="p-6 font-medium">{metric.metric}</td>
+                      <td className={`p-6 font-bold text-xl ${metric.rankColor === 'emerald' ? 'text-emerald-600' : ''}`}>
+                        #{metric.rankValue}
+                      </td>
+                      <td className="p-6 text-muted-foreground text-sm leading-relaxed">
+                        <strong className="text-foreground block mb-1">{metric.insightTitle}</strong>
+                        {metric.insightDescription}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </motion.div>
