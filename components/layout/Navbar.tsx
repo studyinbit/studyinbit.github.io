@@ -13,6 +13,7 @@ const navItems = [
   { name: "Campus Life", href: "/campus-life" },
   { name: "Community", href: "/community" },
   { name: "FAQ", href: "/faq" },
+  { name: "Admissions", href: "/admissions" },
 ];
 
 export function Navbar() {
