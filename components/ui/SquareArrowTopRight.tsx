@@ -19,10 +19,10 @@ export function SquareArrowTopRight({ className = "w-5 h-5" }: SquareArrowTopRig
       className={className}
     >
       {/* Square - static */}
-      <rect width="18" height="18" x="3" y="3" rx="2" className="opacity-80 group-hover:opacity-100 transition-opacity" />
+      <rect width="18" height="18" x="3" y="3" rx="2" className="opacity-50 group-hover:opacity-100 transition-opacity" />
 
       {/* Arrow - animated on parent hover */}
-      <g className="opacity-80 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
+      <g className="opacity-50 group-hover:opacity-100 transition-opacity group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">
         <path d="M15 9l-6 6" />
         <path d="M15 15V9h-6" />
       </g>
