@@ -38,6 +38,7 @@ export default function Home() {
       rankValue: "9",
       rankSuffix: "th",
       rankColor: "emerald",
+      insightTitle: "Career-Ready Graduates",
       insightDescription: "BIT graduates are valued higher by employers than graduates from \"higher ranked\" but less practical universities."
     },
     {
@@ -45,6 +46,7 @@ export default function Home() {
       rankValue: "14",
       rankSuffix: "th",
       rankColor: "emerald",
+      insightTitle: "Engineering Excellence",
       insightDescription: "In pure engineering output, BIT is a global top-15 institution, outranking many Ivy League schools."
     },
     {
@@ -52,6 +54,7 @@ export default function Home() {
       rankValue: "102",
       rankSuffix: "nd",
       rankColor: "default",
+      insightTitle: "Global Research Impact",
       insightDescription: "Being on the cusp of the Top 100 globally signals immense research productivity."
     }
   ];
