@@ -317,7 +317,19 @@ export default function Home() {
               </motion.div>
             </div>
             <div className="order-1 md:order-2">
-              <h2 className="text-3xl font-display font-bold mb-6">Rise with a <span className="text-primary">Superpower</span></h2>
+              <h2 className="text-3xl font-display font-bold mb-6">China{" "}
+                <span className="text-primary">
+                <ShinyText
+                text="the Future"
+                speed={2}
+                delay={1}
+                color="#009C62"
+                shineColor="#cfd8ccff"
+                spread={120}
+                className="text-primary"
+                />
+                </span>
+              </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                 China is not just the world&apos;s factory; it is becoming the world&apos;s laboratory. Speaking Chinese is no longer just a &quot;nice-to-have&quot;—it is a critical career asset for the next 50 years.
               </p>
