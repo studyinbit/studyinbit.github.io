@@ -80,7 +80,8 @@ export const siteContent = {
     },
   ],
   costs: {
-    tuition: 26000, // RMB per year
+    tuitionEnglish: 30000, // RMB per year (English-taught)
+    tuitionChinese: 23000, // RMB per year (Chinese-taught)
     dormOnCampus: 4000, // RMB per year
     livingOnCampus: 18000, // RMB per year (food, transport, etc.)
     livingOffCampus: 36000, // RMB per year

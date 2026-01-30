@@ -9,8 +9,10 @@ import { Label } from "@/components/ui/label";
 export function CostCalculator() {
   const [scholarship, setScholarship] = useState("none");
   const [housing, setHousing] = useState("on-campus");
+  const [tuitionType, setTuitionType] = useState("english");
 
-  const { tuition, dormOnCampus, livingOnCampus, livingOffCampus } = siteContent.costs;
+  const { tuitionEnglish, tuitionChinese, dormOnCampus, livingOnCampus, livingOffCampus } = siteContent.costs;
+  const tuition = tuitionType === "english" ? tuitionEnglish : tuitionChinese;
   const selectedScholarship = siteContent.scholarships.find((s) => s.id === scholarship);
   const scholarshipValue = selectedScholarship?.value || 0;
 
@@ -39,6 +41,22 @@ export function CostCalculator() {
         <h3 className="text-2xl font-display font-bold mb-6">Cost Estimator</h3>
 
         <div className="space-y-6">
+          {/* Tuition Selector */}
+          <div>
+            <Label htmlFor="tuition" className="text-sm font-semibold mb-2 block">
+              Tuition
+            </Label>
+            <select
+              id="tuition"
+              value={tuitionType}
+              onChange={(e) => setTuitionType(e.target.value)}
+              className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+            >
+              <option value="english">English-Taught</option>
+              <option value="chinese">Chinese-Taught</option>
+            </select>
+          </div>
+          
           {/* Scholarship Selector */}
           <div>
             <Label htmlFor="scholarship" className="text-sm font-semibold mb-2 block">
