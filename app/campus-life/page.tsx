@@ -89,7 +89,7 @@ export default function CampusLifePage() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground leading-relaxed"
           >
-            Modern facilities. Incredible food. A community that feels like family. Located in Liangxiang, engineered for deep work.
+            Modern facilities. Incredible food. A community that feels engineered for deep worklike family. Located in Liangxiang, Beijing.
           </motion.p>
         </div>
 

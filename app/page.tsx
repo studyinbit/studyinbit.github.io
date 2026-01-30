@@ -355,8 +355,8 @@ export default function Home() {
       </section>
 
       <PageSegue
-        title="What Actually Matters"
-        description="Beyond the numbers, there's a vibrant community, unforgettable experiences, and a life-changing journey waiting for you."
+        title="Your BIT life"
+        description={<>Want to get a glimpse of what your life will be like in BIT?</>}
         buttonText="Explore Campus Life"
         buttonHref="/campus-life"
       />

@@ -122,7 +122,7 @@ export default function CommunityPage() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-8 mb-32"
         >
           {pillars.map((pillar, idx) => (

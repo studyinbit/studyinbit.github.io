@@ -5,7 +5,7 @@ import { SquareArrowTopRight } from "@/components/ui/SquareArrowTopRight";
 
 interface PageSegueProps {
   title: string;
-  description: string;
+  description: React.ReactNode;
   buttonText: string;
   buttonHref: string;
 }
