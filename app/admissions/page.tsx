@@ -5,7 +5,7 @@ import { AlertTriangle, CheckCircle2, Download, BookOpen, GraduationCap } from "
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { GradientBlob } from "@/components/ui/GradientBlob";
-import { CostCalculator } from "@/components/features/CostCalculator";
+import Link from "next/link";
 
 export default function AdmissionsPage() {
   const checklist = [
@@ -132,16 +132,24 @@ export default function AdmissionsPage() {
           </div>
         </div>
 
-        {/* Cost Calculator Section */}
-        <div className="mb-24 scroll-mt-24" id="calculator">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold mb-4">Scholarships & Costs</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              BIT is committed to making world-class engineering education accessible. Use our calculator to estimate your annual investment.
-            </p>
-          </div>
-          <CostCalculator />
-        </div>
+        {/* Scholarship & Cost Link */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-24 text-center bg-white/50 backdrop-blur-md border border-white/60 rounded-3xl p-10 shadow-sm"
+        >
+          <h2 className="text-2xl font-display font-bold mb-3">Scholarships & Costs</h2>
+          <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+            Explore available scholarships and use our cost calculator to estimate your annual investment.
+          </p>
+          <Link
+            href="/scholarship-cost"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary/90 transition-colors"
+          >
+            View Scholarships & Cost Calculator
+          </Link>
+        </motion.div>
 
         {/* Timeline */}
         <div className="mb-24">

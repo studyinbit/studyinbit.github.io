@@ -12,6 +12,7 @@ const navItems = [
   { name: "Home", href: "/" },
   { name: "Campus Life", href: "/campus-life" },
   { name: "Community", href: "/community" },
+  { name: "Scholarship & Cost", href: "/scholarship-cost" },
   { name: "FAQ", href: "/faq" },
 ];
 
