@@ -10,7 +10,7 @@ import { CostCalculator } from "@/components/features/CostCalculator";
 export default function AdmissionsPage() {
   const checklist = [
     { category: "Academic", items: ["High School Diploma", "Math & Science proficiency", "CSCA Exam Score"] },
-    { category: "Language", items: ["IELTS 6.0+ / TOEFL 80+", "HSK 4 (for Chinese programs)"] },
+    { category: "Language", items: ["IELTS 6.0+ / TOEFL 80+", "Duolingo English test 110/160 (not required if already done IELTS)", "HSK 4 (for Chinese programs)"] },
     { category: "Documents", items: ["Transcripts (Translated)", "Passport Copy", "Study Plan / Personal Statement", "2 Recommendation Letters", "Physical Exam Form", "Police Clearance Certificate"] },
   ];
 
@@ -99,7 +99,7 @@ export default function AdmissionsPage() {
         {/* Requirements Checklist */}
         <div className="mb-24">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-display font-bold mb-4">What You Need</h2>
+            <h2 className="text-3xl font-display font-bold mb-4">Requirements</h2>
             <p className="text-muted-foreground">Prepare these documents before the portal opens.</p>
           </div>
 
