@@ -16,6 +16,14 @@ import galleryImg3 from "@/public/images/uni/IMG_20251213_102035090.CCD.webp";
 import galleryImg4 from "@/public/images/uni/IMG_20251207_121823829.CCD.webp";
 import galleryImg5 from "@/public/images/uni/IMG_20250915_121520361.CCD.webp";
 import galleryImg6 from "@/public/images/uni/IMG_20250911_163633452.CCD.webp";
+import galleryImg7 from "@/public/images/uni/bridge.jpg";
+import galleryImg8 from "@/public/images/uni/canteen北.jpg";
+import galleryImg9 from "@/public/images/uni/noodles.jpg";
+import galleryImg10 from "@/public/images/uni/duck_south_canteen.jpg";
+import galleryImg11 from "@/public/images/uni/gym4thfloor.jpg";
+import galleryImg12 from "@/public/images/uni/zoo.jpg";
+import galleryImg13 from "@/public/images/uni/24_7_library.png";
+import galleryImg14 from "@/public/images/uni/IMG_20250930_174155491.CCD.webp";
 import beijingMap from "@/public/images/beijing-map.webp";
 
 export default function CampusLifePage() {
@@ -61,10 +69,18 @@ export default function CampusLifePage() {
   const galleryImages = [
     { src: galleryImg1, caption: "Campus at Night" },
     { src: galleryImg2, caption: "Autumn on Campus" },
-    { src: galleryImg3, caption: "Library Study Area" },
-    { src: galleryImg4, caption: "Sports Field" },
-    { src: galleryImg5, caption: "Modern Architecture" },
-    { src: galleryImg6, caption: "Student Center" },
+    { src: galleryImg3, caption: "Snow on Campus" },
+    { src: galleryImg4, caption: "LX Dorm Entrance" },
+    { src: galleryImg5, caption: "Calculus Class" },
+    { src: galleryImg6, caption: "Campus Gala" },
+    { src: galleryImg7, caption: "White bridge" },
+    { src: galleryImg8, caption: "North Canteen" },
+    { src: galleryImg9, caption: "Canteen Food" },
+    { src: galleryImg10, caption: "Canteen Food" },
+    { src: galleryImg11, caption: "Gym 4th floor" },
+    { src: galleryImg12, caption: "Mini Zoo" },
+    { src: galleryImg13, caption: "24/7 library" },
+    { src: galleryImg14, caption: "Autumn Scenery" },
   ];
 
   return (

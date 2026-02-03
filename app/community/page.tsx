@@ -11,10 +11,12 @@ import { PageSegue } from "@/components/ui/PageSegue";
 
 import galleryImg1 from "@/public/images/uni/IMG_20250917_093259940.CCD.webp";
 import galleryImg2 from "@/public/images/uni/IMG_20251122_121955346.CCD.webp";
-import galleryImg3 from "@/public/images/uni/IMG_20251213_092706951.CCD.webp";
+import galleryImg3 from "@/public/images/uni/boxing_club.jpg";
 import galleryImg4 from "@/public/images/uni/IMG_20250912_085144058.CCD.webp";
-import galleryImg5 from "@/public/images/uni/IMG_20250930_174155491.CCD.webp";
-import galleryImg6 from "@/public/images/uni/IMG_20251115_093217450.CCD.webp";
+import galleryImg5 from "@/public/images/uni/study_session.jpg";
+import galleryImg6 from "@/public/images/uni/wushu_competition.jpg";
+import galleryImg7 from "@/public/images/uni/kungfu_show.jpg";
+import galleryImg8 from "@/public/images/uni/marathon_5k.jpg";
 
 import permitImg from "@/public/images/icons/permitbeijing.webp";
 import ppitImg from "@/public/images/icons/ppitiongkok.webp";
@@ -84,12 +86,14 @@ export default function CommunityPage() {
   ];
 
   const galleryImages = [
-    { src: galleryImg1, caption: "Community Moment" },
-    { src: galleryImg2, caption: "Community Moment" },
-    { src: galleryImg3, caption: "Community Moment" },
-    { src: galleryImg4, caption: "Community Moment" },
-    { src: galleryImg5, caption: "Community Moment" },
-    { src: galleryImg6, caption: "Community Moment" },
+    { src: galleryImg1, caption: "Wencui building" },
+    { src: galleryImg2, caption: "ICF event" },
+    { src: galleryImg3, caption: "Boxing club" },
+    { src: galleryImg4, caption: "Opening Ceremony" },
+    { src: galleryImg5, caption: "Study session" },
+    { src: galleryImg6, caption: "Wushu Competition" },
+    { src: galleryImg7, caption: "Kungfu Show" },
+    { src: galleryImg8, caption: "5km Marathon Event" },
   ];
 
   return (
@@ -106,7 +110,7 @@ export default function CommunityPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-display font-bold mb-6"
           >
-            Join Our Family
+            Join The Community
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
