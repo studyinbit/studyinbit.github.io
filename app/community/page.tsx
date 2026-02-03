@@ -88,16 +88,16 @@ export default function CommunityPage() {
   ];
 
   const galleryImages = [
-    { src: galleryImg1, caption: "Wencui building" },
-    { src: galleryImg2, caption: "ICF event" },
-    { src: galleryImg3, caption: "Boxing club" },
+    { src: galleryImg1, caption: "Wencui Building" },
+    { src: galleryImg2, caption: "ICF Event" },
+    { src: galleryImg3, caption: "Boxing Club" },
     { src: galleryImg4, caption: "Opening Ceremony" },
-    { src: galleryImg5, caption: "Group study" },
+    { src: galleryImg5, caption: "Group Study" },
     { src: galleryImg6, caption: "Wushu Competition" },
-    { src: galleryImg7, caption: "Kungfu Show" },
+    { src: galleryImg7, caption: "Kung Fu Show" },
     { src: galleryImg8, caption: "5km Marathon Event" },
-    { src: galleryImg9, caption: "Chinese-taught Study session" },
-    { src: galleryImg10, caption: "English-taught Study session" },
+    { src: galleryImg9, caption: "BIND BBB Chinese-taught Community Study" },
+    { src: galleryImg10, caption: "BIND BBB English-taught Community Study" },
   ];
 
   return (
@@ -201,36 +201,36 @@ export default function CommunityPage() {
               </p>
               <div className="flex gap-4 flex-wrap">
                 <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
-                   <a href="https://www.instagram.com/permitbeijing/" target="_blank" rel="noopener noreferrer" className="flex items-center">
-                     <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
-                     <span>@permitbeijing</span>
-                   </a>
-                 </Button>
-                 <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
-                   <a href="https://www.instagram.com/bit_indonesia/" target="_blank" rel="noopener noreferrer" className="flex items-center">
-                     <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
-                     <span>@bit_indonesia</span>
-                   </a>
-                 </Button>
-                 <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
-                   <a href="https://www.instagram.com/ppitiongkok" target="_blank" rel="noopener noreferrer" className="flex items-center">
-                     <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
-                     <span>@ppitiongkok</span>
-                   </a>
-                 </Button>
+                  <a href="https://www.instagram.com/permitbeijing/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                    <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
+                    <span>@permitbeijing</span>
+                  </a>
+                </Button>
+                <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
+                  <a href="https://www.instagram.com/bit_indonesia/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                    <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
+                    <span>@bit_indonesia</span>
+                  </a>
+                </Button>
+                <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
+                  <a href="https://www.instagram.com/ppitiongkok" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                    <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
+                    <span>@ppitiongkok</span>
+                  </a>
+                </Button>
               </div>
             </div>
             <div className="flex gap-6 justify-center md:justify-end">
               <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg items-center justify-top translate-y-12 relative overflow-hidden">
-                 <BlurImage src={bindImg} alt="BIND" className="rounded-full object-contain" fill sizes="128px" />
-               </div>
-               <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg items-center justify-center relative overflow-hidden">
-                 <BlurImage src={permitImg} alt="PERMIT Beijing" className="rounded-full object-contain" fill sizes="128px" />
-               </div>
-               <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg items-center justify-center translate-y-8 relative overflow-hidden">
-                 <BlurImage src={ppitImg} alt="PPIT Tiongkok" className="rounded-full object-contain" fill sizes="128px" />
-               </div>
-               
+                <BlurImage src={bindImg} alt="BIND" className="rounded-full object-contain" fill sizes="128px" />
+              </div>
+              <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg items-center justify-center relative overflow-hidden">
+                <BlurImage src={permitImg} alt="PERMIT Beijing" className="rounded-full object-contain" fill sizes="128px" />
+              </div>
+              <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg items-center justify-center translate-y-8 relative overflow-hidden">
+                <BlurImage src={ppitImg} alt="PPIT Tiongkok" className="rounded-full object-contain" fill sizes="128px" />
+              </div>
+
             </div>
           </div>
         </div>
@@ -256,7 +256,7 @@ export default function CommunityPage() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                   <p className="text-white font-medium text-sm">{item.caption}</p>
+                  <p className="text-white font-medium text-sm">{item.caption}</p>
                 </div>
               </motion.div>
             ))}

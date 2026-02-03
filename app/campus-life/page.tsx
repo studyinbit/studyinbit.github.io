@@ -68,18 +68,18 @@ export default function CampusLifePage() {
 
   const galleryImages = [
     { src: galleryImg1, caption: "Campus at Night" },
-    { src: galleryImg2, caption: "Autumn on Campus" },
-    { src: galleryImg3, caption: "Snow on Campus" },
-    { src: galleryImg4, caption: "LX Dorm Entrance" },
+    { src: galleryImg2, caption: "Campus in Autumn" },
+    { src: galleryImg3, caption: "Campus in Snow" },
+    { src: galleryImg4, caption: "International Students Dorm Entrance" },
     { src: galleryImg5, caption: "Calculus Class" },
     { src: galleryImg6, caption: "Campus Gala" },
-    { src: galleryImg7, caption: "White bridge" },
+    { src: galleryImg7, caption: "Park Bridge" },
     { src: galleryImg8, caption: "North Canteen" },
-    { src: galleryImg9, caption: "Canteen Food" },
+    { src: galleryImg9, caption: "Halal Canteen Food" },
     { src: galleryImg10, caption: "Canteen Food" },
-    { src: galleryImg11, caption: "Gym 4th floor" },
+    { src: galleryImg11, caption: "Gym 4th Floor" },
     { src: galleryImg12, caption: "Mini Zoo" },
-    { src: galleryImg13, caption: "24/7 library" },
+    { src: galleryImg13, caption: "24/7 Library" },
     { src: galleryImg14, caption: "Autumn Scenery" },
   ];
 
@@ -115,7 +115,7 @@ export default function CampusLifePage() {
             <h2 className="text-3xl font-display font-bold mb-4">Where You&apos;ll Live</h2>
             <p className="text-muted-foreground">Affordable, comfortable, and safe.</p>
           </div>
-          
+
           {/* Location Section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -159,10 +159,10 @@ export default function CampusLifePage() {
                     className="bg-white rounded-3xl overflow-hidden shadow-sm border border-border group"
                   >
                     <div className="h-64 overflow-hidden relative">
-                       <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                       <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-medium z-10">
-                         {dorm.price}
-                       </div>
+                      <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                      <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-medium z-10">
+                        {dorm.price}
+                      </div>
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold mb-4">{dorm.title}</h3>
@@ -194,10 +194,10 @@ export default function CampusLifePage() {
                     className="bg-white rounded-3xl overflow-hidden shadow-sm border border-border group"
                   >
                     <div className="h-64 overflow-hidden relative">
-                       <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                       <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-medium z-10">
-                         {dorm.price}
-                       </div>
+                      <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                      <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-medium z-10">
+                        {dorm.price}
+                      </div>
                     </div>
                     <div className="p-6">
                       <h3 className="text-xl font-bold mb-4">{dorm.title}</h3>
@@ -245,27 +245,27 @@ export default function CampusLifePage() {
         <div>
           <h2 className="text-3xl font-display font-bold mb-12 text-center">Campus Moments</h2>
           <div className="mb-24 columns-2 md:columns-3 gap-4 md:gap-6">
-             {galleryImages.map((img, idx) => (
-               <motion.div
-                 key={idx}
-                 initial={{ opacity: 0, scale: 0.9 }}
-                 whileInView={{ opacity: 1, scale: 1 }}
-                 viewport={{ once: true, margin: "-50px" }}
-                 transition={{ delay: idx * 0.1 }}
-                 className="relative rounded-2xl overflow-hidden group break-inside-avoid mb-6"
-               >
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                 <BlurImage
-                   src={img.src}
-                   alt={img.caption}
-                   className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
-                   sizes="(max-width: 768px) 100vw, 33vw"
-                 />
-                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                    <p className="text-white font-medium text-sm">{img.caption}</p>
-                 </div>
-               </motion.div>
-             ))}
+            {galleryImages.map((img, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: idx * 0.1 }}
+                className="relative rounded-2xl overflow-hidden group break-inside-avoid mb-6"
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+                <BlurImage
+                  src={img.src}
+                  alt={img.caption}
+                  className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
+                  <p className="text-white font-medium text-sm">{img.caption}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
 
