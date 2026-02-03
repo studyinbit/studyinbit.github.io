@@ -17,6 +17,8 @@ import galleryImg5 from "@/public/images/uni/study_session.jpg";
 import galleryImg6 from "@/public/images/uni/wushu_competition.jpg";
 import galleryImg7 from "@/public/images/uni/kungfu_show.jpg";
 import galleryImg8 from "@/public/images/uni/marathon_5k.jpg";
+import galleryImg9 from "@/public/images/uni/BBB_chinesetaught.jpg";
+import galleryImg10 from "@/public/images/uni/BBB_englishtaught.jpg";
 
 import permitImg from "@/public/images/icons/permitbeijing.webp";
 import ppitImg from "@/public/images/icons/ppitiongkok.webp";
@@ -90,10 +92,12 @@ export default function CommunityPage() {
     { src: galleryImg2, caption: "ICF event" },
     { src: galleryImg3, caption: "Boxing club" },
     { src: galleryImg4, caption: "Opening Ceremony" },
-    { src: galleryImg5, caption: "Study session" },
+    { src: galleryImg5, caption: "Group study" },
     { src: galleryImg6, caption: "Wushu Competition" },
     { src: galleryImg7, caption: "Kungfu Show" },
     { src: galleryImg8, caption: "5km Marathon Event" },
+    { src: galleryImg9, caption: "Chinese-taught Study session" },
+    { src: galleryImg10, caption: "English-taught Study session" },
   ];
 
   return (
