@@ -35,13 +35,15 @@ export function CostCalculator() {
   const tuitionOutOfPocket = tuition - tuitionCovered;
 
   // Scholarship accommodation only covers International Dorm 4-Person Room
-  const coveredDormCost = siteContent.housingOptions.find((h) => h.id === "intl-4p")?.cost ?? 0;
+  // Housing costs are monthly — multiply by 12 for annual totals
+  const coveredDormMonthly = siteContent.housingOptions.find((h) => h.id === "intl-4p")?.cost ?? 0;
+  const coveredDormCost = coveredDormMonthly * 12;
   const accommodationCovered = cov?.accommodation ?? false;
   const effectiveHousing = accommodationCovered
     ? siteContent.housingOptions.find((h) => h.id === "intl-4p")
     : selectedHousing;
   const isOnCampus = effectiveHousing?.type === "on-campus";
-  const housingCost = effectiveHousing?.cost ?? 0;
+  const housingCost = (effectiveHousing?.cost ?? 0) * 12;
   const housingCovered = accommodationCovered ? coveredDormCost : 0;
   const housingOutOfPocket = housingCost - housingCovered;
 
@@ -152,7 +154,7 @@ export function CostCalculator() {
             {accommodationCovered ? (
               <>
                 <div className="w-full px-4 py-3 rounded-xl border border-primary/30 bg-primary/5 text-sm font-medium">
-                  International Dorm 4-Person Room (¥{coveredDormCost.toLocaleString()}/yr)
+                  International Dorm 4-Person Room (¥{coveredDormMonthly.toLocaleString()}/mo — ¥{coveredDormCost.toLocaleString()}/yr)
                 </div>
                 <p className="text-xs text-primary mt-2">Scholarship accommodation covers the International Dorm 4-Person Room only.</p>
               </>
@@ -165,7 +167,7 @@ export function CostCalculator() {
               >
                 {siteContent.housingOptions.map((h) => (
                   <option key={h.id} value={h.id}>
-                    {h.name} (¥{h.cost.toLocaleString()}/yr)
+                    {h.name} (¥{h.cost.toLocaleString()}/mo — ¥{(h.cost * 12).toLocaleString()}/yr)
                   </option>
                 ))}
               </select>

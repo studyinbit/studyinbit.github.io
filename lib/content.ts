@@ -190,11 +190,11 @@ export const siteContent = {
     },
   ],
   housingOptions: [
-    { id: "intl-4p", name: "International Dorm 4-Person Room", cost: 900, type: "on-campus" as const },
-    { id: "intl-3p", name: "International Dorm 3-Person Room", cost: 3500, type: "on-campus" as const },
-    { id: "intl-2p", name: "International Dorm 2-Person Room", cost: 4500, type: "on-campus" as const },
-    { id: "bohou-4p", name: "Bohou 4-Person Suite", cost: 1200, type: "on-campus" as const },
-    { id: "off-campus", name: "Off-Campus Apartment", cost: 36000, type: "off-campus" as const },
+    { id: "intl-4p", name: "International Dorm 4-Person Room", cost: 500, type: "on-campus" as const },
+    { id: "intl-3p", name: "International Dorm 3-Person Room", cost: 700, type: "on-campus" as const },
+    { id: "intl-2p", name: "International Dorm 2-Person Room", cost: 900, type: "on-campus" as const },
+    { id: "bohou-4p", name: "Bohou 4-Person Suite", cost: 800, type: "on-campus" as const },
+    { id: "off-campus", name: "Off-Campus Apartment", cost: 1600, type: "off-campus" as const },
   ],
   costs: {
     tuitionEnglish: 30000, // RMB per year (English-taught)

@@ -31,8 +31,8 @@ export default function CampusLifePage() {
   const newDorms = [
     {
       title: "4-Person Suite",
-      price: "~1,200 RMB/yr",
-      features: ["2 Bedrooms (2 per room)", "Private Bathroom", "AC & Heating", "Modern Furnishings"],
+      price: "~800 RMB/mo",
+      features: ["2 Bedrooms (2 per room)", "Private Bathroom", "AC & Heating", "Does not provide free water", "Modern Furnishings"],
       image: dormImg1
     }
   ];
@@ -40,20 +40,20 @@ export default function CampusLifePage() {
   const oldDorms = [
     {
       title: "2-Person Room",
-      price: "~4,500 RMB/yr",
-      features: ["Private Bathroom", "Balcony", "AC & Heating", "Desks & Storage"],
+      price: "~900 RMB/mo",
+      features: ["Private Bathroom", "Balcony", "AC & Heating", "Water is free", "Desks & Storage"],
       image: dormImg2
     },
     {
       title: "3-Person Room",
-      price: "~3,500 RMB/yr",
-      features: ["Private Bathroom", "Balcony", "AC & Heating", "Spacious Layout"],
+      price: "~700 RMB/mo",
+      features: ["Private Bathroom", "Balcony", "AC & Heating", "Water is free", "Spacious Layout"],
       image: dormImg2
     },
     {
       title: "4-Person Room",
-      price: "900 RMB/yr",
-      features: ["Private Bathroom", "Balcony", "Most Affordable", "Community Feel"],
+      price: "900 RMB/mo",
+      features: ["Private Bathroom", "Balcony", "Most Affordable", "Water is free", "Community Feel"],
       image: dormImg3
     }
   ];
