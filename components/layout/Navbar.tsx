@@ -70,7 +70,7 @@ export function Navbar() {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-full hover:bg-black/5 text-foreground transition-colors"
+              className="md:hidden p-2 mr-2 rounded-full hover:bg-black/5 text-foreground transition-colors"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

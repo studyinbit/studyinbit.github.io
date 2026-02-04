@@ -5,6 +5,7 @@ import { BlurImage } from "@/components/ui/blur-image";
 import { MapPin, Coffee, Utensils, Wifi, Bus, Bike, Shield } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { PageSegue } from "@/components/ui/PageSegue";
+import Carousel from "@/components/ui/Carousel";
 
 import dormImg1 from "@/public/images/uni/IMG_20251103_130246 (1).webp";
 import dormImg2 from "@/public/images/uni/IMG_20251109_094544.webp";
@@ -147,8 +148,10 @@ export default function CampusLifePage() {
           <div className="space-y-16">
             {/* New Building */}
             <div>
-              <h3 className="text-2xl font-display font-bold mb-8 text-primary">New Building (Bohou)</h3>
-              <div className="grid md:grid-cols-3 gap-8">
+              <h3 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-8 text-primary">New Building (Bohou)</h3>
+
+              {/* Desktop Grid */}
+              <div className="hidden md:grid md:grid-cols-3 gap-8">
                 {newDorms.map((dorm, idx) => (
                   <motion.div
                     key={idx}
@@ -169,7 +172,39 @@ export default function CampusLifePage() {
                       <ul className="space-y-2">
                         {dorm.features.map((feature, i) => (
                           <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Mobile - centered card matching carousel width */}
+              <div className="md:hidden flex justify-center">
+                {newDorms.map((dorm, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border w-[288px]"
+                  >
+                    <div className="h-44 overflow-hidden relative">
+                      <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover" />
+                      <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full text-xs font-medium z-10">
+                        {dorm.price}
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-base font-bold mb-3">{dorm.title}</h3>
+                      <ul className="space-y-1.5">
+                        {dorm.features.map((feature, i) => (
+                          <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
@@ -182,8 +217,10 @@ export default function CampusLifePage() {
 
             {/* Old Building */}
             <div>
-              <h3 className="text-2xl font-display font-bold mb-8 text-primary">Old Building (International Students Dorm)</h3>
-              <div className="grid md:grid-cols-3 gap-8">
+              <h3 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-8 text-primary">Old Building (International Students Dorm)</h3>
+
+              {/* Desktop Grid */}
+              <div className="hidden md:grid md:grid-cols-3 gap-8">
                 {oldDorms.map((dorm, idx) => (
                   <motion.div
                     key={idx}
@@ -204,7 +241,7 @@ export default function CampusLifePage() {
                       <ul className="space-y-2">
                         {dorm.features.map((feature, i) => (
                           <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
@@ -212,6 +249,33 @@ export default function CampusLifePage() {
                     </div>
                   </motion.div>
                 ))}
+              </div>
+
+              {/* Mobile Carousel */}
+              <div className="md:hidden flex justify-center">
+                <Carousel baseWidth={320} loop>
+                  {oldDorms.map((dorm, idx) => (
+                    <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border h-full">
+                      <div className="h-44 overflow-hidden relative">
+                        <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover" />
+                        <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full text-xs font-medium z-10">
+                          {dorm.price}
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-base font-bold mb-3">{dorm.title}</h3>
+                        <ul className="space-y-1.5">
+                          {dorm.features.map((feature, i) => (
+                            <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  ))}
+                </Carousel>
               </div>
             </div>
           </div>

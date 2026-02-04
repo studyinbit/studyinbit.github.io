@@ -195,24 +195,24 @@ export default function CommunityPage() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-8 mb-32"
+          className="grid grid-cols-2 gap-3 md:gap-8 mb-32"
         >
           {pillars.map((pillar, idx) => (
             <motion.div
               key={idx}
               variants={itemVariants}
-              className="bg-white/50 backdrop-blur-md border border-white/60 rounded-3xl p-8 hover:shadow-xl transition-all duration-300 group"
+              className="bg-white/50 backdrop-blur-md border border-white/60 rounded-2xl md:rounded-3xl p-4 md:p-8 hover:shadow-xl transition-all duration-300 group"
             >
-              <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <pillar.icon className="w-6 h-6 text-primary" />
+              <div className="w-9 h-9 md:w-12 md:h-12 bg-primary/10 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform">
+                <pillar.icon className="w-4 h-4 md:w-6 md:h-6 text-primary" />
               </div>
-              <h3 className="text-2xl font-bold font-display mb-3">{pillar.title}</h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
+              <h3 className="text-sm md:text-2xl font-bold font-display mb-1.5 md:mb-3">{pillar.title}</h3>
+              <p className="text-xs md:text-base text-muted-foreground mb-3 md:mb-6 leading-relaxed">
                 {pillar.desc}
               </p>
-              <blockquote className="border-l-4 border-primary/20 pl-4 italic text-sm text-muted-foreground">
+              <blockquote className="border-l-2 md:border-l-4 border-primary/20 pl-2.5 md:pl-4 italic text-[10px] md:text-sm text-muted-foreground">
                 {pillar.quote}
-                <footer className="mt-2 font-semibold text-foreground not-italic">— {pillar.author}</footer>
+                <footer className="mt-1 md:mt-2 font-semibold text-foreground not-italic text-[10px] md:text-sm">— {pillar.author}</footer>
               </blockquote>
             </motion.div>
           ))}
@@ -220,15 +220,14 @@ export default function CommunityPage() {
 
         {/* Arrival System */}
         <div className="mb-32">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-display font-bold mb-4">Zero-Stress Arrival</h2>
-            <p className="text-muted-foreground">The things that usually stress parents out? We&apos;ve got them covered.</p>
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-2 md:mb-4">Zero-Stress Arrival</h2>
+            <p className="text-sm md:text-base text-muted-foreground">The things that usually stress parents out? We&apos;ve got them covered.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 relative">
-            {/* Connecting Line (Desktop) */}
-            <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-primary/20 via-primary/50 to-primary/20 -z-10" />
-
+          {/* Desktop - 3 column grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-8 relative">
+            <div className="absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-primary/20 via-primary/50 to-primary/20 -z-10" />
             {arrivalSteps.map((step, idx) => (
               <motion.div
                 key={idx}
@@ -244,9 +243,30 @@ export default function CommunityPage() {
                 <div className="text-center">
                   <span className="text-sm font-bold text-primary tracking-widest uppercase mb-2 block">{step.step}</span>
                   <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {step.desc}
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Mobile - vertical stack with left-aligned timeline */}
+          <div className="md:hidden space-y-4">
+            {arrivalSteps.map((step, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ delay: idx * 0.15 }}
+                className="relative bg-white rounded-2xl p-4 shadow-sm border border-border flex gap-4 items-start"
+              >
+                <div className="w-11 h-11 bg-primary/5 rounded-full flex items-center justify-center flex-shrink-0 border-2 border-primary/20">
+                  <step.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-bold text-primary tracking-widest uppercase">{step.step}</span>
+                  <h3 className="text-sm font-bold mb-1">{step.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{step.desc}</p>
                 </div>
               </motion.div>
             ))}

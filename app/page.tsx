@@ -174,63 +174,32 @@ export default function Home() {
               />
             </div>
 
-            {/* Mobile Card Layout */}
+            {/* Rankings Table */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5 }}
-              className="block sm:hidden space-y-6"
-            >
-              {metricsData.map((metric, index) => (
-                <div key={index} className="bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-sm">
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-3xl md:text-4xl font-semibold font-display tabular-nums text-foreground">
-                      {metric.rankValue}
-                    </span>
-                    <span className={`text-sm font-medium ${metric.rankColor === 'emerald' ? 'text-emerald-600' : 'text-primary'}`}>
-                      {metric.rankSuffix}
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {metric.metric}
-                  </p>
-                  <h3 className="font-bold text-foreground mb-2">
-                    {metric.insightTitle}
-                  </h3>
-                  <p className="text-muted-foreground">
-                    {metric.insightDescription}
-                  </p>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Desktop Table Layout */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5 }}
-              className="hidden sm:block overflow-hidden rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
+              className="overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
             >
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-white/50 border-b border-border/50">
-                    <th className="p-6 font-display font-bold text-foreground">Metric</th>
-                    <th className="p-6 font-display font-bold text-primary">Rank</th>
-                    <th className="p-6 font-display font-bold text-foreground">Elaboration</th>
+                    <th className="p-3 sm:p-6 font-display font-bold text-foreground text-xs sm:text-base">Metric</th>
+                    <th className="p-3 sm:p-6 font-display font-bold text-primary text-xs sm:text-base">Rank</th>
+                    <th className="p-3 sm:p-6 font-display font-bold text-foreground text-xs sm:text-base">Elaboration</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/50">
                   {metricsData.map((metric, index) => (
                     <tr key={index} className="hover:bg-white/40 transition-colors">
-                      <td className="p-6 font-medium">{metric.metric}</td>
-                      <td className={`p-6 font-bold text-xl ${metric.rankColor === 'emerald' ? 'text-emerald-600' : ''}`}>
+                      <td className="p-3 sm:p-6 font-medium text-xs sm:text-base">{metric.metric}</td>
+                      <td className={`p-3 sm:p-6 font-bold text-sm sm:text-xl ${metric.rankColor === 'emerald' ? 'text-emerald-600' : ''}`}>
                         #{metric.rankValue}
                       </td>
-                      <td className="p-6 text-muted-foreground text-sm leading-relaxed">
-                        <strong className="text-foreground block mb-1">{metric.insightTitle}</strong>
-                        {metric.insightDescription}
+                      <td className="p-3 sm:p-6 text-muted-foreground text-[10px] sm:text-sm leading-relaxed">
+                        <strong className="text-foreground block mb-0.5 sm:mb-1 text-xs sm:text-sm">{metric.insightTitle}</strong>
+                        <span className="hidden sm:inline">{metric.insightDescription}</span>
                       </td>
                     </tr>
                   ))}
