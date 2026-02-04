@@ -214,30 +214,30 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="space-y-8"
+              className="space-y-4 md:space-y-8"
             >
-              <div className="bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-sm">
-                <div className="flex items-start gap-4">
-                  <div className="bg-amber-100 text-amber-600 p-3 rounded-xl">
-                    <Zap className="w-6 h-6" />
+              <div className="bg-white/60 backdrop-blur-md rounded-3xl p-5 md:p-8 border border-white/40 shadow-sm">
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="bg-amber-100 text-amber-600 p-2 md:p-3 rounded-xl">
+                    <Zap className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold font-display mb-2">Funding Priority</h3>
-                    <p className="text-muted-foreground">
+                    <h3 className="text-base md:text-xl font-bold font-display mb-1 md:mb-2">Funding Priority</h3>
+                    <p className="text-sm md:text-base text-muted-foreground">
                       While other universities struggle for grants, BIT&apos;s labs are capitalized by the state&apos;s most critical projects. This ensures priority in aerospace, high-end manufacturing, and national security research.
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white/60 backdrop-blur-md rounded-3xl p-8 border border-white/40 shadow-sm">
-                <div className="flex items-start gap-4">
-                  <div className="bg-blue-100 text-blue-600 p-3 rounded-xl">
-                    <Award className="w-6 h-6" />
+              <div className="bg-white/60 backdrop-blur-md rounded-3xl p-5 md:p-8 border border-white/40 shadow-sm">
+                <div className="flex items-start gap-3 md:gap-4">
+                  <div className="bg-blue-100 text-blue-600 p-2 md:p-3 rounded-xl">
+                    <Award className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold font-display mb-2">&quot;Double First-Class&quot; Status</h3>
-                    <p className="text-muted-foreground">
+                    <h3 className="text-base md:text-xl font-bold font-display mb-1 md:mb-2">&quot;Double First-Class&quot; Status</h3>
+                    <p className="text-sm md:text-base text-muted-foreground">
                       BIT is designated as a Class A &quot;Double First-Class&quot; university. This is the gold standard, placing you at the forefront of China&apos;s push to become a science and technology superpower.
                     </p>
                   </div>

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { BlurImage } from "@/components/ui/blur-image";
 import { Users, BookOpen, Briefcase, Heart, Plane, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { PageSegue } from "@/components/ui/PageSegue";
 

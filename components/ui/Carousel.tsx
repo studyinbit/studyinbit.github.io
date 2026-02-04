@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, Children, type ReactNode } from "react";
-import { motion, type PanInfo, useMotionValue, useTransform } from "framer-motion";
+import { type MotionValue, motion, type PanInfo, useMotionValue, useTransform } from "framer-motion";
 
 const DRAG_BUFFER = 0;
 const VELOCITY_THRESHOLD = 500;
@@ -13,7 +13,7 @@ interface CarouselSlideProps {
   index: number;
   itemWidth: number;
   trackItemOffset: number;
-  x: ReturnType<typeof useMotionValue>;
+  x: MotionValue<number>;
   transition: typeof SPRING_OPTIONS | { duration: number };
 }
 
@@ -188,7 +188,7 @@ export default function Carousel({
     <div
       ref={containerRef}
       className="relative overflow-hidden rounded-2xl"
-      style={{ width: `${baseWidth}px` }}
+      style={{ width: `${baseWidth}px`, padding: `0 ${containerPadding}px` }}
     >
       <motion.div
         className="flex"

@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${jakarta.variable} ${syne.variable}`}>
-      <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen">
+      <body suppressHydrationWarning className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-1">
           {children}

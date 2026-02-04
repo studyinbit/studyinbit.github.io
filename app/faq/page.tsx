@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, ChevronDown, ChevronUp } from "lucide-react";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
@@ -242,12 +242,14 @@ function FAQCard({
   highlightQuery?: string;
 }) {
   const [isOpen, setIsOpen] = useState(autoOpen);
+  const [prevAutoOpen, setPrevAutoOpen] = useState(autoOpen);
 
-  useEffect(() => {
+  if (autoOpen !== prevAutoOpen) {
+    setPrevAutoOpen(autoOpen);
     if (autoOpen && !isOpen) {
       setIsOpen(true);
     }
-  }, [autoOpen, isOpen]);
+  }
 
   return (
     <motion.div

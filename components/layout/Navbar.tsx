@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, GraduationCap, MessageCircle } from "lucide-react";
+import { Menu, X, GraduationCap } from "lucide-react";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { cn } from "@/lib/utils";
 
@@ -28,13 +28,13 @@ export function Navbar() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
       >
-        <div className="navbar-sheen pointer-events-auto flex items-center p-1.5 pl-5 pr-1.5 gap-2 sm:gap-4">
+        <div className="navbar-sheen pointer-events-auto flex items-center p-2 pl-4 pr-3 sm:p-1.5 sm:pl-5 sm:pr-1.5 gap-2 sm:gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="bg-primary/10 p-2 rounded-full group-hover:bg-primary/20 transition-colors">
-              <GraduationCap className="w-5 h-5 text-primary" />
+          <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
+            <div className="bg-primary/10 p-1.5 sm:p-2 rounded-full group-hover:bg-primary/20 transition-colors">
+              <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
             </div>
-            <span className="font-display font-bold text-lg tracking-tight">
+            <span className="font-display font-bold text-base sm:text-lg tracking-tight">
               Studyin<span className="text-primary">BIT</span>
             </span>
           </Link>
@@ -61,16 +61,16 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Link
               href="/admissions"
-              className="cta-button !px-5 !py-2 !text-sm whitespace-nowrap hidden sm:inline-flex items-center gap-2"
+              className="cta-button !px-3 !py-1.5 !text-xs sm:!px-5 sm:!py-2 sm:!text-sm whitespace-nowrap hidden sm:inline-flex items-center gap-1.5 sm:gap-2"
             >
               <span className="cta-glow"></span>
               Admissions
-              <GraduationCap className="w-4 h-4" />
+              <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </Link>
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 mr-2 rounded-full hover:bg-black/5 text-foreground transition-colors"
+              className="md:hidden p-2 rounded-full hover:bg-black/5 text-foreground transition-colors"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

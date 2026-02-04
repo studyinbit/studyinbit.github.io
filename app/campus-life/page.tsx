@@ -123,24 +123,24 @@ export default function CampusLifePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="bg-slate-900 text-white rounded-3xl p-8 md:p-16 relative overflow-hidden mb-12"
+            className="bg-slate-900 text-white -mx-6 px-6 py-8 md:mx-0 md:rounded-3xl md:p-16 relative overflow-hidden mb-12"
           >
             <div className="absolute top-0 right-0 w-full h-full opacity-20">
               <GradientBlob variant="cool" className="translate-x-1/2" />
             </div>
 
-            <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Liangxiang Campus</h2>
-                <p className="text-slate-300 leading-relaxed mb-6">
+                <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 md:mb-6">Liangxiang Campus</h2>
+                <p className="text-sm md:text-base text-slate-300 leading-relaxed mb-4 md:mb-6">
                   Liangxiang is a small university district located outside of beijing. It is located 30-40km from central Beijing. It would take 1-2 hours(depending on how busy the subway is) to travel from campus to the city center. Liangxiang campus occupies an area of 2,001,000 m².
                 </p>
-                <div className="flex items-center gap-4 text-slate-300">
-                  <Shield className="w-5 h-5 text-emerald-400" />
+                <div className="flex items-center gap-3 md:gap-4 text-slate-300 text-sm md:text-base">
+                  <Shield className="w-4 h-4 md:w-5 md:h-5 text-emerald-400" />
                   <span>Library seats 2,500 students</span>
                 </div>
               </div>
-              <div className="h-64 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 overflow-hidden relative group">
+              <div className="h-48 md:h-64 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 overflow-hidden relative group">
                 <BlurImage src={beijingMap} alt="Map of Liangxiang vs Beijing" fill className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" placeholder="blur" />
               </div>
             </div>
