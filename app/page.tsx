@@ -165,7 +165,7 @@ export default function Home() {
               <h2 className="text-3xl font-display font-bold mb-4">Why BIT?</h2>
               <ShinyText
                 text="More Reasons to Choose BIT"
-                speed={2}
+                speed={3}
                 delay={1}
                 color="#1a1b1aff"
                 shineColor="#cfd8ccff"

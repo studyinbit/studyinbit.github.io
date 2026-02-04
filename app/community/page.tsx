@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BlurImage } from "@/components/ui/blur-image";
@@ -25,6 +26,68 @@ import ppitImg from "@/public/images/icons/ppitiongkok.webp";
 import bindImg from "@/public/images/icons/bit_indonesia.webp"
 
 export default function CommunityPage() {
+  // rAF-driven orbit animation — syncs with browser animation frame loop
+  // and smoothly ramps speed back up after tab switch instead of jumping
+  const orbitRef = useRef<HTMLDivElement>(null);
+  const isHovering = useRef(false);
+  const hoverSpeed = useRef(1); // smoothly interpolates between 1 (normal) and 0.5 (hovered)
+  const orbitState = useRef({
+    angle: 0,
+    lastTime: 0,
+    speedMultiplier: 1,
+    rampStart: 0,
+    isRamping: false,
+  });
+
+  useEffect(() => {
+    const state = orbitState.current;
+    const SPEED = 30; // deg/s — (360 / SPEED = seconds per rotation)
+    const RAMP_DURATION = 1400; // ms to reach full speed after tab switch
+    let rafId: number;
+
+    const animate = (timestamp: number) => {
+      if (!state.lastTime) {
+        state.lastTime = timestamp;
+        rafId = requestAnimationFrame(animate);
+        return;
+      }
+
+      const dt = timestamp - state.lastTime;
+      state.lastTime = timestamp;
+
+      if (dt > 200) {
+        state.isRamping = true;
+        state.rampStart = timestamp;
+        state.speedMultiplier = 0;
+      }
+
+      if (state.isRamping) {
+        const p = Math.min((timestamp - state.rampStart) / RAMP_DURATION, 1);
+        state.speedMultiplier = p * p * (3 - 2 * p);
+        if (p >= 1) {
+          state.isRamping = false;
+          state.speedMultiplier = 1;
+        }
+      }
+
+      // Smoothly lerp hover speed (50% slowdown on hover)
+      const hoverTarget = isHovering.current ? 0.5 : 1;
+      hoverSpeed.current += (hoverTarget - hoverSpeed.current) * 0.08;
+
+      const effectiveDt = Math.min(dt, 50);
+      state.angle = (state.angle + SPEED * state.speedMultiplier * hoverSpeed.current * (effectiveDt / 1000)) % 360;
+
+      if (orbitRef.current) {
+        orbitRef.current.style.setProperty("--orbit-angle", `${state.angle}deg`);
+      }
+
+      rafId = requestAnimationFrame(animate);
+    };
+
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
@@ -191,7 +254,8 @@ export default function CommunityPage() {
         </div>
 
         {/* Community Network */}
-        <div className="bg-gradient-to-b md:bg-gradient-to-r from-slate-900 from-40% to-slate-100 text-white rounded-[2.5rem] p-12 mb-32 relative overflow-hidden">
+        {/* Desktop version - card with rotating orbit */}
+        <div className="hidden md:block bg-gradient-to-r from-slate-900 from-40% to-slate-100 text-white rounded-[2.5rem] p-12 mb-32 relative overflow-hidden">
           <GradientBlob variant="cool" className="opacity-50" />
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -220,17 +284,105 @@ export default function CommunityPage() {
                 </Button>
               </div>
             </div>
-            <div className="flex gap-6 justify-center md:justify-end">
-              <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg items-center justify-top translate-y-12 relative overflow-hidden">
-                <BlurImage src={bindImg} alt="BIND" className="rounded-full object-contain" fill sizes="128px" />
+            {/* Rotating orbit logos */}
+            <div
+              className="flex items-center justify-center -mt-6"
+              onMouseEnter={() => { isHovering.current = true; }}
+              onMouseLeave={() => { isHovering.current = false; }}
+            >
+              <div className="relative w-80 h-80">
+                <div
+                  ref={orbitRef}
+                  className="absolute inset-0"
+                  style={{ transform: "rotate(var(--orbit-angle, 0deg))" }}
+                >
+                  {[
+                    { src: bindImg, alt: "BIND", handle: "@bit_indonesia", url: "https://www.instagram.com/bit_indonesia/", angle: 0 },
+                    { src: permitImg, alt: "PERMIT Beijing", handle: "@permitbeijing", url: "https://www.instagram.com/permitbeijing/", angle: 120 },
+                    { src: ppitImg, alt: "PPIT Tiongkok", handle: "@ppitiongkok", url: "https://www.instagram.com/ppitiongkok/", angle: 240 },
+                  ].map((logo, idx) => {
+                    const rad = (logo.angle * Math.PI) / 180;
+                    const x = Math.round(Math.cos(rad) * 110);
+                    const y = Math.round(Math.sin(rad) * 110);
+                    return (
+                      <a
+                        key={idx}
+                        href={logo.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute w-[106px] h-[106px] rounded-full bg-white p-3 shadow-lg overflow-visible group/logo cursor-pointer hover:scale-[1.2] transition-[scale] duration-200"
+                        style={{
+                          left: `calc(50% + ${x}px - 53px)`,
+                          top: `calc(50% + ${y}px - 53px)`,
+                          transform: "rotate(calc(-1 * var(--orbit-angle, 0deg)))",
+                        }}
+                      >
+                        <div className="w-full h-full rounded-full overflow-hidden relative">
+                          <BlurImage src={logo.src} alt={logo.alt} className="rounded-full object-contain" fill sizes="106px" />
+                        </div>
+                        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/logo:opacity-100 transition-opacity duration-200 pointer-events-none">
+                          <span className="bg-white/90 backdrop-blur-sm text-slate-900 text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-md">
+                            {logo.handle}
+                          </span>
+                        </div>
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg items-center justify-center relative overflow-hidden">
-                <BlurImage src={permitImg} alt="PERMIT Beijing" className="rounded-full object-contain" fill sizes="128px" />
-              </div>
-              <div className="w-32 h-32 rounded-full bg-white p-4 shadow-lg items-center justify-center translate-y-8 relative overflow-hidden">
-                <BlurImage src={ppitImg} alt="PPIT Tiongkok" className="rounded-full object-contain" fill sizes="128px" />
-              </div>
+            </div>
+          </div>
+        </div>
 
+        {/* Mobile version - section layout with marquee */}
+        <div className="md:hidden bg-gradient-to-b from-slate-900 to-slate-800 text-white mb-32 -mx-6 px-6 py-12 relative overflow-hidden">
+          <GradientBlob variant="cool" className="opacity-50" />
+          <div className="relative z-10">
+            <h2 className="text-3xl font-display font-bold mb-6">Part of a Larger Network</h2>
+            <p className="text-slate-300 leading-relaxed mb-8">
+              StudyinBIT is connected to organizations such as <strong>BIND</strong> (BIT Indonesia), <strong>PERMIT Beijing</strong> (Indonesian Students Association in Beijing) and <strong>PPIT Tiongkok</strong>. This gives you access to Embassy resources, inter-university events, and a network of over 1,000 Indonesian students across the city.
+            </p>
+            <div className="flex gap-3 flex-wrap mb-10">
+              <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
+                <a href="https://www.instagram.com/permitbeijing/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                  <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
+                  <span>@permitbeijing</span>
+                </a>
+              </Button>
+              <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
+                <a href="https://www.instagram.com/bit_indonesia/" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                  <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
+                  <span>@bit_indonesia</span>
+                </a>
+              </Button>
+              <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
+                <a href="https://www.instagram.com/ppitiongkok" target="_blank" rel="noopener noreferrer" className="flex items-center">
+                  <Image src="/images/icons/insagram-white-outline.svg" alt="Instagram" width={18} height={18} className="opacity-90" />
+                  <span>@ppitiongkok</span>
+                </a>
+              </Button>
+            </div>
+            {/* Infinite scrolling marquee */}
+            <div className="overflow-hidden -mx-6">
+              <motion.div
+                className="flex gap-6 w-max"
+                animate={{ x: ["0%", "-50%"] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+              >
+                {[...Array(2)].map((_, dupeIdx) => (
+                  <div key={dupeIdx} className="flex gap-6">
+                    {[
+                      { src: bindImg, alt: "BIND", url: "https://www.instagram.com/bit_indonesia/" },
+                      { src: permitImg, alt: "PERMIT Beijing", url: "https://www.instagram.com/permitbeijing/" },
+                      { src: ppitImg, alt: "PPIT Tiongkok", url: "https://www.instagram.com/ppitiongkok/" },
+                    ].map((logo, idx) => (
+                      <a key={idx} href={logo.url} target="_blank" rel="noopener noreferrer" className="w-24 h-24 rounded-full bg-white p-3 shadow-lg flex-shrink-0 relative overflow-hidden">
+                        <BlurImage src={logo.src} alt={logo.alt} className="rounded-full object-contain" fill sizes="96px" />
+                      </a>
+                    ))}
+                  </div>
+                ))}
+              </motion.div>
             </div>
           </div>
         </div>

@@ -100,8 +100,8 @@ export function CostCalculator() {
               onChange={(e) => setTuitionType(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
             >
-              <option value="english">English-Taught (¥{tuitionEnglish.toLocaleString()}/yr)</option>
-              <option value="chinese">Chinese-Taught (¥{tuitionChinese.toLocaleString()}/yr)</option>
+              <option value="english">English-Taught (¥{tuitionEnglish.toLocaleString('en-US')}/yr)</option>
+              <option value="chinese">Chinese-Taught (¥{tuitionChinese.toLocaleString('en-US')}/yr)</option>
             </select>
           </div>
 
@@ -154,7 +154,7 @@ export function CostCalculator() {
             {accommodationCovered ? (
               <>
                 <div className="w-full px-4 py-3 rounded-xl border border-primary/30 bg-primary/5 text-sm font-medium">
-                  International Dorm 4-Person Room (¥{coveredDormMonthly.toLocaleString()}/mo — ¥{coveredDormCost.toLocaleString()}/yr)
+                  International Dorm 4-Person Room (¥{coveredDormMonthly.toLocaleString('en-US')}/mo — ¥{coveredDormCost.toLocaleString('en-US')}/yr)
                 </div>
                 <p className="text-xs text-primary mt-2">Scholarship accommodation covers the International Dorm 4-Person Room only.</p>
               </>
@@ -167,7 +167,7 @@ export function CostCalculator() {
               >
                 {siteContent.housingOptions.map((h) => (
                   <option key={h.id} value={h.id}>
-                    {h.name} (¥{h.cost.toLocaleString()}/mo — ¥{(h.cost * 12).toLocaleString()}/yr)
+                    {h.name} (¥{h.cost.toLocaleString('en-US')}/mo — ¥{(h.cost * 12).toLocaleString('en-US')}/yr)
                   </option>
                 ))}
               </select>
@@ -181,11 +181,11 @@ export function CostCalculator() {
               <span className="font-semibold">
                 {tuitionCovered > 0 ? (
                   <>
-                    <span className="line-through text-muted-foreground/50 mr-2">¥{tuition.toLocaleString()}</span>
-                    <span className="text-primary">¥{tuitionOutOfPocket.toLocaleString()}</span>
+                    <span className="line-through text-muted-foreground/50 mr-2">¥{tuition.toLocaleString('en-US')}</span>
+                    <span className="text-primary">¥{tuitionOutOfPocket.toLocaleString('en-US')}</span>
                   </>
                 ) : (
-                  <>¥{tuition.toLocaleString()}</>
+                  <>¥{tuition.toLocaleString('en-US')}</>
                 )}
               </span>
             </div>
@@ -194,53 +194,53 @@ export function CostCalculator() {
               <span className="font-semibold">
                 {housingCovered > 0 ? (
                   <>
-                    <span className="line-through text-muted-foreground/50 mr-2">¥{housingCost.toLocaleString()}</span>
-                    <span className="text-primary">¥{housingOutOfPocket.toLocaleString()}</span>
+                    <span className="line-through text-muted-foreground/50 mr-2">¥{housingCost.toLocaleString('en-US')}</span>
+                    <span className="text-primary">¥{housingOutOfPocket.toLocaleString('en-US')}</span>
                   </>
                 ) : (
-                  <>¥{housingCost.toLocaleString()}</>
+                  <>¥{housingCost.toLocaleString('en-US')}</>
                 )}
               </span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Living Expenses</span>
-              <span className="font-semibold">¥{livingCost.toLocaleString()}</span>
+              <span className="font-semibold">¥{livingCost.toLocaleString('en-US')}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Insurance</span>
               <span className="font-semibold">
                 {insuranceCovered > 0 ? (
                   <>
-                    <span className="line-through text-muted-foreground/50 mr-2">¥{insuranceCost.toLocaleString()}</span>
-                    <span className="text-primary">¥{insuranceOutOfPocket.toLocaleString()}</span>
+                    <span className="line-through text-muted-foreground/50 mr-2">¥{insuranceCost.toLocaleString('en-US')}</span>
+                    <span className="text-primary">¥{insuranceOutOfPocket.toLocaleString('en-US')}</span>
                   </>
                 ) : (
-                  <>¥{insuranceCost.toLocaleString()}</>
+                  <>¥{insuranceCost.toLocaleString('en-US')}</>
                 )}
               </span>
             </div>
             {stipendAnnual > 0 && (
               <div className="flex justify-between text-sm">
-                <span className="text-primary font-semibold">Stipend (¥{stipendMonthly.toLocaleString()}/mo × 12)</span>
-                <span className="font-bold text-primary">-¥{stipendAnnual.toLocaleString()}</span>
+                <span className="text-primary font-semibold">Stipend (¥{stipendMonthly.toLocaleString('en-US')}/mo × 12)</span>
+                <span className="font-bold text-primary">-¥{stipendAnnual.toLocaleString('en-US')}</span>
               </div>
             )}
             <div className="flex justify-between text-sm pt-3 border-t border-border/50">
               <span className="font-semibold">Total Annual Cost</span>
-              <span className="font-bold text-lg">¥{totalCost.toLocaleString()}</span>
+              <span className="font-bold text-lg">¥{totalCost.toLocaleString('en-US')}</span>
             </div>
             {totalCovered > 0 && (
               <div className="flex justify-between text-sm">
                 <span className="text-primary font-semibold">Total Scholarship Coverage</span>
-                <span className="font-bold text-primary">-¥{Math.min(totalCovered, totalCost).toLocaleString()}</span>
+                <span className="font-bold text-primary">-¥{Math.min(totalCovered, totalCost).toLocaleString('en-US')}</span>
               </div>
             )}
             <div className="flex justify-between pt-3 border-t-2 border-primary/20">
               <span className="font-bold text-lg">Your Cost Per Year</span>
-              <span className="font-bold text-2xl text-primary">¥{outOfPocket.toLocaleString()}</span>
+              <span className="font-bold text-2xl text-primary">¥{outOfPocket.toLocaleString('en-US')}</span>
             </div>
             <p className="text-xs text-muted-foreground pt-2">
-              ≈ ${Math.round(outOfPocket / 7.2).toLocaleString()} USD (at ¥7.2/USD)
+              ≈ ${Math.round(outOfPocket / 7.2).toLocaleString('en-US')} USD (at ¥7.2/USD)
             </p>
           </div>
         </div>
@@ -267,7 +267,7 @@ export function CostCalculator() {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value) => `¥${Number(value).toLocaleString()}`} />
+              <Tooltip formatter={(value) => `¥${Number(value).toLocaleString('en-US')}`} />
             </PieChart>
           </ResponsiveContainer>
         </Card>
@@ -292,7 +292,7 @@ export function CostCalculator() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => `¥${Number(value).toLocaleString()}`} />
+                <Tooltip formatter={(value) => `¥${Number(value).toLocaleString('en-US')}`} />
               </PieChart>
             </ResponsiveContainer>
           ) : (
