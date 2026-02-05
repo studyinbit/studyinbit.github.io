@@ -213,8 +213,8 @@ export default function CampusLifePage() {
                       </div>
                     </div>
                     <div className="p-4">
-                      <h3 className="text-base font-bold mb-3">{dorm.title}</h3>
-                      <ul className="space-y-1.5">
+                      <h3 className="text-base font-bold mb-3 text-center">{dorm.title}</h3>
+                      <ul className="space-y-1.5 px-6">
                         {dorm.features.map((feature, i) => (
                           <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
                             <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
@@ -289,9 +289,9 @@ export default function CampusLifePage() {
                           {dorm.price}
                         </div>
                       </div>
-                      <div className="p-4 flex flex-col items-center">
+                      <div className="p-4">
                         <h3 className="text-base font-bold mb-3 text-center">{dorm.title}</h3>
-                        <ul className="space-y-1.5">
+                        <ul className="space-y-1.5 px-6">
                           {dorm.features.map((feature, i) => (
                             <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
                               <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
