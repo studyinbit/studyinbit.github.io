@@ -1,11 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, type PanInfo } from "framer-motion";
 import { BlurImage } from "@/components/ui/blur-image";
 import { MapPin, Coffee, Utensils, Wifi, Bus, Bike, Shield } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { PageSegue } from "@/components/ui/PageSegue";
-import Carousel from "@/components/ui/Carousel";
 
 import dormImg1 from "@/public/images/uni/IMG_20251103_130246 (1).webp";
 import dormImg2 from "@/public/images/uni/IMG_20251109_094544.webp";
@@ -66,6 +66,22 @@ export default function CampusLifePage() {
       image: dormImg3
     }
   ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const getSlideOffset = (index: number) => {
+    const vw = typeof window !== "undefined" ? window.innerWidth : 375;
+    return -index * (vw * 0.8 + 16);
+  };
+
+  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const { offset, velocity } = info;
+    let direction = 0;
+    if (offset.x < -50 || velocity.x < -500) direction = 1;
+    else if (offset.x > 50 || velocity.x > 500) direction = -1;
+    const next = Math.max(0, Math.min(currentSlide + direction, oldDorms.length - 1));
+    setCurrentSlide(next);
+  };
 
   const galleryImages = [
     { src: galleryImg1, caption: "Campus at Night" },
@@ -146,7 +162,6 @@ export default function CampusLifePage() {
             </div>
           </motion.div>
           <div className="space-y-16">
-            {/* New Building */}
             <div>
               <h3 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-8 text-primary">New Building (Bohou)</h3>
 
@@ -182,7 +197,7 @@ export default function CampusLifePage() {
                 ))}
               </div>
 
-              {/* Mobile - centered card matching carousel width */}
+              {/* Mobile*/}
               <div className="md:hidden flex justify-center">
                 {newDorms.map((dorm, idx) => (
                   <motion.div
@@ -251,22 +266,36 @@ export default function CampusLifePage() {
                 ))}
               </div>
 
-              {/* Mobile Carousel */}
-              <div className="md:hidden flex justify-center">
-                <Carousel baseWidth={320} loop>
+              {/* Mobile Drag Carousel */}
+              <div className="md:hidden -mx-6 overflow-hidden">
+                <motion.div
+                  className="flex gap-4 px-[10vw] cursor-grab active:cursor-grabbing touch-pan-y"
+                  drag="x"
+                  dragConstraints={{
+                    left: getSlideOffset(oldDorms.length - 1),
+                    right: 0,
+                  }}
+                  dragElastic={0.15}
+                  onDragEnd={handleDragEnd}
+                  animate={{ x: getSlideOffset(currentSlide) }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                >
                   {oldDorms.map((dorm, idx) => (
-                    <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border h-full">
-                      <div className="h-44 overflow-hidden relative">
-                        <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover" />
-                        <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full text-xs font-medium z-10">
+                    <div
+                      key={idx}
+                      className="flex-shrink-0 w-[80vw] select-none"
+                    >
+                      <div className="aspect-[4/3] overflow-hidden relative">
+                        <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover pointer-events-none" />
+                        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-medium z-10">
                           {dorm.price}
                         </div>
                       </div>
-                      <div className="p-4">
-                        <h3 className="text-base font-bold mb-3">{dorm.title}</h3>
+                      <div className="pt-4 pb-2 flex flex-col items-center">
+                        <h3 className="text-lg font-bold mb-2 text-center">{dorm.title}</h3>
                         <ul className="space-y-1.5">
                           {dorm.features.map((feature, i) => (
-                            <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
                               <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                               {feature}
                             </li>
@@ -275,7 +304,24 @@ export default function CampusLifePage() {
                       </div>
                     </div>
                   ))}
-                </Carousel>
+                </motion.div>
+                {/* Dot indicators */}
+                <div className="flex justify-center mt-4">
+                  <div className="flex gap-2.5 items-center">
+                    {oldDorms.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`rounded-full transition-all duration-200 ${
+                          currentSlide === index
+                            ? "bg-primary w-3 h-3"
+                            : "bg-primary/30 w-2.5 h-2.5"
+                        }`}
+                        onClick={() => setCurrentSlide(index)}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

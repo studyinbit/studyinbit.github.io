@@ -26,11 +26,10 @@ import ppitImg from "@/public/images/icons/ppitiongkok.webp";
 import bindImg from "@/public/images/icons/bit_indonesia.webp"
 
 export default function CommunityPage() {
-  // rAF-driven orbit animation — syncs with browser animation frame loop
-  // and smoothly ramps speed back up after tab switch instead of jumping
+  // rAF-driven orbit animation — syncs with browser animation frame loop and smoothly ramps speed back up after tab switch instead of jumping
   const orbitRef = useRef<HTMLDivElement>(null);
   const isHovering = useRef(false);
-  const hoverSpeed = useRef(1); // smoothly interpolates between 1 (normal) and 0.5 (hovered)
+  const hoverSpeed = useRef(1);
   const orbitState = useRef({
     angle: 0,
     lastTime: 0,

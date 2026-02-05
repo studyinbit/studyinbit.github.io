@@ -23,7 +23,6 @@ export function Footer() {
     <footer className="bg-white/50 border-t border-border/40 backdrop-blur-lg pt-10 md:pt-16 pb-8">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-4 md:gap-12 mb-10 md:mb-16">
-          {/* Brand */}
           <div className="md:col-span-1 space-y-3 md:space-y-4">
             <Link href="/" className="flex items-center gap-2">
               <div className="bg-primary/10 p-1.5 md:p-2 rounded-full">
@@ -38,7 +37,6 @@ export function Footer() {
 
           {/* Links + Contact row on mobile */}
           <div className="flex justify-between md:contents">
-            {/* Left side: Explore + Resources stacked */}
             <div className="space-y-4 md:space-y-0 md:contents">
               <div>
                 <h3 className="font-semibold mb-3 md:mb-4 text-xs md:text-sm uppercase tracking-wider text-foreground/80">Explore</h3>
