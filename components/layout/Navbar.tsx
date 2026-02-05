@@ -61,6 +61,7 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Link
               href="/admissions"
+              onClick={() => setIsOpen(false)}
               className="cta-button !px-3 !py-1.5 !text-xs sm:!px-5 sm:!py-2 sm:!text-sm whitespace-nowrap hidden sm:inline-flex items-center gap-1.5 sm:gap-2"
             >
               <span className="cta-glow"></span>
