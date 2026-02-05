@@ -333,7 +333,7 @@ export default function CampusLifePage() {
             <h2 className="text-3xl font-display font-bold mb-4">Life at BIT</h2>
             <p className="text-muted-foreground">Everything you need within walking distance.</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="flex flex-wrap gap-6">
             {facilities.map((item, idx) => (
               <motion.div
                 key={idx}
@@ -341,7 +341,7 @@ export default function CampusLifePage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.05 }}
-                className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-white/40 hover:bg-white/80 transition-colors"
+                className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-white/40 hover:bg-white/80 transition-colors w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1rem)]"
               >
                 <item.icon className="w-8 h-8 text-primary mb-4" />
                 <h3 className="font-bold text-lg mb-2">{item.title}</h3>
@@ -354,7 +354,7 @@ export default function CampusLifePage() {
         {/* Gallery */}
         <div>
           <h2 className="text-3xl font-display font-bold mb-12 text-center">Campus Moments</h2>
-          <div className="mb-24 columns-2 md:columns-3 gap-4 md:gap-6">
+          <div className="mb-24 flex flex-wrap gap-4 md:gap-6">
             {galleryImages.map((img, idx) => (
               <motion.div
                 key={idx}
@@ -362,7 +362,7 @@ export default function CampusLifePage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1 }}
-                className="relative rounded-2xl overflow-hidden group break-inside-avoid mb-6"
+                className="relative rounded-2xl overflow-hidden group w-[calc(50%-0.5rem)] md:w-[calc(33.333%-1rem)]"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
                 <BlurImage
