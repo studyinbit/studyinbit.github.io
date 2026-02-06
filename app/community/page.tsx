@@ -407,7 +407,7 @@ export default function CommunityPage() {
         </div>
 
         {/* Photo Gallery */}
-        <div className="mb-24">
+        <div className="mb-32">
           <h2 className="text-3xl font-display font-bold mb-12 text-center">Life at BIT</h2>
           <div className="columns-2 md:columns-3 gap-4 md:gap-6">
             {galleryImages.map((item, idx) => (

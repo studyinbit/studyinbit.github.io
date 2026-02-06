@@ -214,7 +214,7 @@ export default function FAQPage() {
         </div>
 
         {/* CTA */}
-        <div className="mt-20 text-center bg-white/50 backdrop-blur-sm border border-white/60 rounded-3xl p-12 shadow-sm">
+        <div className="mt-32 text-center bg-white/50 backdrop-blur-sm border border-white/60 rounded-3xl p-12 shadow-sm">
           <h2 className="text-2xl font-display font-bold mb-4">Still have questions?</h2>
           <p className="text-muted-foreground mb-8">
             Our student team is ready to chat. No chatbots, just real seniors.

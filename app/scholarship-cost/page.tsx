@@ -16,7 +16,7 @@ export default function ScholarshipCostPage() {
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
 
         {/* Hero */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="text-center max-w-3xl mt-28 mx-auto mb-20">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

@@ -49,11 +49,10 @@ export default function AdmissionsPage() {
         </div>
 
         {/* CRITICAL ALERT - CSCA */}
-        <motion.div
+        <motion.div className="mb-24 rounded-3xl overflow-hidden border-l-8 border-amber-500 bg-amber-50/80 backdrop-blur-sm shadow-lg"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="mb-24 rounded-3xl overflow-hidden border-l-8 border-amber-500 bg-amber-50/80 backdrop-blur-sm shadow-lg"
         >
           <div className="p-8 md:p-12">
             <div className="flex items-start gap-4 mb-6">
@@ -170,7 +169,7 @@ export default function AdmissionsPage() {
                 className={`relative md:grid md:grid-cols-2 md:gap-8 ${index === timeline.length - 1 ? "" : "mb-12"}`}
               >
                 {/* Mobile: left dot */}
-                <div className="md:hidden absolute left-[3px] top-2 w-2.5 h-2.5 rounded-full bg-primary border-2 border-white shadow-sm z-10" />
+                <div className="md:hidden absolute left-0.75 top-2 w-2.5 h-2.5 rounded-full bg-primary border-2 border-white shadow-sm z-10" />
 
                 {/* Desktop: center dot */}
                 <div className="hidden md:block absolute left-1/2 top-2 w-3 h-3 rounded-full bg-primary border-4 border-white shadow-sm -translate-x-1/2 z-10" />
