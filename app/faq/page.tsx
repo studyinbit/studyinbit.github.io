@@ -81,7 +81,7 @@ export default function FAQPage() {
         a: "English-taught programs are available. Additionally, the university provides Chinese language courses (aiming for HSK 4). Many students arrive with zero Chinese and reach conversational fluency by Year 2.",
       },
       {
-        q: "Can we afford this?",
+        q: "Is it affordable?",
         a: "BIT is very affordable compared to Western universities. Total cost (without scholarship) is ~60,000-80,000 RMB/year ($9k-12k). With scholarships (which most Indonesians get), costs drop significantly.",
       }
     ],
@@ -111,6 +111,13 @@ export default function FAQPage() {
       {
         q: "Can parents visit?",
         a: "Yes! Tourist visas are available. We recommend visiting during holidays. BIND can even help arrange a campus tour.",
+      },
+      {
+        q: "What VPN should I use?",
+        a: "While there are many VPNs such as ExpressVPN and Mullvad proven to be useful and have many positive reviews, LetsVPN is the most popular choice amongst international students and teachers.",
+      },{
+        q: "Is there Halal food?",
+        a: "Yes! BIT has a dedicated Halal Canteen where all the foods are permissible under Islamic law.",
       }
     ]
   };
