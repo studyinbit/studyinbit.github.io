@@ -58,7 +58,7 @@ export default function Home() {
       insightDescription: "Being on the cusp of the Top 100 globally signals immense research productivity."
     }
   ];
-
+  
   return (
     <div className="relative overflow-hidden">
       {/* Animated Breathing Background Blobs */}
@@ -67,7 +67,7 @@ export default function Home() {
       <GradientBlob variant="accent" className="bottom-0 left-1/4 w-[400px] h-[400px] opacity-20" delay={4} />
 
       {/* Hero Section */}
-      <section className="relative pt-28 pb-20 md:pt-22 md:pb-20 px-6">
+      <section className="relative pt-28 pb-32 px-6">
         <div className="container mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
 
@@ -157,7 +157,7 @@ export default function Home() {
 
       
 
-      <section className="py-12 px-6 relative">
+      <section className="pb-32 px-6 relative">
         <div className="container mx-auto max-w-6xl">
           {/* Rankings Table */}
           <div className="mb-12">
@@ -286,7 +286,7 @@ export default function Home() {
               </motion.div>
             </div>
             <div className="order-1 md:order-2">
-              <h2 className="text-3xl font-display font-bold mb-6">China{" "}
+              <h2 className="text-3xl font-display font-bold mb-6">China is{" "}
                 <span className="text-primary">
                 <ShinyText
                 text="the Future"
@@ -300,7 +300,7 @@ export default function Home() {
                 </span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                China is not just the world&apos;s factory; it is becoming the world&apos;s laboratory. Speaking Chinese is no longer just a &quot;nice-to-have&quot;—it is a critical career asset for the next 50 years.
+                China has shown that it is not just the world&apos;s factory; It is becoming the world&apos;s laboratory. Speaking Chinese is no longer just a &quot;language&quot; but a critical career asset for the next 50 years.
               </p>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
