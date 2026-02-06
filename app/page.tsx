@@ -31,34 +31,6 @@ export default function Home() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   };
 
-  // Metrics data for responsive rendering (ordered by best ranking first)
-  const metricsData = [
-    {
-      metric: "QS Graduate Employability",
-      rankValue: "9",
-      rankSuffix: "th",
-      rankColor: "emerald",
-      insightTitle: "Career-Ready Graduates",
-      insightDescription: "BIT graduates are valued higher by employers than graduates from \"higher ranked\" but less practical universities."
-    },
-    {
-      metric: "NTU Ranking (Engineering)",
-      rankValue: "14",
-      rankSuffix: "th",
-      rankColor: "emerald",
-      insightTitle: "Engineering Excellence",
-      insightDescription: "In pure engineering output, BIT is a global top-15 institution, outranking many Ivy League schools."
-    },
-    {
-      metric: "ARWU (Shanghai Ranking) 2025",
-      rankValue: "102",
-      rankSuffix: "nd",
-      rankColor: "default",
-      insightTitle: "Global Research Impact",
-      insightDescription: "Being on the cusp of the Top 100 globally signals immense research productivity."
-    }
-  ];
-  
   return (
     <div className="relative overflow-hidden">
       {/* Animated Breathing Background Blobs */}
@@ -159,28 +131,38 @@ export default function Home() {
 
       <section className="pb-32 px-6 relative">
         <div className="container mx-auto max-w-6xl">
-          {/* Rankings Table */}
-          <div className="mb-12">
+          {/* Video Introduction */}
+          <div className="mb-32">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-display font-bold mb-4">Why BIT?</h2>
-              <ShinyText
-                text="More Reasons to Choose BIT"
-                speed={3}
-                delay={1}
-                color="#1a1b1aff"
-                shineColor="#cfd8ccff"
-                spread={120}
-                className="text-xs font-medium uppercase tracking-wider mb-4"
-              />
             </div>
 
-            {/* Rankings Table */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5 }}
               className="overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
+            >
+              <video
+                className="w-full h-auto aspect-video"
+                controls
+                playsInline
+                preload="metadata"
+                poster=""
+              >
+                <source src="/video/VideoIntroduction.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </motion.div>
+
+            {/* Rankings Table */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="mt-12 overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
             >
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -191,15 +173,17 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/50">
-                  {metricsData.map((metric, index) => (
+                  {[
+                    { metric: "QS Graduate Employability", rank: "#9", color: "text-emerald-600", title: "Career-Ready Graduates", desc: "BIT graduates are valued higher by employers than graduates from \"higher ranked\" but less practical universities." },
+                    { metric: "NTU Ranking (Engineering)", rank: "#14", color: "text-emerald-600", title: "Engineering Excellence", desc: "In pure engineering output, BIT is a global top-15 institution, outranking many Ivy League schools." },
+                    { metric: "ARWU (Shanghai Ranking) 2025", rank: "#102", color: "", title: "Global Research Impact", desc: "Being on the cusp of the Top 100 globally signals immense research productivity." },
+                  ].map((item, index) => (
                     <tr key={index} className="hover:bg-white/40 transition-colors">
-                      <td className="p-3 sm:p-6 font-medium text-xs sm:text-base">{metric.metric}</td>
-                      <td className={`p-3 sm:p-6 font-bold text-sm sm:text-xl ${metric.rankColor === 'emerald' ? 'text-emerald-600' : ''}`}>
-                        #{metric.rankValue}
-                      </td>
+                      <td className="p-3 sm:p-6 font-medium text-xs sm:text-base">{item.metric}</td>
+                      <td className={`p-3 sm:p-6 font-bold text-sm sm:text-xl ${item.color}`}>{item.rank}</td>
                       <td className="p-3 sm:p-6 text-muted-foreground text-[10px] sm:text-sm leading-relaxed">
-                        <strong className="text-foreground block mb-0.5 sm:mb-1 text-xs sm:text-sm">{metric.insightTitle}</strong>
-                        <span className="hidden sm:inline">{metric.insightDescription}</span>
+                        <strong className="text-foreground block mb-0.5 sm:mb-1 text-xs sm:text-sm">{item.title}</strong>
+                        <span className="hidden sm:inline">{item.desc}</span>
                       </td>
                     </tr>
                   ))}
