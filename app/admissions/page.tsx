@@ -53,44 +53,44 @@ export default function AdmissionsPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="mb-24 rounded-3xl overflow-hidden border-l-8 border-amber-500 bg-amber-50/80 backdrop-blur-sm shadow-lg"
+          className="mb-16 md:mb-24 rounded-2xl md:rounded-3xl overflow-hidden border-l-4 md:border-l-8 border-amber-500 bg-amber-50/80 backdrop-blur-sm shadow-lg"
         >
-          <div className="p-8 md:p-12">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="bg-amber-100 p-3 rounded-full text-amber-600 shrink-0">
-                <AlertTriangle className="w-8 h-8" />
+          <div className="p-5 md:p-12">
+            <div className="flex items-start gap-3 md:gap-4 mb-4 md:mb-6">
+              <div className="bg-amber-100 p-2 md:p-3 rounded-full text-amber-600 shrink-0">
+                <AlertTriangle className="w-5 h-5 md:w-8 md:h-8" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-amber-900 mb-2">CRITICAL UPDATE: 2026 Admissions Change</h2>
-                <p className="text-amber-800/80 text-lg">
+                <h2 className="text-lg md:text-2xl font-bold text-amber-900 mb-1 md:mb-2">CRITICAL UPDATE: 2026 Admissions Change</h2>
+                <p className="text-amber-800/80 text-sm md:text-lg">
                   The <strong>China Scholastic Competency Assessment (CSCA)</strong> is now the standard for international admissions and scholarship ranking.
                 </p>
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 mt-8">
-              <div className="bg-white/60 p-6 rounded-2xl border border-amber-200/50">
-                <h3 className="font-bold text-amber-900 mb-2">The Exam</h3>
-                <p className="text-sm text-amber-800/70">Mathematics (Mandatory) + Physics OR Chemistry. Multiple choice & problem solving.</p>
+            <div className="grid md:grid-cols-3 gap-3 md:gap-6 mt-5 md:mt-8">
+              <div className="bg-white/60 p-4 md:p-6 rounded-xl md:rounded-2xl border border-amber-200/50">
+                <h3 className="font-bold text-amber-900 text-sm md:text-base mb-1 md:mb-2">The Exam</h3>
+                <p className="text-xs md:text-sm text-amber-800/70">Mathematics (Mandatory) + Physics OR Chemistry. Multiple choice & problem solving.</p>
               </div>
-              <div className="bg-white/60 p-6 rounded-2xl border border-amber-200/50">
-                <h3 className="font-bold text-amber-900 mb-2">Why It Matters</h3>
-                <p className="text-sm text-amber-800/70">Scores determine your scholarship tier (CSC Type A vs B). High score = Better coverage.</p>
+              <div className="bg-white/60 p-4 md:p-6 rounded-xl md:rounded-2xl border border-amber-200/50">
+                <h3 className="font-bold text-amber-900 text-sm md:text-base mb-1 md:mb-2">Why It Matters</h3>
+                <p className="text-xs md:text-sm text-amber-800/70">Scores determine your scholarship tier (CSC Type A vs B). High score = Better coverage.</p>
               </div>
-              <div className="bg-white/60 p-6 rounded-2xl border border-amber-200/50 flex flex-col justify-between">
+              <div className="bg-white/60 p-4 md:p-6 rounded-xl md:rounded-2xl border border-amber-200/50 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-bold text-amber-900 mb-2">Action Plan</h3>
-                  <p className="text-sm text-amber-800/70">Focus on Calculus & Mechanics. Download sample papers below.</p>
+                  <h3 className="font-bold text-amber-900 text-sm md:text-base mb-1 md:mb-2">Action Plan</h3>
+                  <p className="text-xs md:text-sm text-amber-800/70">Focus on Calculus & Mechanics. Download sample papers below.</p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-               <Button variant="outline" className="border-amber-200 hover:bg-amber-100 text-amber-900">
-                 <Download className="w-4 h-4 mr-2" /> Download Syllabus
+            <div className="mt-5 md:mt-8 flex flex-wrap gap-2 md:gap-4">
+               <Button variant="outline" className="border-amber-200 hover:bg-amber-100 text-amber-900 text-xs md:text-sm px-3 md:px-4 py-2">
+                 <Download className="w-3 h-3 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Download Syllabus
                </Button>
-               <Button variant="outline" className="border-amber-200 hover:bg-amber-100 text-amber-900">
-                 <Download className="w-4 h-4 mr-2" /> Sample CSCA Papers
+               <Button variant="outline" className="border-amber-200 hover:bg-amber-100 text-amber-900 text-xs md:text-sm px-3 md:px-4 py-2">
+                 <Download className="w-3 h-3 md:w-4 md:h-4 mr-1.5 md:mr-2" /> Sample CSCA Papers
                </Button>
             </div>
           </div>

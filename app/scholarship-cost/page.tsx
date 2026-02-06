@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { CostCalculator } from "@/components/features/CostCalculator";
 import { ScholarshipInfoCard } from "@/components/features/ScholarshipInfoCard";
+import { ScholarshipCarousel } from "@/components/features/ScholarshipCarousel";
 import { PageSegue } from "@/components/ui/PageSegue";
 import { siteContent } from "@/lib/content";
 
@@ -43,10 +44,16 @@ export default function ScholarshipCostPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Desktop Grid */}
+          <div className="hidden md:grid md:grid-cols-2 gap-6">
             {siteContent.scholarshipInfo.map((scholarship, idx) => (
               <ScholarshipInfoCard key={scholarship.id} scholarship={scholarship} index={idx} />
             ))}
+          </div>
+
+          {/* Mobile Carousel */}
+          <div className="md:hidden">
+            <ScholarshipCarousel scholarships={siteContent.scholarshipInfo} />
           </div>
         </div>
 
