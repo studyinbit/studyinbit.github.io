@@ -62,12 +62,10 @@ type MobileNetworkNode = {
   alt: string;
   handle: string;
   url: string;
-  phaseOffset: number;
 };
 
 type MobileNetworkLogoProps = {
   logo: MobileNetworkNode;
-  index: number;
 };
 
 function FloatingNetworkLogo({ logo, baseX, baseY, cursorX, cursorY, pointerActive }: FloatingNetworkLogoProps) {
@@ -153,43 +151,20 @@ function FloatingNetworkLogo({ logo, baseX, baseY, cursorX, cursorY, pointerActi
   );
 }
 
-function MobileNetworkLogo({ logo, index }: MobileNetworkLogoProps) {
-  const prefersReducedMotion = useReducedMotion();
-
+function MobileNetworkLogo({ logo }: MobileNetworkLogoProps) {
   return (
-    <motion.a
+    <a
       href={logo.url}
       target="_blank"
       rel="noopener noreferrer"
       className="relative z-10 block w-[76px] h-[76px] rounded-full bg-white p-2.5 shadow-[0_10px_26px_rgba(15,23,42,0.26)] overflow-hidden"
-      initial={{ opacity: 0, y: 8, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-20px" }}
-      whileTap={{ scale: 1.05 }}
-      animate={prefersReducedMotion ? undefined : { y: [0, -2, 0] }}
-      style={{ willChange: "transform" }}
-      transition={
-        prefersReducedMotion
-          ? { delay: index * 0.08, duration: 0.32 }
-          : {
-              y: {
-                duration: 4.8 + index * 0.45,
-                ease: "easeInOut",
-                repeat: Infinity,
-                delay: logo.phaseOffset * 1.6,
-              },
-              delay: index * 0.08,
-              duration: 0.32,
-            }
-      }
     >
       <BlurImage src={logo.src} alt={logo.alt} className="rounded-full object-contain" fill sizes="76px" />
-    </motion.a>
+    </a>
   );
 }
 
 export default function CommunityPage() {
-  const prefersReducedMotion = useReducedMotion();
   const networkRef = useRef<HTMLDivElement>(null);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
@@ -321,21 +296,18 @@ export default function CommunityPage() {
       alt: "BIND",
       handle: "@bit_indonesia",
       url: "https://www.instagram.com/bit_indonesia/",
-      phaseOffset: 0.12,
     },
     {
       src: permitImg,
       alt: "PERMIT Beijing",
       handle: "@permitbeijing",
       url: "https://www.instagram.com/permitbeijing/",
-      phaseOffset: 0.48,
     },
     {
       src: ppitImg,
       alt: "PPIT Tiongkok",
       handle: "@ppitiongkok",
       url: "https://www.instagram.com/ppitiongkok/",
-      phaseOffset: 0.78,
     },
   ];
 
@@ -569,18 +541,16 @@ export default function CommunityPage() {
               <div className="relative rounded-[1.5rem] border border-white/15 bg-white/[0.04] backdrop-blur-sm p-5">
                 <div className="absolute left-9 right-9 top-1/2 -translate-y-1/2 h-px bg-gradient-to-r from-white/10 via-white/35 to-white/10" />
                 <div className="relative z-10 grid grid-cols-3 gap-4 place-items-center">
-                  {mobileNetworkNodes.map((logo, index) => (
-                    <MobileNetworkLogo key={logo.handle} logo={logo} index={index} />
+                  {mobileNetworkNodes.map((logo) => (
+                    <MobileNetworkLogo key={logo.handle} logo={logo} />
                   ))}
                 </div>
               </div>
-              <motion.p
+              <p
                 className="mt-4 text-[11px] text-center text-slate-300/90 tracking-wide"
-                animate={prefersReducedMotion ? undefined : { opacity: [0.82, 1, 0.82] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
               >
                 Tap any logo to open Instagram.
-              </motion.p>
+              </p>
             </div>
           </div>
         </div>
