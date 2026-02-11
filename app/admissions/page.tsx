@@ -5,6 +5,7 @@ import { AlertTriangle, CheckCircle2, Download, BookOpen, GraduationCap } from "
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+import { SquareArrowTopRight } from "@/components/ui/SquareArrowTopRight";
 import Link from "next/link";
 
 export default function AdmissionsPage() {
@@ -79,7 +80,7 @@ export default function AdmissionsPage() {
               </div>
               <div className="bg-white/60 p-4 md:p-6 rounded-xl md:rounded-2xl border border-amber-200/50 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-bold text-amber-900 text-sm md:text-base mb-1 md:mb-2">Action Plan</h3>
+                  <h3 className="font-bold text-amber-900 text-sm md:text-base mb-1 md:mb-2">What To Do?</h3>
                   <p className="text-xs md:text-sm text-amber-800/70">Focus on Calculus & Mechanics. Download sample papers below.</p>
                 </div>
               </div>
@@ -137,18 +138,25 @@ export default function AdmissionsPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-24 text-center bg-white/50 backdrop-blur-md border border-white/60 rounded-3xl p-10 shadow-sm"
+          className="mb-24 text-center"
         >
-          <h2 className="text-2xl font-display font-bold mb-3">Scholarships & Costs</h2>
-          <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">Scholarships & Costs</h2>
+          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
             Explore available scholarships and use our cost calculator to estimate your annual investment.
           </p>
-          <Link
-            href="/scholarship-cost"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white font-semibold hover:bg-primary/90 transition-colors"
-          >
-            View Scholarships & Cost Calculator
-          </Link>
+          <div className="flex justify-center">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="group rounded-full px-8 py-6 text-lg bg-white text-foreground hover:bg-gray-100 hover:text-foreground shadow-lg border border-border transition-colors"
+            >
+              <Link href="/scholarship-cost" className="flex items-center gap-2">
+                View Scholarships & Cost Calculator
+                <SquareArrowTopRight />
+              </Link>
+            </Button>
+          </div>
         </motion.div>
 
         {/* Timeline */}

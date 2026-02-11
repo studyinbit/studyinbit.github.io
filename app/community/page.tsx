@@ -185,29 +185,29 @@ export default function CommunityPage() {
       title: "Academic Support",
       icon: BookOpen,
       desc: "Weekly group study sessions, senior mentorship, and exam prep workshops. No one falls behind.",
-      quote: "\"The Iron Triangle (Math, Physics, Programming) is tough. But with BIND study groups, no one gets left behind.\"",
-      author: "Sarah, CS Year 2"
+      // quote: "\"The Iron Triangle (Math, Physics, Programming) is tough. But with BIND study groups, no one gets left behind.\"",
+      // author: "Sarah, CS Year 2"
     },
     {
       title: "Career Integration",
       icon: Briefcase,
-      desc: "Job fairs for Indonesian students, resume workshops, and direct connections to alumni at Huawei & BYD.",
-      quote: "\"I got my internship at Huawei through a BIND alumni connection.\"",
-      author: "Budi, EE Year 3"
+      desc: "Job fairs for Indonesian students, resume workshops, and direct connections to alumni & seniors.",
+      // quote: "\"I got my internship at Huawei through a BIND alumni connection.\"",
+      // author: "Budi, EE Year 3"
     },
     {
-      title: "Community & Culture",
+      title: "Calture",
       icon: Heart,
-      desc: "Indonesian Independence Day celebrations, e-sports tournaments, movie nights, and weekend food gatherings.",
-      quote: "\"It really feels like a second home. The masak bareng (cooking together) sessions are the highlight of my week.\"",
-      author: "Putri,  Year 1"
+      desc: "Join our special Cultural Days to wear your national dress with pride, share the flavors of home, and bond over games.",
+      // quote: "\"It really feels like a second home. The masak bareng (cooking together) sessions are the highlight of my week.\"",
+      // author: "Putri,  Year 1"
     },
     {
       title: "Arrival Support",
       icon: Plane,
       desc: "Airport pickup, dorm setup assistance, SIM card registration, and a 'Zero-Stress' landing experience.",
-      quote: "\"I was so nervous about arriving alone, but the BIND team was waiting for me at the dorm with snacks!\"",
-      author: "Rizky, Year 1"
+      // quote: "\"I was so nervous about arriving alone, but the BIND team was waiting for me at the dorm with snacks!\"",
+      // author: "Rizky, Year 1"
     }
   ];
 
@@ -370,13 +370,13 @@ export default function CommunityPage() {
                 <pillar.icon className="w-4 h-4 md:w-6 md:h-6 text-primary" />
               </div>
               <h3 className="text-sm md:text-2xl font-bold font-display mb-1.5 md:mb-3">{pillar.title}</h3>
-              <p className="text-xs md:text-base text-muted-foreground mb-3 md:mb-6 leading-relaxed">
+              <p className="text-xs md:text-base text-muted-foreground leading-relaxed">
                 {pillar.desc}
               </p>
-              <blockquote className="border-l-2 md:border-l-4 border-primary/20 pl-2.5 md:pl-4 italic text-[10px] md:text-sm text-muted-foreground">
+              {/* <blockquote className="border-l-2 md:border-l-4 border-primary/20 pl-2.5 md:pl-4 italic text-[10px] md:text-sm text-muted-foreground">
                 {pillar.quote}
                 <footer className="mt-1 md:mt-2 font-semibold text-foreground not-italic text-[10px] md:text-sm">— {pillar.author}</footer>
-              </blockquote>
+              </blockquote> */}
             </motion.div>
           ))}
         </motion.div>

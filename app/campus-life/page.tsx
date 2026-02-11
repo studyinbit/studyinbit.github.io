@@ -31,7 +31,7 @@ export default function CampusLifePage() {
     { title: "2,500 Seat Library", icon: MapPin, desc: "A massive, modern library with private study pods and group rooms." },
     { title: "North Canteen", icon: Utensils, desc: "Famous in Beijing. 4 floors of incredible, affordable food." },
     { title: "Campus Coffee", icon: Coffee, desc: "Multiple cafes for your morning espresso or late-night study fuel." },
-    { title: "Campus WiFi", icon: Wifi, desc: "High-speed edu-roam access across the entire campus." },
+    { title: "Campus Internet", icon: Wifi, desc: "High-speed WiFi access across the entire campus, with LAN available in dorms." },
     { title: "Shuttle Bus", icon: Bus, desc: "Regular shuttles to the subway and central Beijing campus." },
     { title: "Bike Sharing", icon: Bike, desc: "Grab a bike anywhere to get to class in 5 minutes." },
   ];

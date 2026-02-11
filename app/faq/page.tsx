@@ -69,8 +69,8 @@ export default function FAQPage() {
       {
         q: "Will my child be safe in China?",
         a: "Yes. Beijing is one of the safest major cities globally with low crime rates. The campus has 24/7 security and controlled dorm access. The BIND community also acts as a social safety net, ensuring no student is isolated.",
-        quote: "I've never felt unsafe on campus. My parents were worried at first, but after visiting, they were impressed by the security.",
-        author: "Dina, Year 2"
+        // quote: "I've never felt unsafe on campus. My parents were worried at first, but after visiting, they were impressed by the security.",
+        // author: "Dina, Year 2"
       },
       {
         q: "Will my child be isolated?",
@@ -92,7 +92,7 @@ export default function FAQPage() {
       },
       {
         q: "Is the food good?",
-        a: "BIT is famous for its food. The North Canteen has 4 floors of diverse options. There is also a dedicated Muslim canteen with Halal food. You will not go hungry!",
+        a: "BIT is famous for its good value and diverse foods. The North Canteen alone has 4 floors featuring many different foods. There is also a dedicated Muslim canteen with Halal food. You will not go hungry!",
       },
       {
         q: "Can I access Instagram/WhatsApp?",
@@ -110,11 +110,11 @@ export default function FAQPage() {
       },
       {
         q: "Can parents visit?",
-        a: "Yes! Tourist visas are available. We recommend visiting during holidays. BIND can even help arrange a campus tour.",
+        a: "Yes! However they may not be allowed stay overnight in campus.",
       },
       {
         q: "What VPN should I use?",
-        a: "While there are many VPNs such as ExpressVPN and Mullvad proven to be useful and have many positive reviews, LetsVPN is the most popular choice amongst international students and teachers.",
+        a: "While there are many global & Chinese based VPNs, LetsVPN is the most popular choice amongst international students and teachers. For those willing to put up with more complexity or better value or flexibility you can look into local options (机场VPN; not a name).",
       },{
         q: "Is there Halal food?",
         a: "Yes! BIT has a dedicated Halal Canteen where all the foods are permissible under Islamic law.",

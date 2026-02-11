@@ -129,7 +129,7 @@ export default function Home() {
 
       
 
-      <section className="pb-32 px-6 relative">
+      <section className="pb-20 px-6 relative">
         <div className="container mx-auto max-w-6xl">
           {/* Video Introduction */}
           <div className="mb-32">
