@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { useRef, useState, type MouseEvent } from "react";
+import { motion, useAnimationFrame, useMotionValue, useReducedMotion, useTransform, type MotionValue } from "framer-motion";
+import Image, { type StaticImageData } from "next/image";
 import { BlurImage } from "@/components/ui/blur-image";
 import { Users, BookOpen, Briefcase, Heart, Plane, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,69 +23,177 @@ import galleryImg10 from "@/public/images/uni/BBB_englishtaught.jpg";
 
 import permitImg from "@/public/images/icons/permitbeijing.webp";
 import ppitImg from "@/public/images/icons/ppitiongkok.webp";
-import bindImg from "@/public/images/icons/bit_indonesia.webp"
+import bindImg from "@/public/images/icons/bit_indonesia.webp";
 
-export default function CommunityPage() {
-  // rAF-driven orbit animation — syncs with browser animation frame loop and smoothly ramps speed back up after tab switch instead of jumping
-  const orbitRef = useRef<HTMLDivElement>(null);
-  const isHovering = useRef(false);
-  const hoverSpeed = useRef(1);
-  const orbitState = useRef({
-    angle: 0,
-    lastTime: 0,
-    speedMultiplier: 1,
-    rampStart: 0,
-    isRamping: false,
+const NETWORK_WIDTH = 448;
+const NETWORK_HEIGHT = 336;
+const NETWORK_CENTER_X = NETWORK_WIDTH / 2;
+const NETWORK_CENTER_Y = NETWORK_HEIGHT / 2;
+const NETWORK_RING_RADIUS = 100;
+const NETWORK_ICON_SIZE = 106;
+const NETWORK_ICON_HALF = NETWORK_ICON_SIZE / 2;
+
+type NetworkLogo = {
+  src: StaticImageData;
+  alt: string;
+  handle: string;
+  url: string;
+  angle: number;
+  radius: number;
+  depth: number;
+  floatX: number;
+  floatY: number;
+  tilt: number;
+  duration: number;
+  phaseOffset: number;
+};
+
+type FloatingNetworkLogoProps = {
+  logo: NetworkLogo;
+  baseX: number;
+  baseY: number;
+  cursorX: MotionValue<number>;
+  cursorY: MotionValue<number>;
+  pointerActive: MotionValue<number>;
+};
+
+type MobileNetworkNode = {
+  src: StaticImageData;
+  alt: string;
+  handle: string;
+  url: string;
+  phaseOffset: number;
+};
+
+type MobileNetworkLogoProps = {
+  logo: MobileNetworkNode;
+  index: number;
+};
+
+function FloatingNetworkLogo({ logo, baseX, baseY, cursorX, cursorY, pointerActive }: FloatingNetworkLogoProps) {
+  const prefersReducedMotion = useReducedMotion();
+  const [isHovered, setIsHovered] = useState(false);
+  const phase = useRef(logo.phaseOffset * Math.PI * 2);
+  const floatOffsetX = useMotionValue(0);
+  const floatOffsetY = useMotionValue(0);
+  const floatRotate = useMotionValue(0);
+  const pullOffsetX = useMotionValue(0);
+  const pullOffsetY = useMotionValue(0);
+  const x = useTransform(() => floatOffsetX.get() + pullOffsetX.get());
+  const y = useTransform(() => floatOffsetY.get() + pullOffsetY.get());
+
+  useAnimationFrame((_, delta) => {
+    const dt = Math.min(delta, 40) / 1000;
+
+    if (!prefersReducedMotion && !isHovered) {
+      phase.current += (Math.PI * 2 * dt) / logo.duration;
+      floatOffsetX.set(Math.sin(phase.current) * logo.floatX);
+      floatOffsetY.set(Math.cos(phase.current * 0.92) * logo.floatY);
+      floatRotate.set(Math.sin(phase.current * 0.75) * logo.tilt);
+    }
+
+    if (isHovered) {
+      return;
+    }
+
+    const shouldPull = !prefersReducedMotion && pointerActive.get() > 0.5;
+    let targetX = 0;
+    let targetY = 0;
+
+    if (shouldPull) {
+      const currentX = baseX + floatOffsetX.get();
+      const currentY = baseY + floatOffsetY.get();
+      const dx = cursorX.get() - currentX;
+      const dy = cursorY.get() - currentY;
+      const distance = Math.hypot(dx, dy);
+      const influence = Math.max(0, 1 - distance / 220);
+      const maxPull = 11 * logo.depth;
+
+      targetX = Math.max(-maxPull, Math.min(maxPull, dx * 0.08 * influence));
+      targetY = Math.max(-maxPull, Math.min(maxPull, dy * 0.08 * influence));
+    }
+
+    pullOffsetX.set(pullOffsetX.get() + (targetX - pullOffsetX.get()) * 0.2);
+    pullOffsetY.set(pullOffsetY.get() + (targetY - pullOffsetY.get()) * 0.2);
   });
 
-  useEffect(() => {
-    const state = orbitState.current;
-    const SPEED = 30; // deg/s — (360 / SPEED = seconds per rotation)
-    const RAMP_DURATION = 1400; // ms to reach full speed after tab switch
-    let rafId: number;
+  return (
+    <motion.div
+      className="absolute"
+      style={{
+        left: `${baseX - NETWORK_ICON_HALF}px`,
+        top: `${baseY - NETWORK_ICON_HALF}px`,
+        x,
+        y,
+      }}
+    >
+      <motion.a
+        href={logo.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block w-[106px] h-[106px] rounded-full bg-white p-3 shadow-lg overflow-visible group/logo cursor-pointer"
+        onHoverStart={() => setIsHovered(true)}
+        onHoverEnd={() => setIsHovered(false)}
+        style={{ rotate: floatRotate }}
+        whileHover={{
+          scale: 1.06,
+          boxShadow: "0 16px 36px rgba(15, 23, 42, 0.28)",
+        }}
+      >
+        <div className="w-full h-full rounded-full overflow-hidden relative">
+          <BlurImage src={logo.src} alt={logo.alt} className="rounded-full object-contain" fill sizes="106px" />
+        </div>
+        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/logo:opacity-100 transition-opacity duration-200 pointer-events-none">
+          <span className="bg-white/90 backdrop-blur-sm text-slate-900 text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-md">
+            {logo.handle}
+          </span>
+        </div>
+      </motion.a>
+    </motion.div>
+  );
+}
 
-    const animate = (timestamp: number) => {
-      if (!state.lastTime) {
-        state.lastTime = timestamp;
-        rafId = requestAnimationFrame(animate);
-        return;
+function MobileNetworkLogo({ logo, index }: MobileNetworkLogoProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <motion.a
+      href={logo.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="relative z-10 block w-[76px] h-[76px] rounded-full bg-white p-2.5 shadow-[0_10px_26px_rgba(15,23,42,0.26)] overflow-hidden"
+      initial={{ opacity: 0, y: 8, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-20px" }}
+      whileTap={{ scale: 1.05 }}
+      animate={prefersReducedMotion ? undefined : { y: [0, -2, 0] }}
+      style={{ willChange: "transform" }}
+      transition={
+        prefersReducedMotion
+          ? { delay: index * 0.08, duration: 0.32 }
+          : {
+              y: {
+                duration: 4.8 + index * 0.45,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: logo.phaseOffset * 1.6,
+              },
+              delay: index * 0.08,
+              duration: 0.32,
+            }
       }
+    >
+      <BlurImage src={logo.src} alt={logo.alt} className="rounded-full object-contain" fill sizes="76px" />
+    </motion.a>
+  );
+}
 
-      const dt = timestamp - state.lastTime;
-      state.lastTime = timestamp;
-
-      if (dt > 200) {
-        state.isRamping = true;
-        state.rampStart = timestamp;
-        state.speedMultiplier = 0;
-      }
-
-      if (state.isRamping) {
-        const p = Math.min((timestamp - state.rampStart) / RAMP_DURATION, 1);
-        state.speedMultiplier = p * p * (3 - 2 * p);
-        if (p >= 1) {
-          state.isRamping = false;
-          state.speedMultiplier = 1;
-        }
-      }
-
-      // Smoothly lerp hover speed (50% slowdown on hover)
-      const hoverTarget = isHovering.current ? 0.5 : 1;
-      hoverSpeed.current += (hoverTarget - hoverSpeed.current) * 0.08;
-
-      const effectiveDt = Math.min(dt, 50);
-      state.angle = (state.angle + SPEED * state.speedMultiplier * hoverSpeed.current * (effectiveDt / 1000)) % 360;
-
-      if (orbitRef.current) {
-        orbitRef.current.style.setProperty("--orbit-angle", `${state.angle}deg`);
-      }
-
-      rafId = requestAnimationFrame(animate);
-    };
-
-    rafId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
+export default function CommunityPage() {
+  const prefersReducedMotion = useReducedMotion();
+  const networkRef = useRef<HTMLDivElement>(null);
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+  const pointerActive = useMotionValue(0);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -161,6 +269,90 @@ export default function CommunityPage() {
     { src: galleryImg9, caption: "BIND BBB Chinese-taught Community Study" },
     { src: galleryImg10, caption: "BIND BBB English-taught Community Study" },
   ];
+
+  const networkLogos: NetworkLogo[] = [
+    {
+      src: bindImg,
+      alt: "BIND",
+      handle: "@bit_indonesia",
+      url: "https://www.instagram.com/bit_indonesia/",
+      angle: -90,
+      radius: NETWORK_RING_RADIUS,
+      depth: 0.68,
+      floatX: 3.8,
+      floatY: 5.5,
+      tilt: 1.2,
+      duration: 8,
+      phaseOffset: 0.12,
+    },
+    {
+      src: permitImg,
+      alt: "PERMIT Beijing",
+      handle: "@permitbeijing",
+      url: "https://www.instagram.com/permitbeijing/",
+      angle: 30,
+      radius: NETWORK_RING_RADIUS,
+      depth: 0.9,
+      floatX: 4.3,
+      floatY: 6,
+      tilt: 1.45,
+      duration: 8.6,
+      phaseOffset: 0.48,
+    },
+    {
+      src: ppitImg,
+      alt: "PPIT Tiongkok",
+      handle: "@ppitiongkok",
+      url: "https://www.instagram.com/ppitiongkok/",
+      angle: 150,
+      radius: NETWORK_RING_RADIUS,
+      depth: 0.8,
+      floatX: 4,
+      floatY: 5.8,
+      tilt: 1.3,
+      duration: 8.2,
+      phaseOffset: 0.78,
+    },
+  ];
+
+  const mobileNetworkNodes: MobileNetworkNode[] = [
+    {
+      src: bindImg,
+      alt: "BIND",
+      handle: "@bit_indonesia",
+      url: "https://www.instagram.com/bit_indonesia/",
+      phaseOffset: 0.12,
+    },
+    {
+      src: permitImg,
+      alt: "PERMIT Beijing",
+      handle: "@permitbeijing",
+      url: "https://www.instagram.com/permitbeijing/",
+      phaseOffset: 0.48,
+    },
+    {
+      src: ppitImg,
+      alt: "PPIT Tiongkok",
+      handle: "@ppitiongkok",
+      url: "https://www.instagram.com/ppitiongkok/",
+      phaseOffset: 0.78,
+    },
+  ];
+
+  const handleNetworkMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+    if (!networkRef.current) {
+      return;
+    }
+
+    const rect = networkRef.current.getBoundingClientRect();
+    cursorX.set(event.clientX - rect.left);
+    cursorY.set(event.clientY - rect.top);
+    pointerActive.set(1);
+  };
+
+  const resetNetworkPull = () => {
+    pointerActive.set(0);
+  };
 
   return (
     <div className="relative overflow-hidden min-h-screen pt-32">
@@ -273,7 +465,7 @@ export default function CommunityPage() {
         </div>
 
         {/* Community Network */}
-        {/* Desktop version - card with rotating orbit */}
+        {/* Desktop version - organic floating logos with subtle pointer pull */}
         <div className="hidden md:block bg-gradient-to-r from-slate-900 from-40% to-slate-100 text-white rounded-[2.5rem] p-12 mb-32 relative overflow-hidden">
           <GradientBlob variant="cool" className="opacity-50" />
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
@@ -303,57 +495,49 @@ export default function CommunityPage() {
                 </Button>
               </div>
             </div>
-            {/* Rotating orbit logos */}
+            {/* Ring-structured logos with micro-float motion */}
             <div
               className="flex items-center justify-center -mt-6"
-              onMouseEnter={() => { isHovering.current = true; }}
-              onMouseLeave={() => { isHovering.current = false; }}
+              onMouseMove={handleNetworkMouseMove}
+              onMouseLeave={resetNetworkPull}
             >
-              <div className="relative w-80 h-80">
+              <div ref={networkRef} className="relative w-[28rem] h-[21rem]">
                 <div
-                  ref={orbitRef}
-                  className="absolute inset-0"
-                  style={{ transform: "rotate(var(--orbit-angle, 0deg))" }}
-                >
-                  {[
-                    { src: bindImg, alt: "BIND", handle: "@bit_indonesia", url: "https://www.instagram.com/bit_indonesia/", angle: 0 },
-                    { src: permitImg, alt: "PERMIT Beijing", handle: "@permitbeijing", url: "https://www.instagram.com/permitbeijing/", angle: 120 },
-                    { src: ppitImg, alt: "PPIT Tiongkok", handle: "@ppitiongkok", url: "https://www.instagram.com/ppitiongkok/", angle: 240 },
-                  ].map((logo, idx) => {
-                    const rad = (logo.angle * Math.PI) / 180;
-                    const x = Math.round(Math.cos(rad) * 110);
-                    const y = Math.round(Math.sin(rad) * 110);
-                    return (
-                      <a
-                        key={idx}
-                        href={logo.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute w-[106px] h-[106px] rounded-full bg-white p-3 shadow-lg overflow-visible group/logo cursor-pointer hover:scale-[1.2] transition-[scale] duration-200"
-                        style={{
-                          left: `calc(50% + ${x}px - 53px)`,
-                          top: `calc(50% + ${y}px - 53px)`,
-                          transform: "rotate(calc(-1 * var(--orbit-angle, 0deg)))",
-                        }}
-                      >
-                        <div className="w-full h-full rounded-full overflow-hidden relative">
-                          <BlurImage src={logo.src} alt={logo.alt} className="rounded-full object-contain" fill sizes="106px" />
-                        </div>
-                        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/logo:opacity-100 transition-opacity duration-200 pointer-events-none">
-                          <span className="bg-white/90 backdrop-blur-sm text-slate-900 text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap shadow-md">
-                            {logo.handle}
-                          </span>
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10"
+                  style={{
+                    width: `${NETWORK_RING_RADIUS * 2 + 58}px`,
+                    height: `${NETWORK_RING_RADIUS * 2 + 58}px`,
+                  }}
+                />
+                <div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/15"
+                  style={{
+                    width: `${NETWORK_RING_RADIUS * 2}px`,
+                    height: `${NETWORK_RING_RADIUS * 2}px`,
+                  }}
+                />
+                {networkLogos.map((logo) => {
+                  const rad = (logo.angle * Math.PI) / 180;
+                  const baseX = NETWORK_CENTER_X + Math.cos(rad) * logo.radius;
+                  const baseY = NETWORK_CENTER_Y + Math.sin(rad) * logo.radius;
+                  return (
+                    <FloatingNetworkLogo
+                      key={logo.handle}
+                      logo={logo}
+                      baseX={baseX}
+                      baseY={baseY}
+                      cursorX={cursorX}
+                      cursorY={cursorY}
+                      pointerActive={pointerActive}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Mobile version - section layout with marquee */}
+        {/* Mobile version - constellation layout with scroll-reactive emphasis */}
         <div className="md:hidden bg-gradient-to-b from-slate-900 to-slate-800 text-white mb-32 -mx-6 px-6 py-12 relative overflow-hidden">
           <GradientBlob variant="cool" className="opacity-50" />
           <div className="relative z-10">
@@ -381,27 +565,22 @@ export default function CommunityPage() {
                 </a>
               </Button>
             </div>
-            {/* Infinite scrolling marquee */}
-            <div className="overflow-hidden -mx-6">
-              <motion.div
-                className="flex gap-6 w-max"
-                animate={{ x: ["0%", "-50%"] }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+            <div className="relative mx-auto max-w-[21.5rem]">
+              <div className="relative rounded-[1.5rem] border border-white/15 bg-white/[0.04] backdrop-blur-sm p-5">
+                <div className="absolute left-9 right-9 top-1/2 -translate-y-1/2 h-px bg-gradient-to-r from-white/10 via-white/35 to-white/10" />
+                <div className="relative z-10 grid grid-cols-3 gap-4 place-items-center">
+                  {mobileNetworkNodes.map((logo, index) => (
+                    <MobileNetworkLogo key={logo.handle} logo={logo} index={index} />
+                  ))}
+                </div>
+              </div>
+              <motion.p
+                className="mt-4 text-[11px] text-center text-slate-300/90 tracking-wide"
+                animate={prefersReducedMotion ? undefined : { opacity: [0.82, 1, 0.82] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
               >
-                {[...Array(2)].map((_, dupeIdx) => (
-                  <div key={dupeIdx} className="flex gap-6">
-                    {[
-                      { src: bindImg, alt: "BIND", url: "https://www.instagram.com/bit_indonesia/" },
-                      { src: permitImg, alt: "PERMIT Beijing", url: "https://www.instagram.com/permitbeijing/" },
-                      { src: ppitImg, alt: "PPIT Tiongkok", url: "https://www.instagram.com/ppitiongkok/" },
-                    ].map((logo, idx) => (
-                      <a key={idx} href={logo.url} target="_blank" rel="noopener noreferrer" className="w-24 h-24 rounded-full bg-white p-3 shadow-lg flex-shrink-0 relative overflow-hidden">
-                        <BlurImage src={logo.src} alt={logo.alt} className="rounded-full object-contain" fill sizes="96px" />
-                      </a>
-                    ))}
-                  </div>
-                ))}
-              </motion.div>
+                Tap any logo to open Instagram.
+              </motion.p>
             </div>
           </div>
         </div>
