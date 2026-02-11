@@ -144,16 +144,17 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="overflow-hidden rounded-2xl sm:rounded-3xl border border-border bg-white/40 backdrop-blur-sm shadow-xl"
             >
-              <video
-                className="w-full h-auto aspect-video"
-                controls
-                playsInline
-                preload="metadata"
-                poster=""
-              >
-                <source src="/video/VideoIntroduction.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <div className="aspect-video w-full bg-black">
+                <video
+                  className="block h-full w-full object-cover"
+                  controls
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src="/video/VideoIntroduction.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
             </motion.div>
 
             {/* Rankings Table */}
