@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion, type PanInfo } from "framer-motion";
+import { motion } from "framer-motion";
 import { BlurImage } from "@/components/ui/blur-image";
 import { MapPin, Coffee, Utensils, Wifi, Bus, Bike, Shield } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
@@ -67,18 +66,14 @@ export default function CampusLifePage() {
     }
   ];
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
 
-  // 288px card + 16px gap = 304px per slide
-  const getSlideOffset = (index: number) => -index * 304;
-
-  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    const { offset, velocity } = info;
-    let direction = 0;
-    if (offset.x < -50 || velocity.x < -500) direction = 1;
-    else if (offset.x > 50 || velocity.x > 500) direction = -1;
-    const next = Math.max(0, Math.min(currentSlide + direction, oldDorms.length - 1));
-    setCurrentSlide(next);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
   };
 
   const galleryImages = [
@@ -264,62 +259,36 @@ export default function CampusLifePage() {
                 ))}
               </div>
 
-              {/* Mobile Drag Carousel */}
-              <div className="md:hidden -mx-6 overflow-hidden">
-                <motion.div
-                  className="flex gap-4 px-[calc((100vw-288px)/2)] cursor-grab active:cursor-grabbing touch-pan-y"
-                  drag="x"
-                  dragConstraints={{
-                    left: getSlideOffset(oldDorms.length - 1),
-                    right: 0,
-                  }}
-                  dragElastic={0.15}
-                  onDragEnd={handleDragEnd}
-                  animate={{ x: getSlideOffset(currentSlide) }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                >
-                  {oldDorms.map((dorm, idx) => (
-                    <div
-                      key={idx}
-                      className="flex-shrink-0 w-[288px] select-none bg-white rounded-2xl overflow-hidden shadow-sm border border-border"
-                    >
-                      <div className="h-44 overflow-hidden relative">
-                        <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover pointer-events-none" />
-                        <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full text-xs font-medium z-10">
-                          {dorm.price}
-                        </div>
-                      </div>
-                      <div className="p-4">
-                        <h3 className="text-base font-bold mb-3 text-center">{dorm.title}</h3>
-                        <ul className="space-y-1.5 px-6">
-                          {dorm.features.map((feature, i) => (
-                            <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
+              {/* Mobile */}
+              <div className="md:hidden space-y-4">
+                {oldDorms.map((dorm, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border"
+                  >
+                    <div className="h-44 overflow-hidden relative">
+                      <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover" />
+                      <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full text-xs font-medium z-10">
+                        {dorm.price}
                       </div>
                     </div>
-                  ))}
-                </motion.div>
-                {/* Dot indicators */}
-                <div className="flex justify-center mt-4">
-                  <div className="flex gap-2.5 items-center">
-                    {oldDorms.map((_, index) => (
-                      <button
-                        key={index}
-                        className={`rounded-full transition-all duration-200 ${
-                          currentSlide === index
-                            ? "bg-primary w-3 h-3"
-                            : "bg-primary/30 w-2.5 h-2.5"
-                        }`}
-                        onClick={() => setCurrentSlide(index)}
-                        aria-label={`Go to slide ${index + 1}`}
-                      />
-                    ))}
-                  </div>
-                </div>
+                    <div className="p-4">
+                      <h3 className="text-base font-bold mb-3 text-center">{dorm.title}</h3>
+                      <ul className="space-y-1.5 px-6">
+                        {dorm.features.map((feature, i) => (
+                          <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>
@@ -331,46 +300,51 @@ export default function CampusLifePage() {
             <h2 className="text-3xl font-display font-bold mb-4">Life at BIT</h2>
             <p className="text-muted-foreground">Everything you need within walking distance.</p>
           </div>
-          <div className="flex flex-wrap gap-6">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 gap-3 md:gap-8"
+          >
             {facilities.map((item, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: idx * 0.05 }}
-                className="bg-white/60 backdrop-blur-sm p-6 rounded-2xl border border-white/40 hover:bg-white/80 transition-colors w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1rem)]"
+                variants={itemVariants}
+                className="bg-white/50 backdrop-blur-md border border-white/60 rounded-2xl md:rounded-3xl p-4 md:p-8 hover:shadow-xl transition-all duration-300 group"
               >
-                <item.icon className="w-8 h-8 text-primary mb-4" />
-                <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                <div className="w-9 h-9 md:w-12 md:h-12 bg-primary/10 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform">
+                  <item.icon className="w-4 h-4 md:w-6 md:h-6 text-primary" />
+                </div>
+                <h3 className="text-sm md:text-2xl font-bold font-display mb-1.5 md:mb-3">{item.title}</h3>
+                <p className="text-xs md:text-base text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* Gallery */}
-        <div>
+        <div className="mb-32">
           <h2 className="text-3xl font-display font-bold mb-12 text-center">Campus Moments</h2>
-          <div className="mb-24 flex flex-wrap gap-4 md:gap-6">
-            {galleryImages.map((img, idx) => (
+          <div className="columns-2 md:columns-3 gap-4 md:gap-6">
+            {galleryImages.map((item, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: idx * 0.1 }}
-                className="relative rounded-2xl overflow-hidden group w-[calc(50%-0.5rem)] md:w-[calc(33.333%-1rem)]"
+                className="relative rounded-2xl overflow-hidden group break-inside-avoid mb-6"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
                 <BlurImage
-                  src={img.src}
-                  alt={img.caption}
+                  src={item.src}
+                  alt={item.caption}
                   className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                  <p className="text-white font-medium text-sm">{img.caption}</p>
+                  <p className="text-white font-medium text-sm">{item.caption}</p>
                 </div>
               </motion.div>
             ))}
