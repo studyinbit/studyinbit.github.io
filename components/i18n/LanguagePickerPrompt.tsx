@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Languages, X } from "lucide-react";
-import { AlertDialog, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
@@ -15,16 +14,24 @@ export function LanguagePickerPrompt() {
     messages,
   } = useLocale();
 
+  if (!showLanguagePrompt) {
+    return null;
+  }
+
   return (
-    <AlertDialog
-      open={showLanguagePrompt}
-      onOpenChange={(open) => {
-        if (!open) {
-          acceptCurrentLanguage();
-        }
-      }}
-    >
-      <AlertDialogContent size="sm" className="max-w-[380px] rounded-3xl p-5">
+    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
+      <button
+        type="button"
+        aria-label="Dismiss language picker"
+        onClick={acceptCurrentLanguage}
+        className="absolute inset-0 bg-black/20 backdrop-blur-[2px]"
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="language-picker-title"
+        className="relative z-10 w-full max-w-[380px] rounded-3xl border border-border bg-background p-5 shadow-2xl"
+      >
         <button
           type="button"
           aria-label="Close language picker"
@@ -33,15 +40,17 @@ export function LanguagePickerPrompt() {
         >
           <X className="w-4 h-4" />
         </button>
-        <AlertDialogHeader className="pt-1">
-          <div className="inline-flex items-center gap-2 justify-center">
+        <div className="pt-1">
+          <div className="inline-flex items-center gap-2 justify-center w-full">
             <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary">
               <Languages className="w-4.5 h-4.5" />
             </span>
-            <AlertDialogTitle>{messages.languagePrompt.title}</AlertDialogTitle>
+            <h2 id="language-picker-title" className="text-base font-semibold text-foreground">
+              {messages.languagePrompt.title}
+            </h2>
           </div>
-        </AlertDialogHeader>
-        <AlertDialogFooter className="grid grid-cols-2 gap-3 bg-transparent border-0 -mx-0 -mb-0 p-0 mt-3">
+        </div>
+        <div className="grid grid-cols-2 gap-3 mt-4">
           <Button
             variant={locale === "id" ? "default" : "outline"}
             onClick={() => setLocale("id")}
@@ -62,8 +71,8 @@ export function LanguagePickerPrompt() {
             </span>
             <span>{messages.common.english}</span>
           </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </div>
+      </div>
+    </div>
   );
 }

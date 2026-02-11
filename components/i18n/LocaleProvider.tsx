@@ -12,8 +12,10 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import {
   DEFAULT_LOCALE,
+  LOCALE_COOKIE_KEY,
   LOCALE_META,
   LOCALE_PROMPT_SEEN_KEY,
+  LOCALE_PROMPT_TRIGGER_KEY,
   LOCALE_STORAGE_KEY,
   LOCALE_SWITCH_NUDGE_KEY,
   type Locale,
@@ -48,12 +50,65 @@ const MESSAGE_REGISTRY: Record<Locale, Messages> = {
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-function readSavedLocale(): string | null {
+const LOCALE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365;
+
+function readCookie(name: string): string | null {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  const encodedName = `${encodeURIComponent(name)}=`;
+  const value = document.cookie
+    .split("; ")
+    .find((part) => part.startsWith(encodedName))
+    ?.slice(encodedName.length);
+
+  return value ? decodeURIComponent(value) : null;
+}
+
+function writeCookie(name: string, value: string): void {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE_SECONDS}; samesite=lax`;
+}
+
+function readSavedLocale(): Locale | null {
   if (typeof window === "undefined") {
     return null;
   }
 
-  return window.localStorage.getItem(LOCALE_STORAGE_KEY);
+  let localStorageValue: string | null = null;
+  try {
+    localStorageValue = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+  } catch {
+    localStorageValue = null;
+  }
+
+  if (localStorageValue && isLocale(localStorageValue)) {
+    return localStorageValue;
+  }
+
+  const cookieValue = readCookie(LOCALE_COOKIE_KEY);
+  if (cookieValue && isLocale(cookieValue)) {
+    return cookieValue;
+  }
+
+  return null;
+}
+
+function writeSavedLocale(locale: Locale): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+  } catch {
+    // Storage can be unavailable in strict browser modes.
+  }
+  writeCookie(LOCALE_COOKIE_KEY, locale);
 }
 
 function readPromptSeen(): boolean {
@@ -61,7 +116,11 @@ function readPromptSeen(): boolean {
     return true;
   }
 
-  return window.localStorage.getItem(LOCALE_PROMPT_SEEN_KEY) === "1";
+  try {
+    return window.localStorage.getItem(LOCALE_PROMPT_SEEN_KEY) === "1";
+  } catch {
+    return false;
+  }
 }
 
 function writePromptSeen(): void {
@@ -69,7 +128,35 @@ function writePromptSeen(): void {
     return;
   }
 
-  window.localStorage.setItem(LOCALE_PROMPT_SEEN_KEY, "1");
+  try {
+    window.localStorage.setItem(LOCALE_PROMPT_SEEN_KEY, "1");
+  } catch {
+    // Ignore storage failures and continue with in-memory state.
+  }
+
+  try {
+    window.sessionStorage.removeItem(LOCALE_PROMPT_TRIGGER_KEY);
+  } catch {
+    // Session storage can also be restricted.
+  }
+}
+
+function consumePromptTrigger(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  let shouldPrompt = false;
+  try {
+    shouldPrompt = window.sessionStorage.getItem(LOCALE_PROMPT_TRIGGER_KEY) === "1";
+    if (shouldPrompt) {
+      window.sessionStorage.removeItem(LOCALE_PROMPT_TRIGGER_KEY);
+    }
+  } catch {
+    shouldPrompt = false;
+  }
+
+  return shouldPrompt;
 }
 
 function shouldSkipLocaleRedirect(pathname: string): boolean {
@@ -100,10 +187,8 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       const { cleanPath } = stripLocale(pathname);
       const target = localizePath(cleanPath, nextLocale);
 
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(LOCALE_STORAGE_KEY, nextLocale);
-        writePromptSeen();
-      }
+      writeSavedLocale(nextLocale);
+      writePromptSeen();
 
       setLocaleState(nextLocale);
       setSource("saved");
@@ -134,15 +219,16 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const dismissLanguagePrompt = useCallback(() => {
+    writeSavedLocale(locale);
     writePromptSeen();
+    setSource("saved");
+    setBrowserUnsupported(false);
     setShowLanguagePrompt(false);
-  }, []);
+  }, [locale]);
 
   const acceptCurrentLanguage = useCallback(() => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
-      writePromptSeen();
-    }
+    writeSavedLocale(locale);
+    writePromptSeen();
 
     setSource("saved");
     setBrowserUnsupported(false);
@@ -167,18 +253,20 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       savedLocale,
       browserLocales,
     });
-    const savedLocaleValid = savedLocale && isLocale(savedLocale) ? savedLocale : null;
+    const savedLocaleValid = savedLocale;
     const activeLocale = localeInPath ?? resolved.locale;
+    const promptedByBootstrap = consumePromptTrigger();
+    const browserUnsupportedActive =
+      promptedByBootstrap || (!localeInPath && resolved.browserUnsupported);
 
     if (typeof document !== "undefined") {
       document.documentElement.lang = activeLocale;
     }
 
     const shouldShowPrompt =
-      !localeInPath &&
-      resolved.browserUnsupported &&
-      resolved.source !== "saved" &&
-      !readPromptSeen();
+      !readPromptSeen() &&
+      (promptedByBootstrap ||
+        (!localeInPath && resolved.browserUnsupported && resolved.source !== "saved"));
     let cancelled = false;
     queueMicrotask(() => {
       if (cancelled) {
@@ -186,8 +274,8 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       }
 
       setLocaleState(activeLocale);
-      setSource(resolved.source);
-      setBrowserUnsupported(resolved.browserUnsupported);
+      setSource(localeInPath ? "url" : resolved.source);
+      setBrowserUnsupported(browserUnsupportedActive);
       setShowLanguagePrompt(shouldShowPrompt);
     });
 

@@ -1,6 +1,6 @@
 import { DEFAULT_LOCALE, type Locale, isLocale } from "@/lib/i18n/config";
 
-export type LocaleSource = "saved" | "browser" | "fallback";
+export type LocaleSource = "saved" | "browser" | "fallback" | "url";
 
 export type ResolveLocaleInput = {
   savedLocale?: string | null;
@@ -15,16 +15,12 @@ export type ResolveLocaleResult = {
 
 export function mapBrowserLocaleToSupported(tag: string): Locale | null {
   const normalized = tag.trim().toLowerCase();
-
-  if (normalized.startsWith("id")) {
-    return "id";
+  if (!normalized) {
+    return null;
   }
 
-  if (normalized.startsWith("en")) {
-    return "en";
-  }
-
-  return null;
+  const [base] = normalized.split("-");
+  return base && isLocale(base) ? base : null;
 }
 
 export function resolveLocale(input: ResolveLocaleInput): ResolveLocaleResult {

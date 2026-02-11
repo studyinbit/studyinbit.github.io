@@ -30,7 +30,9 @@ export const LOCALE_META: readonly LocaleMeta[] = [
 ] as const;
 
 export const LOCALE_STORAGE_KEY = "bit.locale";
+export const LOCALE_COOKIE_KEY = "bit_locale";
 export const LOCALE_PROMPT_SEEN_KEY = "bit.locale_prompt_seen";
+export const LOCALE_PROMPT_TRIGGER_KEY = "bit.locale_prompt_trigger";
 export const LOCALE_SWITCH_NUDGE_KEY = "bit.locale_switch_nudge";
 
 export function isLocale(value: string): value is Locale {

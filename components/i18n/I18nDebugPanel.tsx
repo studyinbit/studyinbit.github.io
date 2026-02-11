@@ -3,7 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import {
+  LOCALE_COOKIE_KEY,
   LOCALE_PROMPT_SEEN_KEY,
+  LOCALE_PROMPT_TRIGGER_KEY,
   LOCALE_STORAGE_KEY,
   LOCALE_SWITCH_NUDGE_KEY,
 } from "@/lib/i18n/config";
@@ -52,7 +54,9 @@ export function I18nDebugPanel() {
         onClick={() => {
           window.localStorage.removeItem(LOCALE_STORAGE_KEY);
           window.localStorage.removeItem(LOCALE_PROMPT_SEEN_KEY);
+          window.sessionStorage.removeItem(LOCALE_PROMPT_TRIGGER_KEY);
           window.sessionStorage.removeItem(LOCALE_SWITCH_NUDGE_KEY);
+          document.cookie = `${encodeURIComponent(LOCALE_COOKIE_KEY)}=; path=/; max-age=0; samesite=lax`;
         }}
       >
         Reset i18n storage

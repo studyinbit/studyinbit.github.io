@@ -37,7 +37,7 @@ const enMessagesRaw = {
     chooseLater: "Continue with Indonesian",
   },
   languageNudge: {
-    title: "Language updated",
+    title: "Language options",
     description:
       "We switched this page based on your saved language preference. Use the language switcher if you want another language.",
     action: "Change language",

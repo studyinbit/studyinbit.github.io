@@ -39,7 +39,7 @@ export const idMessages: Messages = {
     chooseLater: "Lanjut dengan Indonesia",
   },
   languageNudge: {
-    title: "Bahasa diperbarui",
+    title: "Pilihan bahasa",
     description:
       "Kami mengganti halaman ini berdasarkan preferensi bahasa yang tersimpan. Gunakan pengalih bahasa kalau kamu ingin bahasa lain.",
     action: "Ganti bahasa",
