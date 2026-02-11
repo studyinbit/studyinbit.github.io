@@ -2,6 +2,7 @@
 
 import WhatsAppIcon from "@/public/images/icons/whatsapp-icon.svg";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { siteContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -14,8 +15,11 @@ interface WhatsAppButtonProps {
 export function WhatsAppButton({
   size = "lg",
   className,
-  children = "Chat on WhatsApp"
+  children,
 }: WhatsAppButtonProps) {
+  const { locale } = useLocale();
+  const label = children ?? (locale === "id" ? "Chat via WhatsApp" : "Chat on WhatsApp");
+
   return (
     <Button
       size={size}
@@ -59,7 +63,7 @@ export function WhatsAppButton({
         <WhatsAppIcon className="w-6 h-6 relative z-10" />
 
         {/* Button Text */}
-        <span className="relative z-10">{children}</span>
+        <span className="relative z-10">{label}</span>
       </a>
     </Button>
   );

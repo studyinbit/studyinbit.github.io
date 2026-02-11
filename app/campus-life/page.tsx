@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { BlurImage } from "@/components/ui/blur-image";
 import { MapPin, Coffee, Utensils, Wifi, Bus, Bike, Shield } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 import { PageSegue } from "@/components/ui/PageSegue";
 
 import dormImg1 from "@/public/images/uni/IMG_20251103_130246 (1).webp";
@@ -27,41 +28,88 @@ import galleryImg14 from "@/public/images/uni/IMG_20250930_174155491.CCD.webp";
 import beijingMap from "@/public/images/beijing-map.webp";
 
 export default function CampusLifePage() {
+  const { locale } = useLocale();
+  const isId = locale === "id";
+
   const facilities = [
-    { title: "2,500 Seat Library", icon: MapPin, desc: "A massive, modern library with private study pods and group rooms." },
-    { title: "North Canteen", icon: Utensils, desc: "Famous in Beijing. 4 floors of incredible, affordable food." },
-    { title: "Campus Coffee", icon: Coffee, desc: "Multiple cafes for your morning espresso or late-night study fuel." },
-    { title: "Campus Internet", icon: Wifi, desc: "High-speed WiFi access across the entire campus, with LAN available in dorms." },
-    { title: "Shuttle Bus", icon: Bus, desc: "Regular shuttles to the subway and central Beijing campus." },
-    { title: "Bike Sharing", icon: Bike, desc: "Grab a bike anywhere to get to class in 5 minutes." },
+    {
+      title: isId ? "Perpustakaan 2.500 Kursi" : "2,500 Seat Library",
+      icon: MapPin,
+      desc: isId
+        ? "Perpustakaan modern yang besar dengan pod belajar pribadi dan ruang diskusi."
+        : "A massive, modern library with private study pods and group rooms.",
+    },
+    {
+      title: isId ? "North Canteen" : "North Canteen",
+      icon: Utensils,
+      desc: isId
+        ? "Terkenal di Beijing. 4 lantai pilihan makanan enak dengan harga mahasiswa."
+        : "Famous in Beijing. 4 floors of incredible, affordable food.",
+    },
+    {
+      title: isId ? "Kafe Kampus" : "Campus Coffee",
+      icon: Coffee,
+      desc: isId
+        ? "Banyak kafe untuk kopi pagi atau lembur tugas sampai malam."
+        : "Multiple cafes for your morning espresso or late-night study fuel.",
+    },
+    {
+      title: isId ? "Internet Kampus" : "Campus Internet",
+      icon: Wifi,
+      desc: isId
+        ? "WiFi cepat tersedia di seluruh kampus, dengan opsi LAN di asrama."
+        : "High-speed WiFi access across the entire campus, with LAN available in dorms.",
+    },
+    {
+      title: isId ? "Bus Shuttle" : "Shuttle Bus",
+      icon: Bus,
+      desc: isId
+        ? "Shuttle rutin ke stasiun subway dan kampus pusat Beijing."
+        : "Regular shuttles to the subway and central Beijing campus.",
+    },
+    {
+      title: isId ? "Sepeda Bersama" : "Bike Sharing",
+      icon: Bike,
+      desc: isId
+        ? "Ambil sepeda dari mana saja dan sampai kelas dalam 5 menit."
+        : "Grab a bike anywhere to get to class in 5 minutes.",
+    },
   ];
 
   const newDorms = [
     {
-      title: "4-Person Suite",
-      price: "~800 RMB/mo",
-      features: ["2 Bedrooms (2 per room)", "Private Bathroom", "AC & Heating", "Does not provide free water", "Modern Furnishings"],
+      title: isId ? "Suite 4 Orang" : "4-Person Suite",
+      price: isId ? "~800 RMB/bln" : "~800 RMB/mo",
+      features: isId
+        ? ["2 Kamar Tidur (2 orang/kamar)", "Kamar mandi pribadi", "AC & pemanas", "Air tidak gratis", "Furnitur modern"]
+        : ["2 Bedrooms (2 per room)", "Private Bathroom", "AC & Heating", "Does not provide free water", "Modern Furnishings"],
       image: dormImg1
     }
   ];
 
   const oldDorms = [
     {
-      title: "2-Person Room",
-      price: "~900 RMB/mo",
-      features: ["Private Bathroom", "Balcony", "AC & Heating", "Water is free", "Desks & Storage"],
+      title: isId ? "Kamar 2 Orang" : "2-Person Room",
+      price: isId ? "~900 RMB/bln" : "~900 RMB/mo",
+      features: isId
+        ? ["Kamar mandi pribadi", "Balkon", "AC & pemanas", "Air gratis", "Meja belajar & penyimpanan"]
+        : ["Private Bathroom", "Balcony", "AC & Heating", "Water is free", "Desks & Storage"],
       image: dormImg2
     },
     {
-      title: "3-Person Room",
-      price: "~700 RMB/mo",
-      features: ["Private Bathroom", "Balcony", "AC & Heating", "Water is free", "Spacious Layout"],
+      title: isId ? "Kamar 3 Orang" : "3-Person Room",
+      price: isId ? "~700 RMB/bln" : "~700 RMB/mo",
+      features: isId
+        ? ["Kamar mandi pribadi", "Balkon", "AC & pemanas", "Air gratis", "Ruang lebih lega"]
+        : ["Private Bathroom", "Balcony", "AC & Heating", "Water is free", "Spacious Layout"],
       image: dormImg2
     },
     {
-      title: "4-Person Room",
-      price: "900 RMB/mo",
-      features: ["Private Bathroom", "Balcony", "Most Affordable", "Water is free", "Community Feel"],
+      title: isId ? "Kamar 4 Orang" : "4-Person Room",
+      price: isId ? "900 RMB/bln" : "900 RMB/mo",
+      features: isId
+        ? ["Kamar mandi pribadi", "Balkon", "Pilihan paling terjangkau", "Air gratis", "Nuansa komunitas"]
+        : ["Private Bathroom", "Balcony", "Most Affordable", "Water is free", "Community Feel"],
       image: dormImg3
     }
   ];
@@ -77,20 +125,20 @@ export default function CampusLifePage() {
   };
 
   const galleryImages = [
-    { src: galleryImg1, caption: "Campus at Night" },
-    { src: galleryImg2, caption: "Campus in Autumn" },
-    { src: galleryImg3, caption: "Campus in Snow" },
-    { src: galleryImg4, caption: "International Students Dorm Entrance" },
-    { src: galleryImg5, caption: "Calculus Class" },
-    { src: galleryImg6, caption: "Campus Gala" },
-    { src: galleryImg7, caption: "Park Bridge" },
+    { src: galleryImg1, caption: isId ? "Kampus di Malam Hari" : "Campus at Night" },
+    { src: galleryImg2, caption: isId ? "Kampus Saat Musim Gugur" : "Campus in Autumn" },
+    { src: galleryImg3, caption: isId ? "Kampus Saat Salju" : "Campus in Snow" },
+    { src: galleryImg4, caption: isId ? "Pintu Masuk Asrama Mahasiswa Internasional" : "International Students Dorm Entrance" },
+    { src: galleryImg5, caption: isId ? "Kelas Kalkulus" : "Calculus Class" },
+    { src: galleryImg6, caption: isId ? "Gala Kampus" : "Campus Gala" },
+    { src: galleryImg7, caption: isId ? "Jembatan Taman" : "Park Bridge" },
     { src: galleryImg8, caption: "North Canteen" },
-    { src: galleryImg9, caption: "Halal Canteen Food" },
-    { src: galleryImg10, caption: "Canteen Food" },
-    { src: galleryImg11, caption: "Gym 4th Floor" },
-    { src: galleryImg12, caption: "Mini Zoo" },
-    { src: galleryImg13, caption: "24/7 Library" },
-    { src: galleryImg14, caption: "Autumn Scenery" },
+    { src: galleryImg9, caption: isId ? "Makanan Kantin Halal" : "Halal Canteen Food" },
+    { src: galleryImg10, caption: isId ? "Makanan Kantin" : "Canteen Food" },
+    { src: galleryImg11, caption: isId ? "Gym Lantai 4" : "Gym 4th Floor" },
+    { src: galleryImg12, caption: isId ? "Mini Zoo" : "Mini Zoo" },
+    { src: galleryImg13, caption: isId ? "Perpustakaan 24/7" : "24/7 Library" },
+    { src: galleryImg14, caption: isId ? "Pemandangan Musim Gugur" : "Autumn Scenery" },
   ];
 
   return (
@@ -107,7 +155,8 @@ export default function CampusLifePage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-display font-bold mb-6"
           >
-            Your Home in <span className="text-primary">Beijing</span>
+            {isId ? "Rumahmu di " : "Your Home in "}
+            <span className="text-primary">Beijing</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -115,15 +164,17 @@ export default function CampusLifePage() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground leading-relaxed"
           >
-            Modern facilities. Incredible food. A community that feels engineered for deep worklike family. Located in Liangxiang, Beijing.
+            {isId
+              ? "Fasilitas modern. Makanan enak. Komunitas suportif untuk belajar serius sekaligus hidup nyaman. Berlokasi di Liangxiang, Beijing."
+              : "Modern facilities. Incredible food. A community that feels engineered for deep work and family-like support. Located in Liangxiang, Beijing."}
           </motion.p>
         </div>
 
         {/* Dormitories */}
         <div className="mb-32">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-display font-bold mb-4">Where You&apos;ll Live</h2>
-            <p className="text-muted-foreground">Affordable, comfortable, and safe.</p>
+            <h2 className="text-3xl font-display font-bold mb-4">{isId ? "Tempat Tinggalmu" : "Where You'll Live"}</h2>
+            <p className="text-muted-foreground">{isId ? "Terjangkau, nyaman, dan aman." : "Affordable, comfortable, and safe."}</p>
           </div>
 
           {/* Location Section */}
@@ -140,13 +191,15 @@ export default function CampusLifePage() {
 
             <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
-                <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 md:mb-6">Liangxiang Campus</h2>
+                <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 md:mb-6">{isId ? "Kampus Liangxiang" : "Liangxiang Campus"}</h2>
                 <p className="text-sm md:text-base text-slate-300 leading-relaxed mb-4 md:mb-6">
-                  Liangxiang is a small university district located outside of beijing. It is located 30-40km from central Beijing. It would take 1-2 hours(depending on how busy the subway is) to travel from campus to the city center. Liangxiang campus occupies an area of 2,001,000 m².
+                  {isId
+                    ? "Liangxiang adalah distrik universitas yang berada di pinggiran Beijing, sekitar 30-40 km dari pusat kota. Perjalanan ke pusat kota biasanya 1-2 jam, tergantung kepadatan subway. Luas kampus Liangxiang mencapai 2.001.000 m2."
+                    : "Liangxiang is a small university district located outside of Beijing. It is around 30-40 km from central Beijing. Travel from campus to city center typically takes 1-2 hours depending on subway traffic. Liangxiang campus occupies an area of 2,001,000 m2."}
                 </p>
                 <div className="flex items-center gap-3 md:gap-4 text-slate-300 text-sm md:text-base">
                   <Shield className="w-4 h-4 md:w-5 md:h-5 text-emerald-400" />
-                  <span>Library seats 2,500 students</span>
+                  <span>{isId ? "Perpustakaan menampung 2.500 mahasiswa" : "Library seats 2,500 students"}</span>
                 </div>
               </div>
               <div className="h-48 md:h-64 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 overflow-hidden relative group">
@@ -156,7 +209,7 @@ export default function CampusLifePage() {
           </motion.div>
           <div className="space-y-16">
             <div>
-              <h3 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-8 text-primary">New Building (Bohou)</h3>
+              <h3 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-8 text-primary">{isId ? "Gedung Baru (Bohou)" : "New Building (Bohou)"}</h3>
 
               {/* Desktop Grid */}
               <div className="hidden md:grid md:grid-cols-3 gap-8">
@@ -225,7 +278,7 @@ export default function CampusLifePage() {
 
             {/* Old Building */}
             <div>
-              <h3 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-8 text-primary">Old Building (International Students Dorm)</h3>
+              <h3 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-8 text-primary">{isId ? "Gedung Lama (Asrama Mahasiswa Internasional)" : "Old Building (International Students Dorm)"}</h3>
 
               {/* Desktop Grid */}
               <div className="hidden md:grid md:grid-cols-3 gap-8">
@@ -297,8 +350,8 @@ export default function CampusLifePage() {
         {/* Facilities Grid */}
         <div className="mb-32">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-display font-bold mb-4">Life at BIT</h2>
-            <p className="text-muted-foreground">Everything you need within walking distance.</p>
+            <h2 className="text-3xl font-display font-bold mb-4">{isId ? "Hidup di BIT" : "Life at BIT"}</h2>
+            <p className="text-muted-foreground">{isId ? "Semua yang kamu butuhkan ada dalam jarak jalan kaki." : "Everything you need within walking distance."}</p>
           </div>
           <motion.div
             variants={containerVariants}
@@ -325,7 +378,7 @@ export default function CampusLifePage() {
 
         {/* Gallery */}
         <div className="mb-32">
-          <h2 className="text-3xl font-display font-bold mb-12 text-center">Campus Moments</h2>
+          <h2 className="text-3xl font-display font-bold mb-12 text-center">{isId ? "Momen Kampus" : "Campus Moments"}</h2>
           <div className="columns-2 md:columns-3 gap-4 md:gap-6">
             {galleryImages.map((item, idx) => (
               <motion.div
@@ -355,9 +408,13 @@ export default function CampusLifePage() {
 
       {/* Link to Community Page */}
       <PageSegue
-        title="Meet Your Community"
-        description="Join 400+ Indonesian students and discover the support system that makes BIT feel like home."
-        buttonText="Discover the Community"
+        title={isId ? "Kenali Komunitasmu" : "Meet Your Community"}
+        description={
+          isId
+            ? "Bergabung dengan 400+ mahasiswa Indonesia dan temukan sistem dukungan yang bikin BIT terasa seperti rumah."
+            : "Join 400+ Indonesian students and discover the support system that makes BIT feel like home."
+        }
+        buttonText={isId ? "Lihat Komunitas" : "Discover the Community"}
         buttonHref="/community"
       />
     </div>

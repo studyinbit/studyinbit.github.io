@@ -6,6 +6,7 @@ import Image, { type StaticImageData } from "next/image";
 import { BlurImage } from "@/components/ui/blur-image";
 import { Users, BookOpen, Briefcase, Heart, Plane, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/components/i18n/LocaleProvider";
 
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { PageSegue } from "@/components/ui/PageSegue";
@@ -165,6 +166,8 @@ function MobileNetworkLogo({ logo }: MobileNetworkLogoProps) {
 }
 
 export default function CommunityPage() {
+  const { locale } = useLocale();
+  const isId = locale === "id";
   const networkRef = useRef<HTMLDivElement>(null);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
@@ -182,30 +185,38 @@ export default function CommunityPage() {
 
   const pillars = [
     {
-      title: "Academic Support",
+      title: isId ? "Dukungan Akademik" : "Academic Support",
       icon: BookOpen,
-      desc: "Weekly group study sessions, senior mentorship, and exam prep workshops. No one falls behind.",
+      desc: isId
+        ? "Sesi belajar kelompok mingguan, mentoring dari senior, dan workshop persiapan ujian. Tidak ada yang tertinggal."
+        : "Weekly group study sessions, senior mentorship, and exam prep workshops. No one falls behind.",
       // quote: "\"The Iron Triangle (Math, Physics, Programming) is tough. But with BIND study groups, no one gets left behind.\"",
       // author: "Sarah, CS Year 2"
     },
     {
-      title: "Career Integration",
+      title: isId ? "Integrasi Karier" : "Career Integration",
       icon: Briefcase,
-      desc: "Job fairs for Indonesian students, resume workshops, and direct connections to alumni & seniors.",
+      desc: isId
+        ? "Job fair untuk mahasiswa Indonesia, workshop CV, dan koneksi langsung ke alumni serta senior."
+        : "Job fairs for Indonesian students, resume workshops, and direct connections to alumni & seniors.",
       // quote: "\"I got my internship at Huawei through a BIND alumni connection.\"",
       // author: "Budi, EE Year 3"
     },
     {
-      title: "Calture",
+      title: isId ? "Budaya" : "Culture",
       icon: Heart,
-      desc: "Join our special Cultural Days to wear your national dress with pride, share the flavors of home, and bond over games.",
+      desc: isId
+        ? "Ikut Cultural Days untuk memakai pakaian tradisional, berbagi cita rasa Indonesia, dan mempererat pertemanan lewat berbagai permainan."
+        : "Join our special Cultural Days to wear your national dress with pride, share the flavors of home, and bond over games.",
       // quote: "\"It really feels like a second home. The masak bareng (cooking together) sessions are the highlight of my week.\"",
       // author: "Putri,  Year 1"
     },
     {
-      title: "Arrival Support",
+      title: isId ? "Bantuan Kedatangan" : "Arrival Support",
       icon: Plane,
-      desc: "Airport pickup, dorm setup assistance, SIM card registration, and a 'Zero-Stress' landing experience.",
+      desc: isId
+        ? "Penjemputan bandara, bantuan setup asrama, aktivasi kartu SIM, dan proses kedatangan yang minim stres."
+        : "Airport pickup, dorm setup assistance, SIM card registration, and a 'Zero-Stress' landing experience.",
       // quote: "\"I was so nervous about arriving alone, but the BIND team was waiting for me at the dorm with snacks!\"",
       // author: "Rizky, Year 1"
     }
@@ -214,35 +225,41 @@ export default function CommunityPage() {
   const arrivalSteps = [
     {
       step: "01",
-      title: "Before You Fly",
-      desc: "Join the WeChat group, pre-order dorm essentials (bedding, cleaning supplies) via our Jastip service, and get packing tips.",
+      title: isId ? "Sebelum Berangkat" : "Before You Fly",
+      desc: isId
+        ? "Gabung grup WeChat, pre-order kebutuhan asrama (sprei, perlengkapan kebersihan) lewat layanan Jastip, dan dapat checklist barang."
+        : "Join the WeChat group, pre-order dorm essentials (bedding, cleaning supplies) via our Jastip service, and get packing tips.",
       icon: Plane
     },
     {
       step: "02",
-      title: "Arrival Day",
-      desc: "Free university shuttle bus takes you directly to Liangxiang. The BIND Welcome Team meets you at the dorm to help with luggage.",
+      title: isId ? "Hari Kedatangan" : "Arrival Day",
+      desc: isId
+        ? "Shuttle kampus gratis mengantar langsung ke Liangxiang. Tim BIND akan menyambut di asrama dan bantu urus barang bawaan."
+        : "Free university shuttle bus takes you directly to Liangxiang. The BIND Welcome Team meets you at the dorm to help with luggage.",
       icon: Home
     },
     {
       step: "03",
-      title: "First Week",
-      desc: "We guide you through bank setup, SIM card activation, campus tours, and welcome dinners to meet your cohort.",
+      title: isId ? "Minggu Pertama" : "First Week",
+      desc: isId
+        ? "Kami dampingi untuk setup bank, aktivasi SIM card, tur kampus, dan acara makan bersama agar cepat kenal satu angkatan."
+        : "We guide you through bank setup, SIM card activation, campus tours, and welcome dinners to meet your cohort.",
       icon: Users
     }
   ];
 
   const galleryImages = [
-    { src: galleryImg1, caption: "Wencui Building" },
-    { src: galleryImg2, caption: "ICF Event" },
-    { src: galleryImg3, caption: "Boxing Club" },
-    { src: galleryImg4, caption: "Opening Ceremony" },
-    { src: galleryImg5, caption: "Group Study" },
-    { src: galleryImg6, caption: "Wushu Competition" },
-    { src: galleryImg7, caption: "Kung Fu Show" },
-    { src: galleryImg8, caption: "5km Marathon Event" },
-    { src: galleryImg9, caption: "BIND BBB Chinese-taught Community Study" },
-    { src: galleryImg10, caption: "BIND BBB English-taught Community Study" },
+    { src: galleryImg1, caption: isId ? "Gedung Wencui" : "Wencui Building" },
+    { src: galleryImg2, caption: isId ? "Acara ICF" : "ICF Event" },
+    { src: galleryImg3, caption: isId ? "Klub Tinju" : "Boxing Club" },
+    { src: galleryImg4, caption: isId ? "Upacara Pembukaan" : "Opening Ceremony" },
+    { src: galleryImg5, caption: isId ? "Belajar Kelompok" : "Group Study" },
+    { src: galleryImg6, caption: isId ? "Kompetisi Wushu" : "Wushu Competition" },
+    { src: galleryImg7, caption: isId ? "Pertunjukan Kung Fu" : "Kung Fu Show" },
+    { src: galleryImg8, caption: isId ? "Event Marathon 5 km" : "5km Marathon Event" },
+    { src: galleryImg9, caption: isId ? "Belajar Komunitas BIND BBB (Program Mandarin)" : "BIND BBB Chinese-taught Community Study" },
+    { src: galleryImg10, caption: isId ? "Belajar Komunitas BIND BBB (Program Inggris)" : "BIND BBB English-taught Community Study" },
   ];
 
   const networkLogos: NetworkLogo[] = [
@@ -340,7 +357,7 @@ export default function CommunityPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-display font-bold mb-6"
           >
-            Join The Community
+            {isId ? "Gabung Komunitas" : "Join The Community"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -348,7 +365,9 @@ export default function CommunityPage() {
             transition={{ delay: 0.1 }}
             className="text-lg text-muted-foreground leading-relaxed"
           >
-            400+ Indonesian students. Structured support from Day 1. One of the most active student organizations on campus.
+            {isId
+              ? "400+ mahasiswa Indonesia. Dukungan terstruktur sejak hari pertama. Salah satu organisasi mahasiswa paling aktif di kampus."
+              : "400+ Indonesian students. Structured support from Day 1. One of the most active student organizations on campus."}
           </motion.p>
         </div>
 
@@ -384,8 +403,12 @@ export default function CommunityPage() {
         {/* Arrival System */}
         <div className="mb-32">
           <div className="text-center mb-8 md:mb-16">
-            <h2 className="text-2xl md:text-3xl font-display font-bold mb-2 md:mb-4">Zero-Stress Arrival</h2>
-            <p className="text-sm md:text-base text-muted-foreground">The things that usually stress parents out? We&apos;ve got them covered.</p>
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-2 md:mb-4">{isId ? "Kedatangan Tanpa Stres" : "Zero-Stress Arrival"}</h2>
+            <p className="text-sm md:text-base text-muted-foreground">
+              {isId
+                ? "Hal-hal yang biasanya bikin orang tua khawatir? Kami sudah siapkan semuanya."
+                : "The things that usually stress parents out? We've got them covered."}
+            </p>
           </div>
 
           {/* Desktop - 3 column grid */}
@@ -442,9 +465,11 @@ export default function CommunityPage() {
           <GradientBlob variant="cool" className="opacity-50" />
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Part of a Larger Network</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">{isId ? "Bagian dari Jaringan yang Lebih Besar" : "Part of a Larger Network"}</h2>
               <p className="text-slate-300 leading-relaxed mb-8">
-                StudyinBIT is connected to organizations such as <strong>BIND</strong> (BIT Indonesia), <strong>PERMIT Beijing</strong> (Indonesian Students Association in Beijing) and <strong>PPIT Tiongkok</strong>. This gives you access to Embassy resources, inter-university events, and a network of over 1,000 Indonesian students across the city.
+                {isId
+                  ? <>StudyinBIT terhubung dengan organisasi seperti <strong>BIND</strong> (BIT Indonesia), <strong>PERMIT Beijing</strong> (Persatuan Mahasiswa Indonesia di Beijing), dan <strong>PPIT Tiongkok</strong>. Ini memberi akses ke sumber daya KBRI, event lintas kampus, serta jaringan 1.000+ mahasiswa Indonesia di Beijing.</>
+                  : <>StudyinBIT is connected to organizations such as <strong>BIND</strong> (BIT Indonesia), <strong>PERMIT Beijing</strong> (Indonesian Students Association in Beijing) and <strong>PPIT Tiongkok</strong>. This gives you access to Embassy resources, inter-university events, and a network of over 1,000 Indonesian students across the city.</>}
               </p>
               <div className="flex gap-4 flex-wrap">
                 <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
@@ -513,9 +538,11 @@ export default function CommunityPage() {
         <div className="md:hidden bg-gradient-to-b from-slate-900 to-slate-800 text-white mb-32 -mx-6 px-6 py-12 relative overflow-hidden">
           <GradientBlob variant="cool" className="opacity-50" />
           <div className="relative z-10">
-            <h2 className="text-3xl font-display font-bold mb-6">Part of a Larger Network</h2>
+            <h2 className="text-3xl font-display font-bold mb-6">{isId ? "Bagian dari Jaringan yang Lebih Besar" : "Part of a Larger Network"}</h2>
             <p className="text-slate-300 leading-relaxed mb-8">
-              StudyinBIT is connected to organizations such as <strong>BIND</strong> (BIT Indonesia), <strong>PERMIT Beijing</strong> (Indonesian Students Association in Beijing) and <strong>PPIT Tiongkok</strong>. This gives you access to Embassy resources, inter-university events, and a network of over 1,000 Indonesian students across the city.
+              {isId
+                ? <>StudyinBIT terhubung dengan organisasi seperti <strong>BIND</strong> (BIT Indonesia), <strong>PERMIT Beijing</strong> (Persatuan Mahasiswa Indonesia di Beijing), dan <strong>PPIT Tiongkok</strong>. Ini memberi akses ke sumber daya KBRI, event lintas kampus, serta jaringan 1.000+ mahasiswa Indonesia di Beijing.</>
+                : <>StudyinBIT is connected to organizations such as <strong>BIND</strong> (BIT Indonesia), <strong>PERMIT Beijing</strong> (Indonesian Students Association in Beijing) and <strong>PPIT Tiongkok</strong>. This gives you access to Embassy resources, inter-university events, and a network of over 1,000 Indonesian students across the city.</>}
             </p>
             <div className="flex gap-3 flex-wrap mb-10">
               <Button variant="outline" className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-white gap-2 pl-3 h-auto py-2.5" asChild>
@@ -549,7 +576,7 @@ export default function CommunityPage() {
               <p
                 className="mt-4 text-[11px] text-center text-slate-300/90 tracking-wide"
               >
-                Tap any logo to open Instagram.
+                {isId ? "Tap logo untuk membuka Instagram." : "Tap any logo to open Instagram."}
               </p>
             </div>
           </div>
@@ -557,7 +584,7 @@ export default function CommunityPage() {
 
         {/* Photo Gallery */}
         <div className="mb-32">
-          <h2 className="text-3xl font-display font-bold mb-12 text-center">Life at BIT</h2>
+          <h2 className="text-3xl font-display font-bold mb-12 text-center">{isId ? "Kehidupan di BIT" : "Life at BIT"}</h2>
           <div className="columns-2 md:columns-3 gap-4 md:gap-6">
             {galleryImages.map((item, idx) => (
               <motion.div
@@ -593,9 +620,13 @@ export default function CommunityPage() {
 
       {/* Link to Admissions Page */}
       <PageSegue
-        title="Ready to Apply?"
-        description="Learn about requirements, scholarships, and the application timeline for BIT."
-        buttonText="View Admissions Info"
+        title={isId ? "Siap Mendaftar?" : "Ready to Apply?"}
+        description={
+          isId
+            ? "Pelajari persyaratan, beasiswa, dan timeline pendaftaran BIT."
+            : "Learn about requirements, scholarships, and the application timeline for BIT."
+        }
+        buttonText={isId ? "Lihat Info Admisi" : "View Admissions Info"}
         buttonHref="/admissions"
       />
     </div>

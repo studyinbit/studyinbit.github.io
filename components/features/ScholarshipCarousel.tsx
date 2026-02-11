@@ -3,6 +3,11 @@
 import { useState, useRef, useEffect, type TouchEvent } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import {
+  getScholarshipUiLabels,
+  localizeScholarshipInfo,
+} from "@/lib/i18n/scholarships";
 
 interface ScholarshipTier {
   name: string;
@@ -32,6 +37,8 @@ interface ScholarshipCarouselProps {
 const MAX_VISIBLE_TIERS = 3;
 
 export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) {
+  const { locale } = useLocale();
+  const labels = getScholarshipUiLabels(locale);
   const [active, setActive] = useState(0);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -41,7 +48,8 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
   const sectionRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
 
-  const activeScholarship = scholarships[active];
+  const localizedScholarships = scholarships.map((item) => localizeScholarshipInfo(item, locale));
+  const activeScholarship = localizedScholarships[active];
   const isActiveExpanded = expandedId === activeScholarship.id;
 
   // Measure active card height to size the container
@@ -146,7 +154,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
               variant="outline"
               className="text-[8px] px-1.5 py-0 h-4 leading-none"
             >
-              Beijing
+              {labels.beijingCampus}
             </Badge>
           )}
           {scholarship.campus === "zhuhai" && (
@@ -154,7 +162,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
               variant="outline"
               className="text-[8px] px-1.5 py-0 h-4 leading-none"
             >
-              Zhuhai
+              {labels.zhuhaiCampus}
             </Badge>
           )}
           {scholarship.campus === "both" && (
@@ -162,7 +170,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
               variant="secondary"
               className="text-[8px] px-1.5 py-0 h-4 leading-none"
             >
-              All Campuses
+              {labels.allCampuses}
             </Badge>
           )}
           {scholarship.languageRestriction === "chinese-only" && (
@@ -170,7 +178,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
               variant="destructive"
               className="text-[8px] px-1.5 py-0 h-4 leading-none"
             >
-              Chinese Only
+              {labels.chineseOnly}
             </Badge>
           )}
           {scholarship.deadline && (
@@ -178,7 +186,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
               variant="default"
               className="text-[8px] px-1.5 py-0 h-4 leading-none"
             >
-              Deadline: {scholarship.deadline}
+              {labels.deadlinePrefix}: {scholarship.deadline}
             </Badge>
           )}
           {scholarship.applicationPeriod && (
@@ -199,7 +207,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
         {/* Coverage Tiers */}
         <div className="mb-2.5">
           <p className="text-[8px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-            Coverage Tiers
+            {labels.coverageTiers}
           </p>
           <div className="space-y-1">
             {visibleTiers.map((tier) => (
@@ -225,8 +233,8 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
               className="w-full flex items-center justify-center gap-0.5 pt-1.5 text-[10px] text-primary font-medium"
             >
               {isExpanded
-                ? "Show less"
-                : `+${scholarship.tiers.length - MAX_VISIBLE_TIERS} more`}
+                ? labels.showLess
+                : labels.showMore(scholarship.tiers.length - MAX_VISIBLE_TIERS)}
               <ChevronDown
                 className={`w-3 h-3 transition-transform duration-300 ${
                   isExpanded ? "rotate-180" : ""
@@ -238,7 +246,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
 
         {/* Application method */}
         <p className="text-[9px] text-muted-foreground">
-          <span className="font-semibold text-foreground">Apply:</span>{" "}
+          <span className="font-semibold text-foreground">{labels.howToApply}:</span>{" "}
           {scholarship.applicationMethod}
         </p>
 
@@ -266,7 +274,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
             className="inline-flex items-center gap-1 text-[10px] text-primary font-semibold hover:underline mt-1.5"
             onClick={(e) => e.stopPropagation()}
           >
-            Learn More <ExternalLink className="w-2.5 h-2.5" />
+            {labels.learnMore} <ExternalLink className="w-2.5 h-2.5" />
           </a>
         )}
       </div>
@@ -292,7 +300,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
         </div>
 
         {/* Carousel cards */}
-        {scholarships.map((scholarship, index) => {
+        {localizedScholarships.map((scholarship, index) => {
           const isActive = index === active;
           return (
             <div
@@ -315,7 +323,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
 
       {/* Dot indicators */}
       <div className="flex justify-center items-center gap-2 mt-4">
-        {scholarships.map((_, idx) => (
+        {localizedScholarships.map((_, idx) => (
           <button
             key={idx}
             className={`rounded-full transition-all duration-300 ${
@@ -325,7 +333,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
               setActive(idx);
               setExpandedId(null);
             }}
-            aria-label={`Scholarship ${idx + 1}`}
+            aria-label={labels.carouselDotAria(idx + 1)}
           />
         ))}
       </div>

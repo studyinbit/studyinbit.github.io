@@ -3,6 +3,11 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useLocale } from "@/components/i18n/LocaleProvider";
+import {
+  getScholarshipUiLabels,
+  localizeScholarshipInfo,
+} from "@/lib/i18n/scholarships";
 
 interface ScholarshipTier {
   name: string;
@@ -29,6 +34,10 @@ interface ScholarshipInfoProps {
 }
 
 export function ScholarshipInfoCard({ scholarship, index }: ScholarshipInfoProps) {
+  const { locale } = useLocale();
+  const labels = getScholarshipUiLabels(locale);
+  const localized = localizeScholarshipInfo(scholarship, locale);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -39,40 +48,40 @@ export function ScholarshipInfoCard({ scholarship, index }: ScholarshipInfoProps
     >
       {/* Program type */}
       <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
-        {scholarship.program}
+        {localized.program}
       </p>
 
       {/* Title */}
-      <h3 className="text-xl font-display font-bold mb-1">{scholarship.name}</h3>
-      {scholarship.subtitle && (
-        <p className="text-sm text-muted-foreground mb-3">{scholarship.subtitle}</p>
+      <h3 className="text-xl font-display font-bold mb-1">{localized.name}</h3>
+      {localized.subtitle && (
+        <p className="text-sm text-muted-foreground mb-3">{localized.subtitle}</p>
       )}
 
       {/* Badges */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {scholarship.campus === "beijing" && <Badge variant="outline">Beijing Campus</Badge>}
-        {scholarship.campus === "zhuhai" && <Badge variant="outline">Zhuhai Campus</Badge>}
-        {scholarship.campus === "both" && <Badge variant="secondary">All Campuses</Badge>}
+        {scholarship.campus === "beijing" && <Badge variant="outline">{labels.beijingCampus}</Badge>}
+        {scholarship.campus === "zhuhai" && <Badge variant="outline">{labels.zhuhaiCampus}</Badge>}
+        {scholarship.campus === "both" && <Badge variant="secondary">{labels.allCampuses}</Badge>}
         {scholarship.languageRestriction === "chinese-only" && (
-          <Badge variant="destructive">Chinese-Taught Only</Badge>
+          <Badge variant="destructive">{labels.chineseOnly}</Badge>
         )}
         {scholarship.deadline && (
-          <Badge variant="default">Deadline: {scholarship.deadline}</Badge>
+          <Badge variant="default">{labels.deadlinePrefix}: {scholarship.deadline}</Badge>
         )}
         {scholarship.applicationPeriod && (
-          <Badge variant="default">Apply: {scholarship.applicationPeriod}</Badge>
+          <Badge variant="default">{labels.applyPrefix}: {scholarship.applicationPeriod}</Badge>
         )}
       </div>
 
       {/* Description */}
-      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{scholarship.description}</p>
+      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{localized.description}</p>
 
       {/* Tiers */}
       <div className="space-y-2 mb-5 flex-1">
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-          Coverage Tiers
+          {labels.coverageTiers}
         </p>
-        {scholarship.tiers.map((tier) => (
+        {localized.tiers.map((tier) => (
           <div key={tier.name} className="bg-primary/5 rounded-xl px-4 py-2.5">
             <span className="font-semibold text-sm text-foreground">{tier.name}</span>
             <span className="text-xs text-muted-foreground ml-2">— {tier.coverageSummary}</span>
@@ -82,13 +91,13 @@ export function ScholarshipInfoCard({ scholarship, index }: ScholarshipInfoProps
 
       {/* Application method */}
       <p className="text-xs text-muted-foreground mb-3">
-        <span className="font-semibold text-foreground">How to apply:</span> {scholarship.applicationMethod}
+        <span className="font-semibold text-foreground">{labels.howToApply}:</span> {localized.applicationMethod}
       </p>
 
       {/* Notes */}
-      {scholarship.notes && scholarship.notes.length > 0 && (
+      {localized.notes && localized.notes.length > 0 && (
         <ul className="space-y-1.5 mb-4">
-          {scholarship.notes.map((note, i) => (
+          {localized.notes.map((note, i) => (
             <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
               <div className="w-1 h-1 rounded-full bg-primary mt-1.5 shrink-0" />
               {note}
@@ -105,7 +114,7 @@ export function ScholarshipInfoCard({ scholarship, index }: ScholarshipInfoProps
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-sm text-primary font-semibold hover:underline mt-auto pt-2"
         >
-          Learn More <ExternalLink className="w-3.5 h-3.5" />
+          {labels.learnMore} <ExternalLink className="w-3.5 h-3.5" />
         </a>
       )}
     </motion.div>
