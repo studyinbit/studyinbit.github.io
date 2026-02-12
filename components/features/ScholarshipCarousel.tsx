@@ -48,13 +48,18 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
   const sectionRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
 
+  const safeCount = scholarships?.length || 0;
   const localizedScholarships = scholarships.map((item) => localizeScholarshipInfo(item, locale));
-  const activeScholarship = localizedScholarships[active];
-  const isActiveExpanded = expandedId === activeScholarship.id;
+  const activeIndex =
+    safeCount > 0 && active >= 0 && active < safeCount ? active : 0;
+  const activeScholarship = safeCount > 0 ? localizedScholarships[activeIndex] : null;
+  const isActiveExpanded =
+    activeScholarship !== null && expandedId === activeScholarship.id;
 
   // Measure active card height to size the container
   // useEffect is necessary here: syncing container height with DOM measurement
   useEffect(() => {
+    if (safeCount === 0) return;
     const el = measureRef.current;
     if (!el) return;
     const update = () => setContainerHeight(el.offsetHeight);
@@ -62,17 +67,17 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
     const observer = new ResizeObserver(update);
     observer.observe(el);
     return () => observer.disconnect();
-  }, [active, isActiveExpanded]);
+  }, [activeIndex, isActiveExpanded, safeCount]);
 
   // Auto-rotate when visible and not expanded
   // useEffect is necessary: syncing with browser timer + IntersectionObserver
   useEffect(() => {
-    if (!isInView || expandedId) return;
+    if (!isInView || expandedId || safeCount < 2) return;
     const timer = setInterval(() => {
-      setActive((prev) => (prev + 1) % scholarships.length);
+      setActive((prev) => (prev + 1) % safeCount);
     }, 5000);
     return () => clearInterval(timer);
-  }, [isInView, expandedId, scholarships.length]);
+  }, [isInView, expandedId, safeCount]);
 
   // IntersectionObserver for auto-rotate
   // useEffect is necessary: syncing with browser IntersectionObserver API
@@ -88,8 +93,9 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
   }, []);
 
   const navigate = (dir: 1 | -1) => {
+    if (safeCount === 0) return;
     setExpandedId(null);
-    setActive((prev) => (prev + dir + scholarships.length) % scholarships.length);
+    setActive((prev) => (prev + dir + safeCount) % safeCount);
   };
 
   const handleTouchStart = (e: TouchEvent) => {
@@ -107,11 +113,11 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
   };
 
   const getCardClass = (index: number) => {
-    const len = scholarships.length;
-    if (index === active) return "translate-x-0 scale-100 opacity-100 z-20";
-    if (index === (active + 1) % len)
+    const len = safeCount;
+    if (index === activeIndex) return "translate-x-0 scale-100 opacity-100 z-20";
+    if (index === (activeIndex + 1) % len)
       return "translate-x-[75%] scale-[0.78] opacity-40 z-10";
-    if (index === (active - 1 + len) % len)
+    if (index === (activeIndex - 1 + len) % len)
       return "-translate-x-[75%] scale-[0.78] opacity-40 z-10";
     return "translate-x-0 scale-[0.65] opacity-0 z-0 pointer-events-none";
   };
@@ -281,6 +287,10 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
     );
   };
 
+  if (safeCount === 0 || !activeScholarship) {
+    return null;
+  }
+
   return (
     <div ref={sectionRef}>
       <div
@@ -301,7 +311,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
 
         {/* Carousel cards */}
         {localizedScholarships.map((scholarship, index) => {
-          const isActive = index === active;
+          const isActive = index === activeIndex;
           return (
             <div
               key={scholarship.id}
@@ -327,7 +337,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
           <button
             key={idx}
             className={`rounded-full transition-all duration-300 ${
-              active === idx ? "bg-primary w-5 h-2" : "bg-primary/30 w-2 h-2"
+              activeIndex === idx ? "bg-primary w-5 h-2" : "bg-primary/30 w-2 h-2"
             }`}
             onClick={() => {
               setActive(idx);

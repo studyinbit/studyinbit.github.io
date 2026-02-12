@@ -24,7 +24,7 @@ export function I18nDebugPanel() {
   }
 
   return (
-    <div className="fixed left-4 bottom-4 z-[90] w-[280px] rounded-2xl border border-border bg-white/95 backdrop-blur-md p-3 shadow-xl">
+    <div className="fixed left-4 bottom-4 z-[90] w-[280px] rounded-2xl glass border border-border p-3 shadow-xl">
       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
         I18n Debug
       </p>

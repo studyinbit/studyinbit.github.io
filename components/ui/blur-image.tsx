@@ -4,7 +4,13 @@ import Image, { ImageProps } from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-export function BlurImage({ className, alt, ...props }: ImageProps) {
+export function BlurImage({
+  className,
+  alt,
+  loading,
+  fetchPriority,
+  ...props
+}: ImageProps) {
   const [isLoading, setLoading] = useState(true);
 
   return (
@@ -16,9 +22,9 @@ export function BlurImage({ className, alt, ...props }: ImageProps) {
       )}
       onLoad={() => setLoading(false)}
       alt={alt}
-      loading="lazy"
+      loading={loading ?? undefined}
       decoding="async"
-      fetchPriority="low"
+      fetchPriority={fetchPriority ?? undefined}
       {...props}
     />
   );

@@ -14,10 +14,10 @@
 
 /* Light (default) theme variables */
 :root {
-  --primarylw: #173eff;
-  --primarylw-2: #3758f9;
-  --darklw: #11131b;
-  --darklw-2: #1a1d25;
+  --primarylw: rgb(23 62 255);
+  --primarylw-2: rgb(55 88 249);
+  --darklw: rgb(17 19 27);
+  --darklw-2: rgb(26 29 37);
 
   /* HSL values for theme colors */
   --background: 0 0% 100%;
@@ -57,15 +57,15 @@
   --scrollbar-hover: 0 0% 65%;
 
   /* Custom named colors */
-  --greedy: #07eae6ff;
+  --greedy: rgb(7 234 230 / 1);
 }
 
 /* Dark theme variables */
 .dark {
-  --primarylw: #173eff;
-  --primarylw-2: #3758f9;
-  --darklw: #11131b;
-  --darklw-2: #1a1d25;
+  --primarylw: rgb(23 62 255);
+  --primarylw-2: rgb(55 88 249);
+  --darklw: rgb(17 19 27);
+  --darklw-2: rgb(26 29 37);
 
   /* HSL values for theme colors in dark mode */
   --background: 0 0% 0%;
@@ -92,7 +92,7 @@
   --destructive: 0 62% 30%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: #000;
+  --border: 0 0% 0%;
   /* Direct hex for dark border */
   --input: 0 0% 20%;
   --ring: 0 0% 20%;
@@ -103,7 +103,7 @@
   --scrollbar-hover: 0 0% 35%;
 
   /* Custom named colors (same as light, but can be overridden if needed) */
-  --greedy: #07eae6ff;
+  --greedy: rgb(7 234 230 / 1);
 }
 
 /* ==========================================================================
@@ -149,14 +149,14 @@
 }
 
 /* Glassmorphism Animated Login Form Background */
-@keyframes GlassLoginAnimateBg {
+@keyframes glass-login-animate-bg {
   100% {
     filter: hue-rotate(360deg);
   }
 }
 
 /* Gradient Animated Background Turn */
-@keyframes GradientAnimatedBgTurn {
+@keyframes gradient-animated-bg-turn {
   to {
     transform: rotate(1turn);
   }
@@ -188,7 +188,7 @@
 }
 
 /* Product Card Skeleton Loader Animation */
-@keyframes skeletonLoader {
+@keyframes skeleton-loader {
   0% {
     background-position: -2000px 0;
   }
@@ -199,7 +199,7 @@
 }
 
 /* Skeleton Bars Loader Animation */
-@keyframes skeletonBarsLoader {
+@keyframes skeleton-bars-loader {
   0% {
     background-position: -2000px 0;
   }
@@ -210,7 +210,7 @@
 }
 
 /* Animated Cart Button Animations */
-@keyframes AnimatedCartBtntruck {
+@keyframes animated-cart-btn-truck {
   0% {
     left: -10%;
   }
@@ -225,7 +225,7 @@
   }
 }
 
-@keyframes AnimatedCartBtnbox {
+@keyframes animated-cart-btn-box {
 
   0%,
   40% {
@@ -244,7 +244,7 @@
   }
 }
 
-@keyframes AnimatedCartBtntxt1 {
+@keyframes animated-cart-btn-txt1 {
   0% {
     opacity: 1;
   }
@@ -255,7 +255,7 @@
   }
 }
 
-@keyframes AnimatedCartBtntxt2 {
+@keyframes animated-cart-btn-txt2 {
 
   0%,
   80% {
@@ -387,8 +387,6 @@ body {
 /* Hide Scrollbar Utility */
 .scrollbar-hide {
   scrollbar-width: none;
-  -ms-overflow-style: none;
-  /* For IE and Edge */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -401,8 +399,8 @@ body {
   border-radius: var(--radius);
   /* Using CSS variable for radius */
   box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -2px rgb(0 0 0 / 0.05);
   /* shadow-lg */
   padding: 1.5rem;
   /* spacing.6 */
@@ -414,17 +412,17 @@ body {
 
 /* Dynamic Navigation Classes */
 .dynamicNav-nav-bg {
-  background-color: #000000;
+  background-color: rgb(0 0 0);
   width: 100%;
   position: relative;
 }
 
 .dynamicNav-highlight-glow {
-  box-shadow: inset 0 0 10px #fff;
+  box-shadow: inset 0 0 10px rgb(255 255 255);
 }
 
 .dynamicNav-nav-link {
-  color: #ffffff;
+  color: rgb(255 255 255);
   transition:
     color 0.3s ease,
     transform 0.3s ease;
@@ -439,7 +437,7 @@ body {
 }
 
 .dynamicNav-active-link {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(255 255 255 / 0.1);
 }
 
 /* Interactive Gallery Card Styles */
@@ -479,23 +477,23 @@ body {
 
 .GlassMarqueeCard:hover {
   transform: translateY(-10px) scale(1.05);
-  box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 30px rgb(0 0 0 / 0.4);
 }
 
 .GlassMarqueeEffect {
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.15);
+  background: rgb(255 255 255 / 0.15);
 }
 
 /* Animated Gradient Border Button Styles */
 .gradient-border {
   --border-angle: 0turn;
   background:
-    conic-gradient(from var(--border-angle), #000, #000) padding-box,
+    conic-gradient(from var(--border-angle), rgb(0 0 0), rgb(0 0 0)) padding-box,
     conic-gradient(from var(--border-angle),
       transparent 25%,
-      #08f,
-      rgb(1, 206, 46) 99%,
+      rgb(0 136 255),
+      rgb(1 206 46) 99%,
       transparent) border-box;
   animation: bg-spin 3s linear infinite;
   border: 1px solid transparent;
@@ -508,11 +506,9 @@ body {
 
 /* Animated Range Input Styles */
 .animatedRangeInput .animatedRangeInputLevel::-webkit-slider-thumb {
-  -webkit-appearance: none;
   width: 0;
   height: 0;
-  -webkit-box-shadow: -200px 0 0 200px #fff;
-  box-shadow: -200px 0 0 200px #fff;
+  box-shadow: -200px 0 0 200px rgb(255 255 255);
 }
 
 .animatedRangeInput .animatedRangeInputLevel::-moz-range-thumb {
@@ -520,7 +516,7 @@ body {
   height: 0;
   border-radius: 0;
   border: none;
-  box-shadow: -200px 0 0 200px #fff;
+  box-shadow: -200px 0 0 200px rgb(255 255 255);
 }
 
 /* Toggle Theme Sidebar Transitions */
@@ -571,17 +567,17 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(120, 120, 120, 0.3);
+  background-color: rgb(120 120 120 / 0.3);
   border-radius: 10px;
   transition: all 0.2s ease;
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  background-color: rgba(120, 120, 120, 0.5);
+  background-color: rgb(120 120 120 / 0.5);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(120, 120, 120, 0.7);
+  background-color: rgb(120 120 120 / 0.7);
 }
 
 .custom-scrollbar::-webkit-scrollbar-corner {
@@ -603,18 +599,18 @@ body {
 }
 
 .sidebar-scrollable-syntax::-webkit-scrollbar-track {
-  background-color: #f0f0f0;
+  background-color: rgb(240 240 240);
   border-radius: 10px;
 }
 
 .sidebar-scrollable-syntax::-webkit-scrollbar-thumb {
-  background-color: #505050;
+  background-color: rgb(80 80 80);
   border-radius: 10px;
-  border: 2px solid #f0f0f0;
+  border: 2px solid rgb(240 240 240);
 }
 
 .sidebar-scrollable-syntax::-webkit-scrollbar-thumb:hover {
-  background-color: #b3b3b3;
+  background-color: rgb(179 179 179);
 }
 
 /* ==========================================================================
@@ -863,12 +859,12 @@ body {
 }
 
 .animate-skeletonLoader {
-  animation: skeletonLoader 5s ease-in-out infinite;
+  animation: skeleton-loader 5s ease-in-out infinite;
 }
 
 .skeletonBarsLoaders {
   background-size: 200% 100%;
-  animation: skeletonBarsLoader 6s ease-in-out infinite;
+  animation: skeleton-bars-loader 6s ease-in-out infinite;
 }
 
 .animate-shimmer {
@@ -877,19 +873,19 @@ body {
 
 /* Animated Cart Button Specific Classes */
 .cart-button.clicked .cart-shopping-svg {
-  animation: AnimatedCartBtntruck 2s ease-in-out forwards;
+  animation: animated-cart-btn-truck 2s ease-in-out forwards;
 }
 
 .cart-button.clicked .cart-box-svg {
-  animation: AnimatedCartBtnbox 2s ease-in-out forwards;
+  animation: animated-cart-btn-box 2s ease-in-out forwards;
 }
 
 .cart-button.clicked span.add-to-cart {
-  animation: AnimatedCartBtntxt1 2s ease-in-out forwards;
+  animation: animated-cart-btn-txt1 2s ease-in-out forwards;
 }
 
 .cart-button.clicked span.added {
-  animation: AnimatedCartBtntxt2 2s ease-in-out forwards;
+  animation: animated-cart-btn-txt2 2s ease-in-out forwards;
 }
 
 /* Card Hover Effect */
@@ -903,8 +899,8 @@ body {
 .card-hover:hover {
   transform: scale(1.02);
   box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -2px rgb(0 0 0 / 0.05);
 }
 
 /* Toggle Switch Component */
@@ -989,7 +985,7 @@ body {
   transition-property: all;
   transition-duration: 200ms;
   transition-timing-function: ease-out;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
   transform-origin: center center;
 }
 
@@ -999,5 +995,5 @@ body {
   transition-property: all;
   transition-duration: 200ms;
   transition-timing-function: ease-out;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
 }

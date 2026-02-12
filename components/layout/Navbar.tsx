@@ -34,7 +34,7 @@ export function Navbar() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
       >
-        <div className="navbar-sheen pointer-events-auto flex items-center p-2 pl-3 pr-2 sm:p-1.5 sm:pl-5 sm:pr-2 gap-1.5 sm:gap-4">
+        <div className="navbar-sheen glass-pill pointer-events-auto flex items-center p-2 pl-3 pr-2 sm:p-1.5 sm:pl-5 sm:pr-2 gap-1.5 sm:gap-4">
           <Link href={localizePath("/", locale)} className="flex items-center gap-2 group shrink-0">
             <div className="bg-primary/10 p-1.5 sm:p-2 rounded-full group-hover:bg-primary/20 transition-colors">
               <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />

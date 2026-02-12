@@ -97,7 +97,7 @@ export function LanguageNudge() {
   });
 
   return (
-    <div className="fixed bottom-4 right-3 sm:right-4 z-[70] w-[min(320px,calc(100vw-1.5rem))] rounded-2xl border border-border bg-white/95 backdrop-blur-md p-3.5 shadow-xl">
+    <div className="fixed bottom-4 right-3 sm:right-4 z-[70] w-[min(320px,calc(100vw-1.5rem))] rounded-2xl glass border border-border p-3.5 shadow-xl">
       <div className="flex items-start justify-between mb-2.5">
         <div className="inline-flex items-center gap-2">
           <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 text-primary">

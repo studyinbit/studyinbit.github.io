@@ -38,6 +38,7 @@ const ThreeDCarousel = ({
   rotateInterval = 4000,
   cardHeight = 500,
 }: ThreeDCarouselProps) => {
+  const itemCount = items.length;
   const [active, setActive] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
@@ -46,48 +47,64 @@ const ThreeDCarousel = ({
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const isMobile = useIsMobile();
   const minSwipeDistance = 50;
+  const activeIndex =
+    itemCount > 0 && active >= 0 && active < itemCount ? active : 0;
 
   useEffect(() => {
-    if (autoRotate && isInView && !isHovering) {
-      const interval = setInterval(() => {
-        setActive((prev) => (prev + 1) % items.length);
-      }, rotateInterval);
-      return () => clearInterval(interval);
-    }
-  }, [isInView, isHovering, autoRotate, rotateInterval, items.length]);
+    if (!autoRotate || !isInView || isHovering || itemCount === 0) return;
+    const interval = setInterval(() => {
+      setActive((prev) => (prev + 1) % itemCount);
+    }, rotateInterval);
+    return () => clearInterval(interval);
+  }, [isInView, isHovering, autoRotate, rotateInterval, itemCount]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIsInView(entry.isIntersecting),
       { threshold: 0.2 }
     );
-    return () => observer.disconnect();
+    const currentCarousel = carouselRef.current;
+    if (currentCarousel) {
+      observer.observe(currentCarousel);
+    }
+    return () => {
+      if (currentCarousel) {
+        observer.unobserve(currentCarousel);
+      }
+      observer.disconnect();
+    };
   }, []);
 
   const onTouchStart = (e: TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
+    const clientX = e.targetTouches[0]?.clientX;
+    if (typeof clientX !== "number") return;
+    setTouchStart(clientX);
     setTouchEnd(null);
   };
 
   const onTouchMove = (e: TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+    const clientX = e.targetTouches[0]?.clientX;
+    if (typeof clientX !== "number") return;
+    setTouchEnd(clientX);
   };
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+    if (touchStart === null || touchEnd === null) return;
+    if (itemCount === 0) return;
     const distance = touchStart - touchEnd;
     if (distance > minSwipeDistance) {
-      setActive((prev) => (prev + 1) % items.length);
+      setActive((prev) => (prev + 1) % itemCount);
     } else if (distance < -minSwipeDistance) {
-      setActive((prev) => (prev - 1 + items.length) % items.length);
+      setActive((prev) => (prev - 1 + itemCount) % itemCount);
     }
   };
 
   const getCardAnimationClass = (index: number) => {
-    if (index === active) return "scale-100 opacity-100 z-20";
-    if (index === (active + 1) % items.length)
+    if (itemCount === 0) return "scale-90 opacity-0";
+    if (index === activeIndex) return "scale-100 opacity-100 z-20";
+    if (index === (activeIndex + 1) % itemCount)
       return "translate-x-[40%] scale-95 opacity-60 z-10";
-    if (index === (active - 1 + items.length) % items.length)
+    if (index === (activeIndex - 1 + itemCount) % itemCount)
       return "translate-x-[-40%] scale-95 opacity-60 z-10";
     return "scale-90 opacity-0";
   };
@@ -120,8 +137,8 @@ const ThreeDCarousel = ({
                 )}`}
               >
                 <Card
-                  className={`overflow-hidden bg-background h-[${cardHeight}px] border shadow-sm 
-                hover:shadow-md flex flex-col`}
+                  className="overflow-hidden bg-background border shadow-sm hover:shadow-md flex flex-col"
+                  style={{ height: cardHeight }}
                 >
                   <div
                     className="relative bg-black p-6 flex items-center justify-center h-48 overflow-hidden"
@@ -189,7 +206,9 @@ const ThreeDCarousel = ({
               <button
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:bg-white z-30 shadow-md transition-all hover:scale-110"
                 onClick={() =>
-                  setActive((prev) => (prev - 1 + items.length) % items.length)
+                  setActive((prev) =>
+                    itemCount > 0 ? (prev - 1 + itemCount) % itemCount : 0
+                  )
                 }
                 aria-label="Previous"
               >
@@ -197,7 +216,9 @@ const ThreeDCarousel = ({
               </button>
               <button
                 className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center text-gray-500 hover:bg-white z-30 shadow-md transition-all hover:scale-110"
-                onClick={() => setActive((prev) => (prev + 1) % items.length)}
+                onClick={() =>
+                  setActive((prev) => (itemCount > 0 ? (prev + 1) % itemCount : 0))
+                }
                 aria-label="Next"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -210,7 +231,7 @@ const ThreeDCarousel = ({
               <button
                 key={idx}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  active === idx
+                  activeIndex === idx
                     ? "bg-gray-500 w-5"
                     : "bg-gray-200 hover:bg-gray-300"
                 }`}
