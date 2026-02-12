@@ -32,7 +32,7 @@ export type ScholarshipUiLabels = {
   howToApply: string;
   learnMore: string;
   showLess: string;
-  showMore: (count: number) => string;
+  showMore: string;
   carouselDotAria: (index: number) => string;
 };
 
@@ -247,7 +247,7 @@ export function getScholarshipUiLabels(locale: Locale): ScholarshipUiLabels {
       howToApply: "Cara mendaftar",
       learnMore: "Pelajari Lebih Lanjut",
       showLess: "Tampilkan lebih sedikit",
-      showMore: (count) => `+${count} lainnya`,
+      showMore: "Tampilkan lebih banyak",
       carouselDotAria: (index) => `Beasiswa ${index}`,
     };
   }
@@ -263,7 +263,7 @@ export function getScholarshipUiLabels(locale: Locale): ScholarshipUiLabels {
     howToApply: "How to apply",
     learnMore: "Learn More",
     showLess: "Show less",
-    showMore: (count) => `+${count} more`,
+    showMore: "Show more",
     carouselDotAria: (index) => `Scholarship ${index}`,
   };
 }

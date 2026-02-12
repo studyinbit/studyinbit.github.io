@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import {
@@ -11,6 +13,7 @@ import {
 } from "@/lib/i18n/config";
 
 export function I18nDebugPanel() {
+  const [isOpen, setIsOpen] = useState(true);
   const {
     locale,
     source,
@@ -23,11 +26,25 @@ export function I18nDebugPanel() {
     return null;
   }
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <div className="fixed left-4 bottom-4 z-[90] w-[280px] rounded-2xl glass border border-border p-3 shadow-xl">
-      <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-        I18n Debug
-      </p>
+      <div className="mb-2 flex items-center justify-between">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          I18n Debug
+        </p>
+        <Button
+          variant="ghost"
+          size="icon-xs"
+          onClick={() => setIsOpen(false)}
+          aria-label="Close i18n debug panel"
+        >
+          <X className="h-3.5 w-3.5" />
+        </Button>
+      </div>
       <p className="text-xs text-foreground mb-2">
         locale: <span className="font-semibold">{locale}</span> ({source})
       </p>

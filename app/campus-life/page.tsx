@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import { BlurImage } from "@/components/ui/blur-image";
 import { MapPin, Coffee, Utensils, Wifi, Bus, Bike, Shield } from "lucide-react";
 import { GradientBlob } from "@/components/ui/GradientBlob";
+import { MobilePeekDeck } from "@/components/ui/MobilePeekDeck";
+import { DormitoryCard, type DormitoryCardData } from "@/components/features/DormitoryCard";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { PageSegue } from "@/components/ui/PageSegue";
 import { localizePath } from "@/lib/i18n/path-utils";
+import { useMobileGalleryHighlight } from "@/hooks/use-mobile-gallery-highlight";
 
 import dormImg1 from "@/public/images/uni/IMG_20251103_130246 (1).webp";
 import dormImg2 from "@/public/images/uni/IMG_20251109_094544.webp";
@@ -78,7 +81,7 @@ export default function CampusLifePage() {
     },
   ];
 
-  const newDorms = [
+  const newDorms: DormitoryCardData[] = [
     {
       title: isId ? "Suite 4 Orang" : "4-Person Suite",
       price: isId ? "~800 RMB/bln" : "~800 RMB/mo",
@@ -89,7 +92,7 @@ export default function CampusLifePage() {
     }
   ];
 
-  const oldDorms = [
+  const oldDorms: DormitoryCardData[] = [
     {
       title: isId ? "Kamar 2 Orang" : "2-Person Room",
       price: isId ? "~900 RMB/bln" : "~900 RMB/mo",
@@ -142,6 +145,16 @@ export default function CampusLifePage() {
     { src: galleryImg13, caption: isId ? "Perpustakaan 24/7" : "24/7 Library" },
     { src: galleryImg14, caption: isId ? "Pemandangan Musim Gugur" : "Autumn Scenery" },
   ];
+
+  const {
+    isMobile: isMobileGallery,
+    activeIndex: activeGalleryIndex,
+    setItemRef: setGalleryItemRef,
+    activateItem: activateGalleryItem,
+    onItemTouchStart,
+    onItemTouchMove,
+    onItemTouchEnd,
+  } = useMobileGalleryHighlight(galleryImages.length);
 
   return (
     <div className="relative overflow-hidden min-h-screen pt-32">
@@ -222,59 +235,27 @@ export default function CampusLifePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ delay: idx * 0.1 }}
-                    className="bg-white rounded-3xl overflow-hidden shadow-sm border border-border group"
+                    className="h-full"
                   >
-                    <div className="h-64 overflow-hidden relative">
-                      <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                      <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-medium z-10">
-                        {dorm.price}
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-4">{dorm.title}</h3>
-                      <ul className="space-y-2">
-                        {dorm.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <DormitoryCard dorm={dorm} className="h-full" />
                   </motion.div>
                 ))}
               </div>
 
-              {/* Mobile*/}
-              <div className="md:hidden flex justify-center">
-                {newDorms.map((dorm, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border w-[288px]"
-                  >
-                    <div className="h-44 overflow-hidden relative">
-                      <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover" />
-                      <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full text-xs font-medium z-10">
-                        {dorm.price}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-base font-bold mb-3 text-center">{dorm.title}</h3>
-                      <ul className="space-y-1.5 px-6">
-                        {dorm.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </motion.div>
-                ))}
+              {/* Mobile */}
+              <div className="md:hidden">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                >
+                  <MobilePeekDeck
+                    items={newDorms}
+                    ariaLabel={isId ? "Pilihan kamar gedung baru" : "New building room options"}
+                    renderItem={(dorm) => <DormitoryCard dorm={dorm} compact />}
+                    getItemKey={(dorm) => `${dorm.title}-${dorm.price}`}
+                  />
+                </motion.div>
               </div>
             </div>
 
@@ -291,59 +272,27 @@ export default function CampusLifePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ delay: idx * 0.1 }}
-                    className="bg-white rounded-3xl overflow-hidden shadow-sm border border-border group"
+                    className="h-full"
                   >
-                    <div className="h-64 overflow-hidden relative">
-                      <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                      <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-medium z-10">
-                        {dorm.price}
-                      </div>
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-4">{dorm.title}</h3>
-                      <ul className="space-y-2">
-                        {dorm.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <DormitoryCard dorm={dorm} className="h-full" />
                   </motion.div>
                 ))}
               </div>
 
               {/* Mobile */}
-              <div className="md:hidden space-y-4">
-                {oldDorms.map((dorm, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border"
-                  >
-                    <div className="h-44 overflow-hidden relative">
-                      <BlurImage src={dorm.image} alt={dorm.title} placeholder="blur" className="w-full h-full object-cover" />
-                      <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md text-white px-2.5 py-0.5 rounded-full text-xs font-medium z-10">
-                        {dorm.price}
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-base font-bold mb-3 text-center">{dorm.title}</h3>
-                      <ul className="space-y-1.5 px-6">
-                        {dorm.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </motion.div>
-                ))}
+              <div className="md:hidden">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                >
+                  <MobilePeekDeck
+                    items={oldDorms}
+                    ariaLabel={isId ? "Pilihan kamar gedung lama" : "Old building room options"}
+                    renderItem={(dorm) => <DormitoryCard dorm={dorm} compact />}
+                    getItemKey={(dorm) => `${dorm.title}-${dorm.price}`}
+                  />
+                </motion.div>
               </div>
             </div>
           </div>
@@ -381,28 +330,44 @@ export default function CampusLifePage() {
         {/* Gallery */}
         <div className="mb-32">
           <h2 className="text-3xl font-display font-bold mb-12 text-center">{isId ? "Momen Kampus" : "Campus Moments"}</h2>
+          <p className="md:hidden text-center text-xs text-muted-foreground mb-6">
+            {isId ? "Tap atau scroll untuk melihat deskripsi foto." : "Tap or scroll to reveal photo descriptions."}
+          </p>
           <div className="columns-2 md:columns-3 gap-4 md:gap-6">
-            {galleryImages.map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: idx * 0.1 }}
-                className="relative rounded-2xl overflow-hidden group break-inside-avoid mb-6"
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                <BlurImage
-                  src={item.src}
-                  alt={item.caption}
-                  className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                  <p className="text-white font-medium text-sm">{item.caption}</p>
-                </div>
-              </motion.div>
-            ))}
+            {galleryImages.map((item, idx) => {
+              const isActive = isMobileGallery && activeGalleryIndex === idx;
+
+              return (
+                <motion.div
+                  key={idx}
+                  ref={(node) => setGalleryItemRef(idx, node)}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: idx * 0.1 }}
+                  onClick={isMobileGallery ? undefined : () => activateGalleryItem(idx)}
+                  onTouchStart={isMobileGallery ? onItemTouchStart : undefined}
+                  onTouchMove={isMobileGallery ? onItemTouchMove : undefined}
+                  onTouchEnd={isMobileGallery ? () => onItemTouchEnd(idx) : undefined}
+                  className={`relative rounded-2xl overflow-hidden group break-inside-avoid mb-6 ${isMobileGallery ? "cursor-pointer" : ""}`}
+                >
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 z-10 ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                  />
+                  <BlurImage
+                    src={item.src}
+                    alt={item.caption}
+                    className={`w-full h-auto object-cover transform transition-transform duration-700 ${isActive ? "scale-105" : "group-hover:scale-105"}`}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div
+                    className={`absolute bottom-0 left-0 right-0 p-6 transition-transform duration-300 z-20 ${isActive ? "translate-y-0" : "translate-y-full group-hover:translate-y-0"}`}
+                  >
+                    <p className="text-white font-medium text-sm">{item.caption}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 

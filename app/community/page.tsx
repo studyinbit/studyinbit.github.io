@@ -8,6 +8,7 @@ import { Users, BookOpen, Briefcase, Heart, Plane, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { localizePath } from "@/lib/i18n/path-utils";
+import { useMobileGalleryHighlight } from "@/hooks/use-mobile-gallery-highlight";
 
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { PageSegue } from "@/components/ui/PageSegue";
@@ -263,6 +264,16 @@ export default function CommunityPage() {
     { src: galleryImg9, caption: isId ? "Belajar Komunitas BIND BBB (Program Mandarin)" : "BIND BBB Chinese-taught Community Study" },
     { src: galleryImg10, caption: isId ? "Belajar Komunitas BIND BBB (Program Inggris)" : "BIND BBB English-taught Community Study" },
   ];
+
+  const {
+    isMobile: isMobileGallery,
+    activeIndex: activeGalleryIndex,
+    setItemRef: setGalleryItemRef,
+    activateItem: activateGalleryItem,
+    onItemTouchStart,
+    onItemTouchMove,
+    onItemTouchEnd,
+  } = useMobileGalleryHighlight(galleryImages.length);
 
   const networkLogos: NetworkLogo[] = [
     {
@@ -587,28 +598,44 @@ export default function CommunityPage() {
         {/* Photo Gallery */}
         <div className="mb-32">
           <h2 className="text-3xl font-display font-bold mb-12 text-center">{isId ? "Kehidupan di BIT" : "Life at BIT"}</h2>
+          <p className="md:hidden text-center text-xs text-muted-foreground mb-6">
+            {isId ? "Tap atau scroll untuk melihat deskripsi foto." : "Tap or scroll to reveal photo descriptions."}
+          </p>
           <div className="columns-2 md:columns-3 gap-4 md:gap-6">
-            {galleryImages.map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: idx * 0.1 }}
-                className="relative rounded-2xl overflow-hidden group break-inside-avoid mb-6"
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-                <BlurImage
-                  src={item.src}
-                  alt={item.caption}
-                  className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-20">
-                  <p className="text-white font-medium text-sm">{item.caption}</p>
-                </div>
-              </motion.div>
-            ))}
+            {galleryImages.map((item, idx) => {
+              const isActive = isMobileGallery && activeGalleryIndex === idx;
+
+              return (
+                <motion.div
+                  key={idx}
+                  ref={(node) => setGalleryItemRef(idx, node)}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: idx * 0.1 }}
+                  onClick={isMobileGallery ? undefined : () => activateGalleryItem(idx)}
+                  onTouchStart={isMobileGallery ? onItemTouchStart : undefined}
+                  onTouchMove={isMobileGallery ? onItemTouchMove : undefined}
+                  onTouchEnd={isMobileGallery ? () => onItemTouchEnd(idx) : undefined}
+                  className={`relative rounded-2xl overflow-hidden group break-inside-avoid mb-6 ${isMobileGallery ? "cursor-pointer" : ""}`}
+                >
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 z-10 ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                  />
+                  <BlurImage
+                    src={item.src}
+                    alt={item.caption}
+                    className={`w-full h-auto object-cover transform transition-transform duration-700 ${isActive ? "scale-105" : "group-hover:scale-105"}`}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div
+                    className={`absolute bottom-0 left-0 right-0 p-6 transition-transform duration-300 z-20 ${isActive ? "translate-y-0" : "translate-y-full group-hover:translate-y-0"}`}
+                  >
+                    <p className="text-white font-medium text-sm">{item.caption}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 

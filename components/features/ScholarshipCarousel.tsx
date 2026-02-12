@@ -1,37 +1,18 @@
 "use client";
 
-import { useState, useRef, useEffect, type TouchEvent } from "react";
+import { useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { MobilePeekDeck } from "@/components/ui/MobilePeekDeck";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import {
   getScholarshipUiLabels,
   localizeScholarshipInfo,
+  type ScholarshipInfoData,
 } from "@/lib/i18n/scholarships";
 
-interface ScholarshipTier {
-  name: string;
-  coverageSummary: string;
-}
-
-interface ScholarshipData {
-  id: string;
-  name: string;
-  subtitle?: string;
-  program: string;
-  description: string;
-  campus: "beijing" | "zhuhai" | "both";
-  languageRestriction?: "chinese-only";
-  deadline?: string;
-  applicationPeriod?: string;
-  applicationMethod: string;
-  link?: string;
-  tiers: ScholarshipTier[];
-  notes?: string[];
-}
-
 interface ScholarshipCarouselProps {
-  scholarships: ScholarshipData[];
+  scholarships: ScholarshipInfoData[];
 }
 
 const MAX_VISIBLE_TIERS = 3;
@@ -39,93 +20,15 @@ const MAX_VISIBLE_TIERS = 3;
 export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) {
   const { locale } = useLocale();
   const labels = getScholarshipUiLabels(locale);
-  const [active, setActive] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [isInView, setIsInView] = useState(false);
-  const [containerHeight, setContainerHeight] = useState(320);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const measureRef = useRef<HTMLDivElement>(null);
 
   const safeCount = scholarships?.length || 0;
   const localizedScholarships = scholarships.map((item) => localizeScholarshipInfo(item, locale));
-  const activeIndex =
-    safeCount > 0 && active >= 0 && active < safeCount ? active : 0;
-  const activeScholarship = safeCount > 0 ? localizedScholarships[activeIndex] : null;
-  const isActiveExpanded =
-    activeScholarship !== null && expandedId === activeScholarship.id;
+  const normalizedActiveIndex = safeCount > 0 ? Math.min(activeIndex, safeCount - 1) : 0;
+  const activeScholarship = safeCount > 0 ? localizedScholarships[normalizedActiveIndex] : null;
 
-  // Measure active card height to size the container
-  // useEffect is necessary here: syncing container height with DOM measurement
-  useEffect(() => {
-    if (safeCount === 0) return;
-    const el = measureRef.current;
-    if (!el) return;
-    const update = () => setContainerHeight(el.offsetHeight);
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [activeIndex, isActiveExpanded, safeCount]);
-
-  // Auto-rotate when visible and not expanded
-  // useEffect is necessary: syncing with browser timer + IntersectionObserver
-  useEffect(() => {
-    if (!isInView || expandedId || safeCount < 2) return;
-    const timer = setInterval(() => {
-      setActive((prev) => (prev + 1) % safeCount);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isInView, expandedId, safeCount]);
-
-  // IntersectionObserver for auto-rotate
-  // useEffect is necessary: syncing with browser IntersectionObserver API
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.3 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const navigate = (dir: 1 | -1) => {
-    if (safeCount === 0) return;
-    setExpandedId(null);
-    setActive((prev) => (prev + dir + safeCount) % safeCount);
-  };
-
-  const handleTouchStart = (e: TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
-    setTouchEnd(null);
-  };
-
-  const handleTouchMove = (e: TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
-
-  const handleTouchEnd = () => {
-    if (touchStart === null || touchEnd === null) return;
-    const dist = touchStart - touchEnd;
-    if (dist > 50) navigate(1);
-    else if (dist < -50) navigate(-1);
-  };
-
-  const getCardClass = (index: number) => {
-    const len = safeCount;
-    if (index === activeIndex) return "translate-x-0 scale-100 opacity-100 z-20";
-    if (index === (activeIndex + 1) % len)
-      return "translate-x-[75%] scale-[0.78] opacity-40 z-10";
-    if (index === (activeIndex - 1 + len) % len)
-      return "-translate-x-[75%] scale-[0.78] opacity-40 z-10";
-    return "translate-x-0 scale-[0.65] opacity-0 z-0 pointer-events-none";
-  };
-
-  const renderCardContent = (
-    scholarship: ScholarshipData,
-    isActive: boolean
-  ) => {
+  const renderCardContent = (scholarship: ScholarshipInfoData, isActive: boolean) => {
     const isExpanded = expandedId === scholarship.id;
     const needsExpand = scholarship.tiers.length > MAX_VISIBLE_TIERS;
     const visibleTiers = isExpanded
@@ -134,8 +37,10 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
 
     return (
       <div
-        className={`bg-white/80 backdrop-blur-md border border-white/60 rounded-2xl p-4 transition-shadow duration-300 ${
-          isActive ? "shadow-lg" : "shadow-sm"
+        className={`bg-white/85 backdrop-blur-md border border-white/70 rounded-[1.4rem] p-4 transition-all duration-300 ${
+          isActive
+            ? "shadow-[0_20px_35px_-28px_rgba(15,23,42,0.55)] ring-1 ring-primary/10"
+            : "shadow-[0_14px_30px_-28px_rgba(15,23,42,0.45)]"
         }`}
       >
         {/* Program type */}
@@ -144,21 +49,21 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
         </p>
 
         {/* Title */}
-        <h3 className="text-[13px] font-display font-bold leading-tight">
+        <h3 className="text-[15px] font-display font-bold leading-tight">
           {scholarship.name}
         </h3>
         {scholarship.subtitle && (
-          <p className="text-[10px] text-muted-foreground mt-0.5">
+          <p className="text-[11px] text-muted-foreground mt-0.5">
             {scholarship.subtitle}
           </p>
         )}
 
         {/* Badges */}
-        <div className="flex flex-wrap gap-1 mt-2 mb-2">
+        <div className="flex flex-wrap gap-1 mt-2.5 mb-2.5">
           {scholarship.campus === "beijing" && (
             <Badge
               variant="outline"
-              className="text-[8px] px-1.5 py-0 h-4 leading-none"
+              className="text-[9px] px-1.5 py-0 h-4 leading-none"
             >
               {labels.beijingCampus}
             </Badge>
@@ -166,7 +71,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
           {scholarship.campus === "zhuhai" && (
             <Badge
               variant="outline"
-              className="text-[8px] px-1.5 py-0 h-4 leading-none"
+              className="text-[9px] px-1.5 py-0 h-4 leading-none"
             >
               {labels.zhuhaiCampus}
             </Badge>
@@ -174,7 +79,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
           {scholarship.campus === "both" && (
             <Badge
               variant="secondary"
-              className="text-[8px] px-1.5 py-0 h-4 leading-none"
+              className="text-[9px] px-1.5 py-0 h-4 leading-none"
             >
               {labels.allCampuses}
             </Badge>
@@ -182,7 +87,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
           {scholarship.languageRestriction === "chinese-only" && (
             <Badge
               variant="destructive"
-              className="text-[8px] px-1.5 py-0 h-4 leading-none"
+              className="text-[9px] px-1.5 py-0 h-4 leading-none"
             >
               {labels.chineseOnly}
             </Badge>
@@ -190,7 +95,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
           {scholarship.deadline && (
             <Badge
               variant="default"
-              className="text-[8px] px-1.5 py-0 h-4 leading-none"
+              className="text-[9px] px-1.5 py-0 h-4 leading-none"
             >
               {labels.deadlinePrefix}: {scholarship.deadline}
             </Badge>
@@ -198,7 +103,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
           {scholarship.applicationPeriod && (
             <Badge
               variant="default"
-              className="text-[8px] px-1.5 py-0 h-4 leading-none"
+              className="text-[9px] px-1.5 py-0 h-4 leading-none"
             >
               {scholarship.applicationPeriod}
             </Badge>
@@ -206,41 +111,40 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
         </div>
 
         {/* Description */}
-        <p className="text-[10px] text-muted-foreground leading-relaxed line-clamp-2 mb-2.5">
+        <p className="text-[12px] text-muted-foreground leading-relaxed line-clamp-3 mb-3">
           {scholarship.description}
         </p>
 
         {/* Coverage Tiers */}
-        <div className="mb-2.5">
-          <p className="text-[8px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+        <div className="mb-3">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
             {labels.coverageTiers}
           </p>
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {visibleTiers.map((tier) => (
               <div
                 key={tier.name}
-                className="bg-primary/5 rounded-lg px-2.5 py-1.5"
+                className="bg-primary/5 rounded-lg px-2.5 py-2"
               >
-                <span className="font-semibold text-[10px] text-foreground">
+                <span className="font-semibold text-[11px] text-foreground">
                   {tier.name}
                 </span>
-                <span className="text-[8px] text-muted-foreground ml-1">
+                <span className="text-[10px] text-muted-foreground ml-1">
                   — {tier.coverageSummary}
                 </span>
               </div>
             ))}
           </div>
-          {needsExpand && isActive && (
+          {needsExpand && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setExpandedId(isExpanded ? null : scholarship.id);
               }}
-              className="w-full flex items-center justify-center gap-0.5 pt-1.5 text-[10px] text-primary font-medium"
+              type="button"
+              className="w-full flex items-center justify-center gap-0.5 pt-2 text-[11px] text-primary font-medium"
             >
-              {isExpanded
-                ? labels.showLess
-                : labels.showMore(scholarship.tiers.length - MAX_VISIBLE_TIERS)}
+              {isExpanded ? labels.showLess : labels.showMore}
               <ChevronDown
                 className={`w-3 h-3 transition-transform duration-300 ${
                   isExpanded ? "rotate-180" : ""
@@ -251,7 +155,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
         </div>
 
         {/* Application method */}
-        <p className="text-[9px] text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground">
           <span className="font-semibold text-foreground">{labels.howToApply}:</span>{" "}
           {scholarship.applicationMethod}
         </p>
@@ -262,7 +166,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
             {scholarship.notes.map((note, i) => (
               <li
                 key={i}
-                className="flex items-start gap-1.5 text-[9px] text-muted-foreground"
+                className="flex items-start gap-1.5 text-[10px] text-muted-foreground"
               >
                 <div className="w-1 h-1 rounded-full bg-primary mt-1 shrink-0" />
                 {note}
@@ -277,7 +181,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
             href={scholarship.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[10px] text-primary font-semibold hover:underline mt-1.5"
+            className="inline-flex items-center gap-1 text-[11px] text-primary font-semibold hover:underline mt-2"
             onClick={(e) => e.stopPropagation()}
           >
             {labels.learnMore} <ExternalLink className="w-2.5 h-2.5" />
@@ -292,61 +196,16 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
   }
 
   return (
-    <div ref={sectionRef}>
-      <div
-        className="relative overflow-hidden transition-[height] duration-500 ease-out"
-        style={{ height: containerHeight }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Invisible measure element — determines container height */}
-        <div
-          ref={measureRef}
-          className="absolute top-0 left-0 right-0 mx-auto w-[80%] max-w-[300px] invisible pointer-events-none"
-          aria-hidden="true"
-        >
-          {renderCardContent(activeScholarship, true)}
-        </div>
-
-        {/* Carousel cards */}
-        {localizedScholarships.map((scholarship, index) => {
-          const isActive = index === activeIndex;
-          return (
-            <div
-              key={scholarship.id}
-              className={`absolute top-0 left-0 right-0 mx-auto w-[80%] max-w-[300px] transition-all duration-500 ease-out ${getCardClass(
-                index
-              )}`}
-              onClick={() => {
-                if (!isActive) {
-                  setActive(index);
-                  setExpandedId(null);
-                }
-              }}
-            >
-              {renderCardContent(scholarship, isActive)}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Dot indicators */}
-      <div className="flex justify-center items-center gap-2 mt-4">
-        {localizedScholarships.map((_, idx) => (
-          <button
-            key={idx}
-            className={`rounded-full transition-all duration-300 ${
-              activeIndex === idx ? "bg-primary w-5 h-2" : "bg-primary/30 w-2 h-2"
-            }`}
-            onClick={() => {
-              setActive(idx);
-              setExpandedId(null);
-            }}
-            aria-label={labels.carouselDotAria(idx + 1)}
-          />
-        ))}
-      </div>
-    </div>
+    <MobilePeekDeck
+      items={localizedScholarships}
+      ariaLabel={locale === "id" ? "Kartu beasiswa" : "Scholarship cards"}
+      getItemKey={(scholarship) => scholarship.id}
+      getIndicatorAriaLabel={labels.carouselDotAria}
+      onActiveIndexChange={(index) => {
+        setActiveIndex(index);
+        setExpandedId(null);
+      }}
+      renderItem={(scholarship, _, isActive) => renderCardContent(scholarship, isActive)}
+    />
   );
 }
