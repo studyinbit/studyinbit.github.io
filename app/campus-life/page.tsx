@@ -6,6 +6,7 @@ import { MapPin, Coffee, Utensils, Wifi, Bus, Bike, Shield } from "lucide-react"
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { PageSegue } from "@/components/ui/PageSegue";
+import { localizePath } from "@/lib/i18n/path-utils";
 
 import dormImg1 from "@/public/images/uni/IMG_20251103_130246 (1).webp";
 import dormImg2 from "@/public/images/uni/IMG_20251109_094544.webp";
@@ -30,6 +31,7 @@ import beijingMap from "@/public/images/beijing-map.webp";
 export default function CampusLifePage() {
   const { locale } = useLocale();
   const isId = locale === "id";
+  const communityHref = localizePath("/community", locale);
 
   const facilities = [
     {
@@ -415,7 +417,7 @@ export default function CampusLifePage() {
             : "Join 400+ Indonesian students and discover the support system that makes BIT feel like home."
         }
         buttonText={isId ? "Lihat Komunitas" : "Discover the Community"}
-        buttonHref="/community"
+        buttonHref={communityHref}
       />
     </div>
   );

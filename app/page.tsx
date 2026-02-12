@@ -7,6 +7,7 @@ import { GradientBlob } from "@/components/ui/GradientBlob";
 import { PageSegue } from "@/components/ui/PageSegue";
 import ShinyText from "@/components/ui/ShinyText";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localizePath } from "@/lib/i18n/path-utils";
 
 import heroImg1 from "@/public/images/uni/IMG_20251101_124832167.CCD.webp";
 import heroImg2 from "@/public/images/uni/IMG_20250914_190338764.CCD.NIGHT.webp";
@@ -15,7 +16,8 @@ import heroImg4 from "@/public/images/uni/IMG_20251207_121823829.CCD.webp";
 import shanghaiImg from "@/public/images/shanghai.webp";
 
 export default function Home() {
-  const { messages } = useLocale();
+  const { locale, messages } = useLocale();
+  const campusLifeHref = localizePath("/campus-life", locale);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -295,7 +297,7 @@ export default function Home() {
         title={messages.home.segue.title}
         description={<>{messages.home.segue.description}</>}
         buttonText={messages.home.segue.button}
-        buttonHref="/campus-life"
+        buttonHref={campusLifeHref}
       />
     </div>
   );

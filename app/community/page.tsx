@@ -7,6 +7,7 @@ import { BlurImage } from "@/components/ui/blur-image";
 import { Users, BookOpen, Briefcase, Heart, Plane, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/components/i18n/LocaleProvider";
+import { localizePath } from "@/lib/i18n/path-utils";
 
 import { GradientBlob } from "@/components/ui/GradientBlob";
 import { PageSegue } from "@/components/ui/PageSegue";
@@ -168,6 +169,7 @@ function MobileNetworkLogo({ logo }: MobileNetworkLogoProps) {
 export default function CommunityPage() {
   const { locale } = useLocale();
   const isId = locale === "id";
+  const admissionsHref = localizePath("/admissions", locale);
   const networkRef = useRef<HTMLDivElement>(null);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
@@ -627,7 +629,7 @@ export default function CommunityPage() {
             : "Learn about requirements, scholarships, and the application timeline for BIT."
         }
         buttonText={isId ? "Lihat Info Admisi" : "View Admissions Info"}
-        buttonHref="/admissions"
+        buttonHref={admissionsHref}
       />
     </div>
   );

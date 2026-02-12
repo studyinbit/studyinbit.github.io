@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Globe } from "lucide-react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { FlagIcon } from "@/components/i18n/FlagIcon";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -76,13 +76,7 @@ export function LanguageSwitcher({
               className={cn("rounded-full gap-2 px-2.5", className)}
               aria-label={messages.common.changeLanguage}
             >
-              <Image
-                src={currentLocaleMeta?.flagSrc}
-                alt={currentLocaleMeta?.label}
-                className="w-4 h-4 rounded-full object-cover"
-                width={16}
-                height={16}
-              />
+              <FlagIcon locale={currentLocaleMeta?.code} className="size-4 rounded-full overflow-hidden" />
               <span className="text-xs font-semibold tracking-wide">{currentLocaleMeta?.shortLabel}</span>
             </Button>
           )
@@ -99,13 +93,7 @@ export function LanguageSwitcher({
         >
           {locales.map((item) => (
             <DropdownMenuRadioItem key={item.code} value={item.code}>
-              <Image
-                src={item.flagSrc}
-                alt={item.label}
-                className="w-4 h-4 rounded-full object-cover"
-                width={16}
-                height={16}
-              />
+              <FlagIcon locale={item.code} className="size-4 rounded-full overflow-hidden" />
               <span>{item.label}</span>
             </DropdownMenuRadioItem>
           ))}

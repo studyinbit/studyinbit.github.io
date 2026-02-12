@@ -5,10 +5,10 @@ This project uses path-localized routes (example: `/id`, `/en`) and a locale reg
 ## Add a new language
 
 1. Add the locale code to `LOCALES` in `lib/i18n/config.ts`.
-2. Add metadata in `LOCALE_META` (label, short label, flag icon path, enabled).
+2. Add metadata in `LOCALE_META` (label, short label, enabled).
 3. Add a dictionary file in `lib/i18n/messages/` and export it.
 4. Register the dictionary in `components/i18n/LocaleProvider.tsx`.
-5. Add a flag icon under `public/images/flags/`.
+5. Add a flag icon SVG and register it in `components/i18n/FlagIcon.tsx`.
 6. Add static route generation support by ensuring `generateStaticParams` includes the new locale.
 7. Verify all dictionary keys match `Messages` type.
 8. Run `bun run lint` and `bun run build`.

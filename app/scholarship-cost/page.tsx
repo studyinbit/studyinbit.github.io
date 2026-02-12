@@ -8,10 +8,12 @@ import { ScholarshipCarousel } from "@/components/features/ScholarshipCarousel";
 import { PageSegue } from "@/components/ui/PageSegue";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 import { siteContent } from "@/lib/content";
+import { localizePath } from "@/lib/i18n/path-utils";
 
 export default function ScholarshipCostPage() {
   const { locale } = useLocale();
   const isId = locale === "id";
+  const admissionsHref = localizePath("/admissions", locale);
 
   return (
     <div className="relative overflow-hidden min-h-screen pt-32">
@@ -89,7 +91,7 @@ export default function ScholarshipCostPage() {
             : "Learn about requirements and the application timeline for BIT."
         }
         buttonText={isId ? "Lihat Info Admisi" : "View Admissions Info"}
-        buttonHref="/admissions"
+        buttonHref={admissionsHref}
       />
     </div>
   );

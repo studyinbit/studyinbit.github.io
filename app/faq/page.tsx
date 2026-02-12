@@ -171,7 +171,7 @@ export default function FAQPage() {
       },
       {
         q: "Can parents visit?",
-        a: "Yes! However they may not be allowed stay overnight in campus.",
+        a: "Yes! However, they may not be allowed to stay overnight on campus.",
       },
       {
         q: "What VPN should I use?",

@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { LocaleProvider } from "@/components/i18n/LocaleProvider";
 import { LanguageNudge } from "@/components/i18n/LanguageNudge";
 import { LanguagePickerPrompt } from "@/components/i18n/LanguagePickerPrompt";
-import { I18nDebugPanel } from "@/components/i18n/I18nDebugPanel";
+import { I18nDebugPanel } from "@/components/features/i18n/I18nDebugPanel";
 import {
   DEFAULT_LOCALE,
   LOCALES,

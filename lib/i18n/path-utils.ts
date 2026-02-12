@@ -56,5 +56,5 @@ export function localizePath(pathname: string, locale: Locale): string {
 }
 
 export function isInternalHref(href: string): boolean {
-  return href.startsWith("/");
+  return href.startsWith("/") && !href.startsWith("//");
 }

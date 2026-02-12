@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { Languages, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FlagIcon } from "@/components/i18n/FlagIcon";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
 export function LanguagePickerPrompt() {
@@ -57,7 +57,7 @@ export function LanguagePickerPrompt() {
             className="h-28 rounded-xl w-full justify-center gap-2 text-base flex-col"
           >
             <span className="w-16 h-12 rounded-md overflow-hidden ring-1 ring-black/10">
-              <Image src="/images/flags/id.svg" alt={messages.common.indonesian} className="w-full h-full object-cover" width={64} height={48} />
+              <FlagIcon locale="id" className="size-full" />
             </span>
             <span>{messages.common.indonesian}</span>
           </Button>
@@ -67,7 +67,7 @@ export function LanguagePickerPrompt() {
             className="h-28 rounded-xl w-full justify-center gap-2 text-base flex-col"
           >
             <span className="w-16 h-12 rounded-md overflow-hidden ring-1 ring-black/10">
-              <Image src="/images/flags/en-us.svg" alt={messages.common.english} className="w-full h-full object-cover" width={64} height={48} />
+              <FlagIcon locale="en" className="size-full" />
             </span>
             <span>{messages.common.english}</span>
           </Button>

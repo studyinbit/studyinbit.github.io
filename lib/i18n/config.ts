@@ -6,7 +6,6 @@ export type LocaleMeta = {
   code: Locale;
   label: string;
   shortLabel: string;
-  flagSrc: string;
   enabled: boolean;
 };
 
@@ -17,14 +16,12 @@ export const LOCALE_META: readonly LocaleMeta[] = [
     code: "id",
     label: "Indonesia",
     shortLabel: "ID",
-    flagSrc: "/images/flags/id.svg",
     enabled: true,
   },
   {
     code: "en",
     label: "English",
     shortLabel: "EN",
-    flagSrc: "/images/flags/en-us.svg",
     enabled: true,
   },
 ] as const;

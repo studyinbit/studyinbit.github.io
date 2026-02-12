@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Languages, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FlagIcon } from "@/components/i18n/FlagIcon";
 import { LOCALE_SWITCH_NUDGE_KEY, type Locale, isLocale } from "@/lib/i18n/config";
 import { useLocale } from "@/components/i18n/LocaleProvider";
 
@@ -127,7 +127,7 @@ export function LanguageNudge() {
             className="h-16 rounded-xl justify-center gap-1.5 flex-col"
           >
             <span className="w-9 h-6 rounded-md overflow-hidden ring-1 ring-black/10">
-              <Image src={item.flagSrc} alt={item.label} width={36} height={24} className="w-full h-full object-cover" />
+              <FlagIcon locale={item.code} className="size-full" />
             </span>
             <span className="text-xs">{item.label}</span>
           </Button>

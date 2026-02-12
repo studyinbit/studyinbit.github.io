@@ -159,6 +159,30 @@ function consumePromptTrigger(): boolean {
   return shouldPrompt;
 }
 
+function readSessionStorageItem(key: string): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  try {
+    return window.sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writeSessionStorageItem(key: string, value: string): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.sessionStorage.setItem(key, value);
+  } catch {
+    // Session storage may be unavailable in restricted/private modes.
+  }
+}
+
 function shouldSkipLocaleRedirect(pathname: string): boolean {
   return pathname === "/_not-found" || pathname === "/404";
 }
@@ -286,21 +310,17 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
       }
     } else if (savedLocaleValid && localeInPath !== savedLocaleValid) {
       const nudgeSeenKey = `${LOCALE_SWITCH_NUDGE_KEY}.seen.${localeInPath}.${savedLocaleValid}`;
-      if (typeof window !== "undefined" && window.sessionStorage.getItem(nudgeSeenKey) === "1") {
+      if (readSessionStorageItem(nudgeSeenKey) === "1") {
         return () => {
           cancelled = true;
         };
       }
 
-      if (
-        typeof window !== "undefined"
-      ) {
-        window.sessionStorage.setItem(nudgeSeenKey, "1");
-        window.sessionStorage.setItem(
-          LOCALE_SWITCH_NUDGE_KEY,
-          JSON.stringify({ from: localeInPath, to: savedLocaleValid })
-        );
-      }
+      writeSessionStorageItem(nudgeSeenKey, "1");
+      writeSessionStorageItem(
+        LOCALE_SWITCH_NUDGE_KEY,
+        JSON.stringify({ from: localeInPath, to: savedLocaleValid })
+      );
       const timer = window.setTimeout(() => {
         setNudgeOpenRequest((prev) => prev + 1);
       }, 0);
