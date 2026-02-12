@@ -269,10 +269,11 @@ export default function CommunityPage() {
     isMobile: isMobileGallery,
     activeIndex: activeGalleryIndex,
     setItemRef: setGalleryItemRef,
-    activateItem: activateGalleryItem,
+    onItemClick,
     onItemTouchStart,
     onItemTouchMove,
     onItemTouchEnd,
+    onItemTouchCancel,
   } = useMobileGalleryHighlight(galleryImages.length);
 
   const networkLogos: NetworkLogo[] = [
@@ -613,10 +614,11 @@ export default function CommunityPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: idx * 0.1 }}
-                  onClick={isMobileGallery ? undefined : () => activateGalleryItem(idx)}
+                  onClick={() => onItemClick(idx)}
                   onTouchStart={isMobileGallery ? onItemTouchStart : undefined}
                   onTouchMove={isMobileGallery ? onItemTouchMove : undefined}
                   onTouchEnd={isMobileGallery ? () => onItemTouchEnd(idx) : undefined}
+                  onTouchCancel={isMobileGallery ? onItemTouchCancel : undefined}
                   className={`relative rounded-2xl overflow-hidden group break-inside-avoid mb-6 ${isMobileGallery ? "cursor-pointer" : ""}`}
                 >
                   <div
