@@ -33,7 +33,7 @@ export const siteContent = {
     },
   ],
   contact: {
-    whatsapp: "https://wa.me/6281388577873",
+    whatsapp: "https://wa.me/8618810362679",
     phone: "+62 813 8857 7873",
     name: "Timothy Pardin",
   },

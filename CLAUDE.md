@@ -116,7 +116,7 @@ Component aliases (from `components.json`):
 
 4. **Path Alias**: `@/*` maps to project root (configured in `tsconfig.json`).
 
-5. **WhatsApp Contact**: Primary contact method is WhatsApp (`https://wa.me/6281388577873`).
+5. **WhatsApp Contact**: Primary contact method is WhatsApp (`https://wa.me/8618810362679`).
 
 6. **Package Manager - BUN ONLY**:
    - This project **EXCLUSIVELY** uses [Bun](https://bun.sh) as the package manager and runtime

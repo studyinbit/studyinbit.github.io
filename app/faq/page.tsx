@@ -191,14 +191,14 @@ export default function FAQPage() {
 
   const filteredFaqs = searchTerm
     ? anyFaqs.filter(item => {
-        const searchLower = searchTerm.toLowerCase();
-        return (
-          item.q.toLowerCase().includes(searchLower) ||
-          item.a.toLowerCase().includes(searchLower) ||
-          (item.quote && item.quote.toLowerCase().includes(searchLower)) ||
-          (item.author && item.author.toLowerCase().includes(searchLower))
-        );
-      })
+      const searchLower = searchTerm.toLowerCase();
+      return (
+        item.q.toLowerCase().includes(searchLower) ||
+        item.a.toLowerCase().includes(searchLower) ||
+        (item.quote && item.quote.toLowerCase().includes(searchLower)) ||
+        (item.author && item.author.toLowerCase().includes(searchLower))
+      );
+    })
     : openCategory === "any"
       ? anyFaqs
       : faqData[openCategory];
@@ -247,11 +247,10 @@ export default function FAQPage() {
               <button
                 key={cat.key}
                 onClick={() => setOpenCategory(cat.key)}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                  openCategory === cat.key
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${openCategory === cat.key
                     ? "bg-primary text-white shadow-md"
                     : "bg-white border border-border text-muted-foreground hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 {isId ? "Untuk " : "For "}
                 {cat.label}
@@ -302,7 +301,7 @@ export default function FAQPage() {
           </p>
           <WhatsAppButton />
           {/* <Button size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90" asChild>
-            <a href="https://wa.me/6281388577873" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/8618810362679" target="_blank" rel="noopener noreferrer">
               Chat on WhatsApp <MessageCircle className="ml-2 w-5 h-5" />
             </a>
           </Button> */}

@@ -23,7 +23,7 @@ export function Footer() {
     social: [
       {
         name: messages.footer.whatsapp,
-        href: "https://wa.me/6281388577873",
+        href: "https://wa.me/8618810362679",
         icon: MessageCircle,
       },
     ],
@@ -101,7 +101,7 @@ export function Footer() {
                 <li className="pt-3 md:pt-4 space-y-3">
                   <div>
                     <p className="text-xs md:text-sm font-medium text-foreground">{messages.footer.contactName}</p>
-                    <p className="text-xs md:text-sm text-muted-foreground mt-0.5">+62 813-88577-873</p>
+                    <p className="text-xs md:text-sm text-muted-foreground mt-0.5">+86 188 1036 2679</p>
                   </div>
                   <div>
                     <p className="text-xs md:text-sm font-medium text-foreground">{messages.footer.emailInquiry}</p>
