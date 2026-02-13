@@ -37,7 +37,7 @@ export function ScholarshipCarousel({ scholarships }: ScholarshipCarouselProps) 
 
     return (
       <div
-        className={`bg-white/85 backdrop-blur-md border border-white/70 rounded-[1.4rem] p-4 transition-all duration-300 ${
+        className={`glass rounded-[1.4rem] p-4 transition-all duration-300 ${
           isActive
             ? "shadow-[0_20px_35px_-28px_rgba(15,23,42,0.55)] ring-1 ring-primary/10"
             : "shadow-[0_14px_30px_-28px_rgba(15,23,42,0.45)]"

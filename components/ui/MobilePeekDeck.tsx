@@ -127,7 +127,8 @@ export function MobilePeekDeck<T>({
               slideRefs.current[index] = node;
             }}
             className={cn(
-              "snap-start shrink-0 w-[min(22rem,calc(100%-3.75rem))] scroll-ml-6 pb-4 md:scroll-ml-0 md:pb-0",
+              "snap-start snap-always shrink-0 w-[min(22rem,calc(100%-3.75rem))] scroll-ml-6 pb-4 md:scroll-ml-0 md:pb-0 transform-gpu transition duration-60 ease-out will-change-transform",
+              index === normalizedActiveIndex ? "scale-100 opacity-100" : "scale-[0.995] opacity-98",
               slideClassName
             )}
           >
@@ -143,7 +144,7 @@ export function MobilePeekDeck<T>({
               key={index}
               type="button"
               className={cn(
-                "h-2 rounded-full transition-all duration-300",
+                "h-2 rounded-full transition-all duration-60 ease-out",
                 normalizedActiveIndex === index ? "w-5 bg-primary" : "w-2 bg-primary/30"
               )}
               aria-label={getIndicatorAriaLabel?.(index + 1) ?? `Go to card ${index + 1}`}
